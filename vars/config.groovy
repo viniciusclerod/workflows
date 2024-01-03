@@ -1,4 +1,5 @@
 @Library('jenkins-orb')
+import com.jenkins.orb.*
 import com.jenkins.orb.ProjectConfiguration
 import com.jenkins.orb.parser.ConfigParser
 
