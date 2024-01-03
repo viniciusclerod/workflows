@@ -1,4 +1,5 @@
-package com.jenkins.orb;
+// src/com/jenkins/orb/ProjectConfiguration.groovy
+package com.jenkins.orb
 
 import com.jenkins.orb.docker.DockerConfiguration;
 
