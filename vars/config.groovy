@@ -1,10 +1,13 @@
 @Library('jenkins-orb')
-// import com.jenkins.orb.*
+import com.jenkins.orb.*
 
 def call(String yamlPath) {
   def yaml = readYaml file: yamlPath
+
+  Foo foo = new Foo()
+  foo.buildNumber = env.BUILD_ID;
   
-  sh "echo ${yamlPath}"
+  sh "echo ${foo.buildNumber}"
 
   // load project's configuration
   // ProjectConfiguration projectConfig = ConfigParser.parse(yaml, env)
