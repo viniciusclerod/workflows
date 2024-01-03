@@ -1,6 +1,6 @@
 @Library('jenkins-orb')
-import com.jenkins.orb.ProjectConfiguration;
 import com.jenkins.orb.parser.ConfigParser;
+import com.jenkins.orb.*;
 
 def call(String yamlPath) {
   def yaml = readYaml file: yamlName;
