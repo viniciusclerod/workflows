@@ -1,7 +1,7 @@
-package orb.parser;
+package com.jenkins.orb.parser;
 
-import orb.ProjectConfiguration;
-import orb.docker.DockerConfiguration;
+import com.jenkins.orb.ProjectConfiguration;
+import com.jenkins.orb.docker.DockerConfiguration;
 
 class ConfigParser {
 

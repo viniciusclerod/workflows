@@ -1,6 +1,6 @@
-package orb;
+package com.jenkins.orb;
 
-import orb.docker.DockerConfiguration;
+import com.jenkins.orb.docker.DockerConfiguration;
 
 class ProjectConfiguration {
     def dockerfile;
