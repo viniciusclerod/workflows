@@ -3,6 +3,8 @@ package com.jenkins.orb.parser;
 
 import com.jenkins.orb.ProjectConfiguration;
 import com.jenkins.orb.docker.DockerConfiguration;
+import com.jenkins.orb.steps.Step;
+import com.jenkins.orb.steps.Steps;
 
 class ConfigParser {
 
