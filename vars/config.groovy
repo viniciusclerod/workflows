@@ -13,6 +13,6 @@ def call(String yamlPath) {
   // build the image specified in the configuration
   def customImage = docker.build(imageName, "--file ${projectConfig.dockerfile} .")
 
-  sh "echo ${customImage}"
+  sh "echo customImage: ${customImage}"
 
 }
