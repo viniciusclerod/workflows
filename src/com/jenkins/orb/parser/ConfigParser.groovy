@@ -10,23 +10,39 @@ class ConfigParser {
     private static Integer DEFAULT_TIMEOUT = 600;   // 600 seconds
 
     static ProjectConfiguration parse(def yaml, def env) {
-        ProjectConfiguration projectConfiguration = new ProjectConfiguration();
+        ProjectConfiguration config = new ProjectConfiguration();
 
-        projectConfiguration.buildNumber = env.BUILD_ID;
+        config.buildNumber = env.BUILD_ID;
+
+        // parse the execution steps
+        config.steps = parseSteps(yaml.steps);
 
         // load the dockefile
-        projectConfiguration.dockerfile = parseDockerfile(yaml.config);
+        config.dockerfile = parseDockerfile(yaml.config);
 
         // load the project name
-        projectConfiguration.projectName = parseProjectName(yaml.config);
+        config.projectName = parseProjectName(yaml.config);
 
-        projectConfiguration.env = env;
+        config.env = env;
 
-        projectConfiguration.dockerConfiguration = new DockerConfiguration(projectConfiguration: projectConfiguration);
+        config.docker = new DockerConfiguration(config: config);
 
-        projectConfiguration.timeout = yaml.timeout ?: DEFAULT_TIMEOUT;
+        config.timeout = yaml.timeout ?: DEFAULT_TIMEOUT;
 
-        return projectConfiguration;
+        return config;
+    }
+
+    static def parseSteps(def yamlSteps) {
+        List<Step> steps = yamlSteps.collect { k, v ->
+            Step step = new Step(name: k)
+
+            // a step can have one or more commands to execute
+            v.each {
+                step.commands.add(it);
+            }
+            return step
+        }
+        return new Steps(list: steps);
     }
 
     static def parseDockerfile(def config) {

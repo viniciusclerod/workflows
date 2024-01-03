@@ -6,13 +6,21 @@ def call(String yamlPath) {
   def yaml = readYaml file: yamlPath
   
   // load project's configuration
-  ProjectConfiguration projectConfig = ConfigParser.parse(yaml, env)
+  ProjectConfiguration config = ConfigParser.parse(yaml, env)
 
-  def imageName = projectConfig.dockerConfiguration.imageName().toLowerCase()
+  def imageName = config.docker.getImageName()
 
   // build the image specified in the configuration
-  def customImage = docker.build(imageName, "--file ${projectConfig.dockerfile} .")
+  def customImage = docker.build(imageName, "--file ${config.dockerfile} .")
 
-  sh "echo customImage: ${customImage}"
+  // adds the last step of the build.
+  def closure = buildSteps(config, customImage);
+
+  // we execute the top level closure so that the cascade starts.
+  try {
+      closure([:]);
+  } finally{
+      deleteDockerImages(config);
+  }
 
 }

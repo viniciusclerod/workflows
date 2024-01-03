@@ -5,23 +5,23 @@ import com.jenkins.orb.ProjectConfiguration;
 
 class DockerConfiguration {
 
-    ProjectConfiguration projectConfiguration;
+    ProjectConfiguration config;
 
-    def imageName() {
-        "${reference()}:${tag()}".toLowerCase();
+    def getImageName() {
+        "${getReference()}:${getTag()}".toLowerCase();
     }
 
-    def baseName() {
-        "${projectConfiguration.projectName}".toLowerCase();
+    def getBaseName() {
+        "${config.projectName}".toLowerCase();
     }
 
-    def reference() {
-        def env = projectConfiguration.env;
-        "${baseName()}-${env.BRANCH_NAME}".toLowerCase();
+    def getReference() {
+        def env = config.env;
+        "${getBaseName()}-${env.BRANCH_NAME}".toLowerCase();
     }
 
-    def tag() {
-        def env = projectConfiguration.env;
+    def getTag() {
+        def env = config.env;
         "${env.BUILD_ID}".toLowerCase();
     }
 }
