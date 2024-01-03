@@ -4,7 +4,7 @@ import com.jenkins.orb.steps.Step;
 
 def call(ProjectConfiguration config, def dockerImage) {
     return { variables ->
-        List<Step> stepList = config.step.list
+        List<Step> stepList = config.steps.list
         def links = variables.collect { k, v -> "--link ${v.id}:${k}" }.join(" ")
         dockerImage.inside(links) {
             stepList.each { step ->
