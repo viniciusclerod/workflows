@@ -1,6 +1,7 @@
 @Library('jenkins-orb')
 import com.jenkins.ci.reference.Configuration
 import com.jenkins.ci.reference.jobs.Job
+import com.jenkins.ci.reference.workflow.Stage
 
 def generateStage(stage) {
     return {
@@ -16,6 +17,10 @@ def call(Configuration config) {
         // jobs.each { job ->
         //     generateJob(job)
         // }
+        List<Stage> stages = config.workflow
+        stages.each { stage ->
+            generateStage(stage)
+        }
     }
 }
 
