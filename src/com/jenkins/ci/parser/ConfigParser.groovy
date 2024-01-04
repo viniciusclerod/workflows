@@ -38,12 +38,12 @@ class ConfigParser {
             Stage stage = null
             if (it instanceof String) {
                 stage = new Stage(
-                    key: key,
+                    key: it,
                     name: 'Simple'
                 )
             } else {
                 stage = new Stage(
-                    key: key,
+                    key: it,
                     name: 'Complex'
                 )
                 // stage = new Stage(
