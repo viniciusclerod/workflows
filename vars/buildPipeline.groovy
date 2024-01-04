@@ -11,26 +11,17 @@ def call(Configuration config) {
         // }
         List<Stage> stgs = config.workflow
         stgs.each { stg ->
+            // if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
             stage(stg.name) {
-                echo "Stage: ${stg.key}"
                 Job job = config.jobs.find { j -> j.name == stg.key }
-                echo "Job: ${job} ${job.name}"
+                job.steps.each { step ->
+                    sh step.command
+                }
             }
+            // }
         }
     }
 }
-            // if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
-            // }
-
-// def generateJob(job) {
-//     return {
-//         stage(job.name) {
-//             job.steps.each { step ->
-//                 sh step.command
-//             }
-//         }
-//     }
-// }
 
 // if ((env.BRANCH_NAME =~ '^((?!develop|master|release).)*$').matches()) {
 //     stage("Deploy"){
