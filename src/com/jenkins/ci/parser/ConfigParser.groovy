@@ -18,47 +18,23 @@ class ConfigParser {
     static List<Job> parseJobs(def yamlJobs) {
         List<Job> jobs = yamlJobs.collect { jobKey, jobValue ->
             Job job = new Job(name: jobKey)
-            // jobValue.steps.each { skey, svalue ->
+            // jobValue.steps.each { step, svalue ->
             //     Step step = new Step(
             //         name: 'run',
             //         command: "echo OK $skey $svalue"
             //     )
             //     job.steps.add(step);
             // }
-            // job.steps = jobValue.steps.collect { stepKey, stepValue ->
-            //     Step step = new Step(
-            //         name: 'run',
-            //         command: "echo OK $stepKey $stepValue"
-            //     )
-            //     return step
-            // }
-            def parseSteps = { yamlSteps ->
-                List<Step> steps = yamlSteps.collect { key, value ->
-                    // Step step = new Step(name: key, command: value)
-                    Step step = new Step(
-                        name: 'run',
-                        command: "echo OK $key $value"
-                    )
-                    return step
-                }
-                return steps
-            }                           
-            job.steps = parseSteps(jobValue.steps)
+            job.steps = jobValue.steps.collect { stepKey ->
+                Step step = new Step(
+                    name: 'run',
+                    command: "echo OK $stepKey"
+                )
+                return step
+            }
             return job
         }
         return jobs
     }
-
-    // List<Step> parseSteps(def yamlSteps) {
-    //     List<Step> steps = yamlSteps.collect { key, value ->
-    //         // Step step = new Step(name: key, command: value)
-    //         Step step = new Step(
-    //             name: 'run',
-    //             command: "echo OK $key $value"
-    //         )
-    //         return step
-    //     }
-    //     return steps
-    // }
 
 }
