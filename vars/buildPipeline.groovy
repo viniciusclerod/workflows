@@ -4,7 +4,7 @@ import com.jenkins.ci.reference.jobs.Job
 import com.jenkins.ci.reference.workflow.Stage
 
 def generateJob(key, config) {
-    Job job = config.jobs.find { it -> it.name = key }
+    Job job = config.jobs.find { it -> it.name == key }
     echo "JOB: ${job.name}" 
     
             // job.steps.each { step ->
