@@ -3,6 +3,12 @@ package com.jenkins.ci.parser
 
 import com.jenkins.ci.reference.Configuration
 import com.jenkins.ci.reference.jobs.Job
+import com.jenkins.ci.reference.commands.*
+
+static String toCamelCase( String text, boolean capitalized = false ) {
+    text = text.replaceAll( "(_)([A-Za-z0-9])", { Object[] it -> it[2].toUpperCase() } )
+    return capitalized ? capitalize(text) : text
+}
 
 class ConfigParser {
 
@@ -14,15 +20,22 @@ class ConfigParser {
         return config;
     }
 
-    static def parseJobs(def yamlJobs) {
-        List<Job> jobs = yamlJobs.collect { k, v ->
-            Job job = new Job(name: k)
-            v.steps.each {
-                job.steps.add(it);
-            }
+    static List<Job> parseJobs(def yamlJobs) {
+        List<Job> jobs = yamlJobs.collect { key, value ->
+            Job job = new Job(name: key)
+            job.steps = parseSteps(value.steps)
             return job
         }
         return jobs
+    }
+
+    static List<Command> parseSteps(def yamlSteps) {
+        List<Command> steps = yamlSteps.collect { key, value ->
+            String className = toCamelCase(key, true)
+            Command step = this.class.classLoader.loadClass( className, true, false )?.newInstance(name: key, command: value)
+            return step
+        }
+        return steps
     }
 
 }

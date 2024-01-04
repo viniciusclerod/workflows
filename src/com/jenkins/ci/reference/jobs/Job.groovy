@@ -1,7 +1,7 @@
-// src/com/jenkins/ci/reference/steps/Step.groovy
+// src/com/jenkins/ci/reference/jobs/Job.groovy
 package com.jenkins.ci.reference.jobs;
 
 class Job {
-    List<String> steps = [];
+    List<Command> steps = [];
     String name;
 }
