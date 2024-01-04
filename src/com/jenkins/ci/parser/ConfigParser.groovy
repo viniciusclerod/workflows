@@ -39,20 +39,16 @@ class ConfigParser {
             if (it instanceof String) {
                 stage = new Stage(
                     key: it,
-                    name: 'Simple'
+                    name: it
                 )
             } else {
                 String key = it.keySet().first()
                 stage = new Stage(
                     key: key,
                     name: it[key].name ?: key
+                    type: it[key].type ?: null,
+                    branches: it[key].branches ?: null
                 )
-                // stage = new Stage(
-                //     key: key,
-                //     name: value.name ?: key,
-                //     type: value.type ?: null,
-                //     branches: value.branches ?: null
-                // )
             }
             return stage
         }
