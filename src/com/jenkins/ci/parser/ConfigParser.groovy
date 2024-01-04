@@ -42,9 +42,10 @@ class ConfigParser {
                     name: 'Simple'
                 )
             } else {
+                String key = it.keySet().first()
                 stage = new Stage(
-                    key: it,
-                    name: 'Complex'
+                    key: key,
+                    name: it[key].name ?: key
                 )
                 // stage = new Stage(
                 //     key: key,
