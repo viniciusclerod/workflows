@@ -29,7 +29,7 @@ class ConfigParser {
                 // stepKey.collect { commandKey, commandValue ->
                 //     val.with { x, y -> x + y }
                 // }
-                Step step = stepKey.with { k, v -> new Step(
+                Step step = stepKey.collect { k, v -> new Step(
                     name: 'run',
                     command: "echo OK $stepKey $k $v"
                 ) }
