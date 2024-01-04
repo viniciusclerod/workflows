@@ -22,6 +22,7 @@ def call(Configuration config) {
             stages.each { stage ->
                 echo "stage: ${stage}"
                 echo "stage.key: ${stage.key}"
+                echo "stage.name: ${stage.name}"
             }
         }
         // stages.each { stage ->
