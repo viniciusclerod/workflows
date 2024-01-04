@@ -26,10 +26,18 @@ class ConfigParser {
             //     job.steps.add(step);
             // }
             job.steps = jobValue.steps.collect { stepKey ->
-                Step step = new Step(
-                    name: 'run',
-                    command: "echo OK $stepKey"
-                )
+                Step step = null
+                stepKey.each { skey, svalue ->
+                    println "Key: $skey, Value: $svalue"
+                    step = new Step(
+                        name: 'run',
+                        command: "echo StepKey: $stepKey, Key: $skey, Value: $svalue"
+                    )
+                }
+                // Step step = new Step(
+                //     name: 'run',
+                //     command: "echo OK $stepKey"
+                // )
                 return step
             }
             return job
