@@ -3,18 +3,6 @@ import com.jenkins.ci.reference.Configuration
 import com.jenkins.ci.reference.jobs.Job
 import com.jenkins.ci.reference.workflow.Stage
 
-// def generateJob(key, config) {
-//     Job job = config.jobs.find { it -> it.name == key }
-//     echo "Job: ${job.name}"
-    
-//             // job.steps.each { step ->
-//             //     sh step.command
-//             // }
-//     // return {
-//     //     echo "Job: ${job.name}"
-//     // }
-// }
-
 def call(Configuration config) {
     return { variables ->
         // List<Job> jobs = config.jobs
@@ -25,7 +13,7 @@ def call(Configuration config) {
         stgs.each { stg ->
             stage(stg.name) {
                 echo "Stage: ${stg.key}"
-                Job job = config.jobs.find { it -> it.name == key }
+                Job job = config.jobs.find { it -> it.name == stg.key }
                 echo "Job: ${job} ${job.name}"
             }
         }
