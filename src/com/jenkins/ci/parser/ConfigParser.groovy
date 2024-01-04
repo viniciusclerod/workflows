@@ -26,13 +26,11 @@ class ConfigParser {
             //     job.steps.add(step);
             // }
             job.steps = jobValue.steps.collect { stepKey ->
-                // stepKey.collect { commandKey, commandValue ->
-                //     val.with { x, y -> x + y }
-                // }
-                Step step = stepKey.collect { k, v -> new Step(
+                echo "$stepkey"
+                Step step = new Step(
                     name: 'run',
-                    command: "echo OK $stepKey $k $v"
-                ) }
+                    command: "echo OK $stepKey"
+                )
                 return step
             }
             return job
