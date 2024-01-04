@@ -7,8 +7,8 @@ def call(Configuration config) {
         List<Job> jobs = config.jobs
         jobs.each { job ->
             stage(job.name) {
-                job.steps.each { command ->
-                    echo "${command.execute()}"
+                job.steps.each { step ->
+                    echo "${step.command}"
                 }
             }
         }
