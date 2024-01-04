@@ -3,7 +3,7 @@ package com.jenkins.ci.parser
 
 import com.jenkins.ci.reference.Configuration
 import com.jenkins.ci.reference.jobs.Job
-import com.jenkins.ci.reference.commands.*
+import com.jenkins.ci.reference.steps.Step
 
 class ConfigParser {
 
@@ -24,17 +24,12 @@ class ConfigParser {
         return jobs
     }
 
-    static List<Command> parseSteps(def yamlSteps) {
-        List<Command> steps = yamlSteps.collect { key, value ->
-            Command step = null
-            switch (x) {
-                case "run":
-                    step = new RunCommand(name: key, command: value)
-                    break
-            }
+    static List<Step> parseSteps(def yamlSteps) {
+        List<Step> steps = yamlSteps.collect { key, value ->
+            Step step = new Step(name: key, command: value)
             return step
         }
-        return steps.findAll {it != null}
+        return steps
     }
 
 }

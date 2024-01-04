@@ -1,9 +1,9 @@
 // src/com/jenkins/ci/reference/jobs/Job.groovy
 package com.jenkins.ci.reference.jobs;
 
-import com.jenkins.ci.reference.commands.Command;
+import com.jenkins.ci.reference.steps.Step;
 
 class Job {
-    List<Command> steps = [];
+    List<Step> steps = [];
     String name;
 }
