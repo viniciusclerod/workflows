@@ -35,12 +35,20 @@ class ConfigParser {
 
     static List<Job> parseWorkflow(def yamlWorkflow) {
         List<Stage> stages = yamlWorkflow.collect { key, value ->
-            Stage stage = new Stage(
-                key: key, 
-                type: value.type ?: null, 
-                name: value.name ?: key, 
-                branches: value.branches ?: null
-            )
+            Stage stage = null
+            if (value != null) {
+                stage = new Stage(
+                    key: key,
+                    type: value.type ?: null,
+                    name: value.name ?: key,
+                    branches: value.branches ?: null
+                )
+            } else {
+                stage = new Stage(
+                    key: key,
+                    name: key
+                )
+            } 
             return stage
         }
         return stages
