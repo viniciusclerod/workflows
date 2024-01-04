@@ -19,7 +19,7 @@ def call(Configuration config) {
         // }
         List<Stage> stages = config.workflow
         stage('ECHO') {
-            sh "echo ${config}"
+            echo "${stages}"
         }
         stages.each { stage ->
             generateStage(stage)
