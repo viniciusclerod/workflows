@@ -34,12 +34,12 @@ def call(Configuration config) {
         // }
         List<Stage> stgs = config.workflow
         stgs.each { stg ->
-            // if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
-                generateStage(stg, config)
-            // }
+            generateStage(stg, config)
         }
     }
 }
+            // if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
+            // }
 
 // def generateJob(job) {
 //     return {
