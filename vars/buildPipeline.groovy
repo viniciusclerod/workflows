@@ -5,17 +5,14 @@ import com.jenkins.ci.reference.workflow.Stage
 
 def generateJob(key, config) {
     Job job = config.jobs.find { it -> it.name == key }
-    echo "JOB: ${job.name}" 
+    // echo "JOB: ${job.name}"
     
             // job.steps.each { step ->
             //     sh step.command
             // }
-    // return {
-    //     stage(stg.name) {
-    //         echo "key: ${stg.key}"
-    //         echo "name: ${stg.name}"
-    //     }
-    // }
+    return {
+        echo "JOB: ${job.name}"
+    }
 }
 
 def generateStage(stg, config) {
