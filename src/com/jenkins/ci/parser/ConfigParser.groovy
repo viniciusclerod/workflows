@@ -18,10 +18,10 @@ class ConfigParser {
     static List<Job> parseJobs(def yamlJobs) {
         List<Job> jobs = yamlJobs.collect { jobKey, jobValue ->
             Job job = new Job(name: jobKey)
-            jobValue.steps.each { it ->
+            jobValue.steps.each { skey, svalue ->
                 Step step = new Step(
                     name: 'run',
-                    command: "echo OK ${it.key} ${it}"
+                    command: "echo OK $skey $svalue"
                 )
                 job.steps.add(step);
             }
