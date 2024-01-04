@@ -17,11 +17,11 @@ def call(Configuration config) {
         // jobs.each { job ->
         //     generateJob(job)
         // }
-        List<Stage> stages = config.workflow
-        stages.each { stage ->
-            stage(stage.name) {
-                echo "stage.key: ${stage.key}"
-                echo "stage.name: ${stage.name}"
+        List<Stage> stgs = config.workflow
+        stgs.each { stg ->
+            stage(stg.name) {
+                echo "key: ${stg.key}"
+                echo "name: ${stg.name}"
             }
         }
         // stages.each { stage ->
