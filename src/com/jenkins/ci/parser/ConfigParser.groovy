@@ -25,24 +25,29 @@ class ConfigParser {
             //     )
             //     job.steps.add(step);
             // }
-            job.steps = jobValue.steps.collect { stepKey, stepValue ->
-                Step step = new Step(
-                    name: 'run',
-                    command: "echo OK $stepKey $stepValue"
-                )
-                return step
-            }
+            // job.steps = jobValue.steps.collect { stepKey, stepValue ->
+            //     Step step = new Step(
+            //         name: 'run',
+            //         command: "echo OK $stepKey $stepValue"
+            //     )
+            //     return step
+            // }
+            job.steps = parseSteps(jobValue.steps)
             return job
         }
         return jobs
     }
 
-    // static List<Step> parseSteps(def yamlSteps) {
-        // List<Step> steps = yamlSteps.collect { key, value ->
-        //     Step step = new Step(name: key, command: value)
-        //     return step
-        // }
-        // return steps
-    // }
+    static List<Step> parseSteps(def yamlSteps) {
+        List<Step> steps = yamlSteps.collect { key, value ->
+            // Step step = new Step(name: key, command: value)
+            Step step = new Step(
+                name: 'run',
+                command: "echo OK $key $value"
+            )
+            return step
+        }
+        return steps
+    }
 
 }
