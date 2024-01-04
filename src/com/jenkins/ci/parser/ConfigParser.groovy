@@ -18,8 +18,8 @@ class ConfigParser {
     static List<Job> parseJobs(def yamlJobs) {
         List<Job> jobs = yamlJobs.collect { key, value ->
             Job job = new Job(name: key)
-            job.steps = value.steps.collect { key, value ->
-                Step step = new Step(name: key, command: value)
+            job.steps = value.steps.collect { name, command ->
+                Step step = new Step(name: name, command: command)
                 return step
             }
 
