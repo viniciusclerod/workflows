@@ -18,8 +18,8 @@ def call(Configuration config) {
         //     generateJob(job)
         // }
         List<Stage> stages = config.workflow
-        stage('ECHO') {
-            stages.each { stage ->
+        stages.each { stage ->
+            stage('ECHO') {
                 echo "stage: ${stage}"
                 echo "stage.key: ${stage.key}"
             }

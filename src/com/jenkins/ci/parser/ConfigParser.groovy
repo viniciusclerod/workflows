@@ -38,10 +38,10 @@ class ConfigParser {
             Stage stage = null
             if (it.value != null) {
                 stage = new Stage(
-                    key: key,
-                    type: value.type ?: null,
-                    name: value.name ?: key,
-                    branches: value.branches ?: null
+                    key: it.key,
+                    type: it.value.type ?: null,
+                    name: it.value.name ?: it.key,
+                    branches: it.value.branches ?: null
                 )
             } else {
                 stage = new Stage(
