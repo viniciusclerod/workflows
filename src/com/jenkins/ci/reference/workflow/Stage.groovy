@@ -5,5 +5,5 @@ class Stage {
     String key
     String type
     String name
-    String filter
+    String branches
 }
