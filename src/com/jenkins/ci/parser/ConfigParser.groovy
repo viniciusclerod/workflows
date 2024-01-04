@@ -31,7 +31,7 @@ class ConfigParser {
                 // }
                 Step step = stepKey.with { k, v -> new Step(
                     name: 'run',
-                    command: "echo OK $stepKey"
+                    command: "echo OK $stepKey $k $v"
                 ) }
                 return step
             }
