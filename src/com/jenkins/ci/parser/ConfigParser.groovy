@@ -26,7 +26,6 @@ class ConfigParser {
             //     job.steps.add(step);
             // }
             job.steps = jobValue.steps.collect { stepKey ->
-                sh("ls -la")
                 Step step = new Step(
                     name: 'run',
                     command: "echo OK $stepKey"
