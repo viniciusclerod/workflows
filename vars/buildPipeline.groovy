@@ -3,10 +3,26 @@ import com.jenkins.ci.reference.Configuration
 import com.jenkins.ci.reference.jobs.Job
 import com.jenkins.ci.reference.workflow.Stage
 
-def generateStage(stage) {
+def generateJob(key, config) {
+    Job job = config.jobs.find { it => it.name = key }
+    echo "JOB: ${job.name}" 
+    
+            // job.steps.each { step ->
+            //     sh step.command
+            // }
+    // return {
+    //     stage(stg.name) {
+    //         echo "key: ${stg.key}"
+    //         echo "name: ${stg.name}"
+    //     }
+    // }
+}
+
+def generateStage(stg, config) {
     return {
-        stage(stage.name) {
-            sh "echo ${stage}"
+        stage(stg.name) {
+            echo "Stage: ${stg.key}"
+            generateJob(stg.key, config)
         }
     }
 }
@@ -19,14 +35,10 @@ def call(Configuration config) {
         // }
         List<Stage> stages = config.workflow
         stages.each { stg ->
-            stage(stg.name) {
-                echo "key: ${stg.key}"
-                echo "name: ${stg.name}"
+            if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
+                generateStage(stg, config)
             }
         }
-        // stages.each { stage ->
-        //     generateStage(stage)
-        // }
     }
 }
 
