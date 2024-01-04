@@ -15,16 +15,16 @@ import com.jenkins.ci.reference.workflow.Stage
 //     // }
 // }
 
-def generateStage(stg, config) {
-    return {
-        stage(stg.name) {
-            echo "Stage: ${stg.key}"
-            echo "Jobs: ${config.jobs}"
+// def generateStage(stg, config) {
+//     return {
+//         stage(stg.name) {
+//             echo "Stage: ${stg.key}"
+//             echo "Jobs: ${config.jobs}"
 
-            // generateJob(stg.key, config)
-        }
-    }
-}
+//             // generateJob(stg.key, config)
+//         }
+//     }
+// }
 
 def call(Configuration config) {
     return { variables ->
@@ -34,8 +34,12 @@ def call(Configuration config) {
         // }
         List<Stage> stages = config.workflow
         stages.each { stg ->
+            stage(stg.name) {
+                echo "Stage: ${stg.key}"
+                echo "Jobs: ${config.jobs}"
+            }
             // if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
-                generateStage(stg, config)
+                // generateStage(stg, config)
             // }
         }
     }
