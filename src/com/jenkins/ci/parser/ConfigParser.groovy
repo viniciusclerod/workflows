@@ -20,7 +20,7 @@ class ConfigParser {
             v.each {
                 job.steps.add(it);
             }
-            return step
+            return job
         }
         return jobs
     }
