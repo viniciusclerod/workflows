@@ -37,9 +37,9 @@ class ConfigParser {
         List<Stage> stages = yamlWorkflow.collect { key, value ->
             Stage stage = new Stage(
                 key: key, 
-                type: value.type, 
+                type: value.type ?: null, 
                 name: value.name ?: key, 
-                branches: value.branches
+                branches: value.branches ?: null
             )
             return stage
         }
