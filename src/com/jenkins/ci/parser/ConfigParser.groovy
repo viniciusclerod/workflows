@@ -46,8 +46,8 @@ class ConfigParser {
                 stage = new Stage(
                     key: key,
                     name: it[key].name ?: key,
-                    type: it[key].type,
-                    branches: it[key].branches
+                    type: it[key].type ?: null,
+                    branches: it[key].branches ?: null
                 )
             }
             return stage
