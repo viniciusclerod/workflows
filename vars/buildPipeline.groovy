@@ -19,7 +19,7 @@ def call(Configuration config) {
         // }
         List<Stage> stages = config.workflow
         stages.each { stage ->
-            stage('ECHO') {
+            stage(stage.name) {
                 echo "stage: ${stage}"
                 echo "stage.key: ${stage.key}"
             }
