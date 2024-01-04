@@ -15,17 +15,6 @@ import com.jenkins.ci.reference.workflow.Stage
 //     // }
 // }
 
-def generateStage(stg, config) {
-    return {
-        stage(stg.name) {
-            echo "Stage: ${stg.key}"
-            echo "Jobs: ${config.jobs}"
-
-            // generateJob(stg.key, config)
-        }
-    }
-}
-
 def call(Configuration config) {
     return { variables ->
         // List<Job> jobs = config.jobs
@@ -34,7 +23,11 @@ def call(Configuration config) {
         // }
         List<Stage> stgs = config.workflow
         stgs.each { stg ->
-            generateStage(stg, config)
+            stage(stg.name) {
+                echo "Stage: ${stg.key}"
+                Job job = config.jobs.find { it -> it.name == key }
+                echo "Job: ${job} ${job.name}"
+            }
         }
     }
 }
