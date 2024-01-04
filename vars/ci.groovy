@@ -8,5 +8,8 @@ def call(String yamlPath) {
     def closure = buildPipeline(config)
     try {
         closure([:])
+    } catch (exc) {
+        echo 'Something failed, I should sound the klaxons!'
+        throw
     }
 }
