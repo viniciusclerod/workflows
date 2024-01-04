@@ -18,7 +18,7 @@ class ConfigParser {
         List<Job> jobs = yamlJobs.collect { k, v ->
             Job job = new Job(name: k)
             v.each {
-                job.steps.add(it.toString());
+                job.steps.add(it);
             }
             return job
         }
