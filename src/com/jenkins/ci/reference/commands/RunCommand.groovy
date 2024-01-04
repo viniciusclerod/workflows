@@ -1,12 +1,12 @@
-// src/com/jenkins/ci/reference/commands/Run.groovy
+// src/com/jenkins/ci/reference/commands/RunCommand.groovy
 package com.jenkins.ci.reference.commands;
 
 import com.jenkins.ci.reference.commands.Command;
 
-class Run implements Command {
+class RunCommand implements Command {
     String name
     String command
     def execute() {
-        sh command
+        return sh command
     }
 }
