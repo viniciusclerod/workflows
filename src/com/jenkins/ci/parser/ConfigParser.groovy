@@ -17,11 +17,12 @@ class ConfigParser {
     static def parseJobs(def yamlJobs) {
         List<Job> jobs = yamlJobs.collect { k, v ->
             Job job = new Job(name: k)
-            v.each {
+            v.steps.each {
                 job.steps.add(it);
             }
             return job
         }
         return jobs
     }
+
 }
