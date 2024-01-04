@@ -11,14 +11,15 @@ def call(Configuration config) {
         // }
         List<Stage> stgs = config.workflow
         stgs.each { stg ->
-            // if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
-            stage(stg.name) {
-                Job job = config.jobs.find { j -> j.name == stg.key }
-                job.steps.each { step ->
-                    sh step.command
+            if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
+                stage(stg.name) {
+                    echo "${env.BRANCH_NAME} ${stg.branches}"
+                    Job job = config.jobs.find { j -> j.name == stg.key }
+                    job.steps.each { step ->
+                        sh step.command
+                    }
                 }
             }
-            // }
         }
     }
 }
