@@ -45,9 +45,9 @@ class ConfigParser {
                 String key = it.keySet().first()
                 stage = new Stage(
                     key: key,
-                    name: it[key].name ?: key
-                    type: it[key].type ?: null,
-                    branches: it[key].branches ?: null
+                    name: it[key].name ?: key,
+                    type: it[key].type,
+                    branches: it[key].branches
                 )
             }
             return stage
