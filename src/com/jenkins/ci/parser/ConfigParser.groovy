@@ -4,14 +4,14 @@ package com.jenkins.ci.parser
 import com.jenkins.ci.reference.Configuration
 import com.jenkins.ci.reference.jobs.Job
 import com.jenkins.ci.reference.steps.Step
+import com.jenkins.ci.reference.workflow.Stage
 
 class ConfigParser {
 
     static Configuration parse(def yaml, def env) {
         Configuration config = new Configuration();
-        
         config.jobs = parseJobs(yaml.jobs);
-
+        config.workflow = parseWorkflow(yaml.workflow);
         return config;
     }
 
@@ -31,6 +31,19 @@ class ConfigParser {
             return job
         }
         return jobs
+    }
+
+    static List<Job> parseWorkflow(def yamlWorkflow) {
+        List<Stage> stages = yamlWorkflow.collect { key, value ->
+            Stage stage = new Stage(
+                key: key, 
+                type: value.type, 
+                name: value.name ?: key, 
+                branches: value.branches
+            )
+            return stage
+        }
+        return stages
     }
 
 }

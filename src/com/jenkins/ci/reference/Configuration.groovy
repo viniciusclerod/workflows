@@ -5,4 +5,5 @@ import com.jenkins.ci.reference.jobs.Job
 
 class Configuration {
     List<Job> jobs
+    List<Stage> workflow
 }
