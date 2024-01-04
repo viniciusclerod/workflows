@@ -34,9 +34,9 @@ def call(Configuration config) {
         // }
         List<Stage> stages = config.workflow
         stages.each { stg ->
-            if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
+            // if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
                 generateStage(stg, config)
-            }
+            // }
         }
     }
 }
