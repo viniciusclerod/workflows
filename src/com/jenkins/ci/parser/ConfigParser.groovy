@@ -21,7 +21,7 @@ class ConfigParser {
             jobValue.steps.each { it ->
                 Step step = new Step(
                     name: 'run',
-                    command: "echo OK ${it}"
+                    command: "echo OK ${it.key} ${it}"
                 )
                 job.steps.add(step);
             }
