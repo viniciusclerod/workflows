@@ -13,7 +13,7 @@ def call(Configuration config) {
         stgs.each { stg ->
             stage(stg.name) {
                 echo "Stage: ${stg.key}"
-                Job job = config.jobs.find { it -> it.name == stg.key }
+                Job job = config.jobs.find { j -> j.name == stg.key }
                 echo "Job: ${job} ${job.name}"
             }
         }
