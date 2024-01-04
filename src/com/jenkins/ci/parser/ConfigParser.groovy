@@ -18,13 +18,6 @@ class ConfigParser {
     static List<Job> parseJobs(def yamlJobs) {
         List<Job> jobs = yamlJobs.collect { jobKey, jobValue ->
             Job job = new Job(name: jobKey)
-            // jobValue.steps.each { step, svalue ->
-            //     Step step = new Step(
-            //         name: 'run',
-            //         command: "echo OK $skey $svalue"
-            //     )
-            //     job.steps.add(step);
-            // }
             job.steps = jobValue.steps.collect { stepKey ->
                 Step step = null
                 if (stepKey.containsKey('run')) {
@@ -33,10 +26,6 @@ class ConfigParser {
                         command: stepKey.run
                     )
                 }
-                // Step step = new Step(
-                //     name: 'run',
-                //     command: "echo OK $stepKey"
-                // )
                 return step
             }
             return job
