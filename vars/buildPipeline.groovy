@@ -14,8 +14,9 @@ def call(Configuration config) {
                     } else {
                         Job job = config.jobs.find { j -> j.name == stg.key }
                         job.steps.each { step ->
-                            
-                            sh script: step.command, returnStdout: true, label: step.name
+                            if (step.type == 'sh') {
+                                sh script: step.command, returnStdout: true, label: step.name
+                            }
                         }
                     }
                 }

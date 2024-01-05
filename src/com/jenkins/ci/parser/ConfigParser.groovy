@@ -18,16 +18,16 @@ class ConfigParser {
     static List<Job> parseJobs(def yamlJobs) {
         List<Job> jobs = yamlJobs.collect { jobKey, jobValue ->
             Job job = new Job(name: jobKey)
-            job.steps = jobValue.steps.collect { it ->
-                String key = it.keySet().first()
+            job.steps = jobValue.steps.collect { step ->
+                String key = step.keySet().first()
                 switch(key) {
                     case 'run':
-                        Command step = new Command(
-                            name: it[key].run.name ?: 'Shell Script',
+                        Command command = new Command(
+                            name: step.run.name ?: 'Shell Script',
                             type: 'sh',
-                            command: it[key].run.command ?: it[key].run
+                            command: step.run.command ?: step.run
                         )
-                        return step
+                        return command
                 }
                 return null
             }.findAll { it != null }
