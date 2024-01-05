@@ -3,7 +3,7 @@ package com.jenkins.ci.parser
 
 import com.jenkins.ci.reference.Configuration
 import com.jenkins.ci.reference.jobs.Job
-import com.jenkins.ci.reference.steps.Step
+import com.jenkins.ci.reference.commands.Command
 import com.jenkins.ci.reference.workflow.Stage
 
 class ConfigParser {
@@ -18,16 +18,19 @@ class ConfigParser {
     static List<Job> parseJobs(def yamlJobs) {
         List<Job> jobs = yamlJobs.collect { jobKey, jobValue ->
             Job job = new Job(name: jobKey)
-            job.steps = jobValue.steps.collect { stepKey ->
-                Step step = null
-                if (stepKey.containsKey('run')) {
-                    step = new Step(
-                        name: 'run',
-                        command: stepKey.run
-                    )
+            job.steps = jobValue.steps.collect { it ->
+                String key = it.keySet().first()
+                switch(key) {
+                    case 'run':
+                        Command step = new Command(
+                            name: it[key].run.name ?: 'Shell Script',
+                            type: 'sh',
+                            command: it[key].run.command ?: it[key].run
+                        )
+                        return step
                 }
-                return step
-            }
+                return null
+            }.findAll { it != null }
             return job
         }
         return jobs
