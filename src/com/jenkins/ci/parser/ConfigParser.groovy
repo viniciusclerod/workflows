@@ -24,8 +24,8 @@ class ConfigParser {
                     case 'run':
                         Command command = new Command(
                             type: 'sh',
-                            name: step[key].hasProperty('name') ? step[key].name : 'Shell Script',
-                            command: step[key].hasProperty('command') ? step[key]?.command : step[key]
+                            name: step[key].containsKey('name') ? step[key].name : 'Shell Script',
+                            command: step[key].containsKey('command') ? step[key]?.command : step[key]
                         )
                         return command
                 }
