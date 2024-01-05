@@ -22,11 +22,25 @@ class ConfigParser {
                 String key = step.keySet().first()
                 switch(key) {
                     case 'run':
-                        Command command = new Command(
-                            type: 'sh',
-                            name: step[key].containsKey('name') ? step[key].name : 'Shell Script',
-                            command: step[key].containsKey('command') ? step[key]?.command : step[key]
-                        )
+                        Command command = null
+                        if (step[key].name) {
+                            Command command = new Command(
+                                type: 'sh',
+                                name: 'Shell Script Complex',
+                                command: "echo ${step[key]}"
+                            )
+                        } else {
+                            Command command = new Command(
+                                type: 'sh',
+                                name: 'Shell Script Simple',
+                                command: "echo ${step[key]}"
+                            )
+                        }
+                        // Command command = new Command(
+                        //     type: 'sh',
+                        //     name: step[key].containsKey('name') ? step[key].name : 'Shell Script',
+                        //     command: step[key].containsKey('command') ? step[key]?.command : step[key]
+                        // )
                         return command
                 }
                 return null
