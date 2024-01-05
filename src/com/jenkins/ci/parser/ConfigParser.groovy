@@ -19,17 +19,23 @@ class ConfigParser {
         List<Job> jobs = yamlJobs.collect { jobKey, jobValue ->
             Job job = new Job(name: jobKey)
             job.steps = jobValue.steps.collect { step ->
-                String key = step.keySet().first()
-                switch(key) {
-                    case 'run':
-                        Command command = new Command(
-                            name: step[key].name ?: 'Shell Script',
-                            type: 'sh',
-                            command: step[key].command ?: step[key]
-                        )
-                        return command
-                }
-                return null
+                Command command = new Command(
+                    name: 'Shell Script',
+                    type: 'sh',
+                    command: "echo ${step}"
+                )
+                return command
+                // String key = step.keySet().first()
+                // switch(key) {
+                //     case 'run':
+                //         Command command = new Command(
+                //             name: step[key].name ?: 'Shell Script',
+                //             type: 'sh',
+                //             command: step[key].command ?: step[key]
+                //         )
+                //         return command
+                // }
+                // return null
             }.findAll { it != null }
             return job
         }
