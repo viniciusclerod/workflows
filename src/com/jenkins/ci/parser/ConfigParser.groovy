@@ -29,7 +29,7 @@ class ConfigParser {
                         if (step.run instanceof String) {
                             command.command = step.run
                         } else {
-                            command.name = step.run.name ?: 'Shell Script Complex'
+                            command.name = step.run.name ?: command.name
                             command.command = step.run.command
                         }
                         return command
