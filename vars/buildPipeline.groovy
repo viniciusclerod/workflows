@@ -9,8 +9,8 @@ def call(Configuration config) {
     // env.TAG=$(git rev-parse --short HEAD)
 
     return { variables ->
-        echo $variables
-        echo $GIT_COMMIT
+        echo "$variables"
+        echo "$GIT_COMMIT"
         List<Stage> stgs = config.workflow
         stgs.each { stg ->
             if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
