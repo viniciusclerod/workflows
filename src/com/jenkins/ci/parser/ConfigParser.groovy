@@ -25,7 +25,7 @@ class ConfigParser {
                         Command command = new Command(
                             name: 'Shell Script',
                             type: 'sh',
-                            command: step[key].command ?: step[key]
+                            command: step[key]
                         )
                         return command
                 }
