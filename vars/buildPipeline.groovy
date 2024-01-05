@@ -14,10 +14,7 @@ def call(Configuration config) {
                     } else {
                         Job job = config.jobs.find { j -> j.name == stg.key }
                         job.steps.each { step ->
-                            // sh step.command
-                            def commandName = 'myCommand'
-                            def commandOutput = sh(script: step.command, returnStdout: true)
-                            echo "${commandName}: ${commandOutput}"
+                            sh script: step.command, displayName: 'My Custom Name'
                         }
                     }
                 }
