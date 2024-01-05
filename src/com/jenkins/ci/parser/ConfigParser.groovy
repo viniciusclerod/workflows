@@ -23,7 +23,7 @@ class ConfigParser {
                 switch(key) {
                     case 'run':
                         Command command = new Command(
-                            name: step[key].name ?: 'Shell Script',
+                            name: 'Shell Script',
                             type: 'sh',
                             command: step[key].command ?: step[key]
                         )
