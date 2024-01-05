@@ -23,17 +23,17 @@ class ConfigParser {
                 switch(key) {
                     case 'run':
                         Command command = null
-                        if (step[key].name) {
+                        if (step.run instanceof String) {
                             command = new Command(
                                 type: 'sh',
-                                name: 'Shell Script Complex',
-                                command: "echo ${step}"
+                                name: 'Shell Script Simple',
+                                command: step.run
                             )
                         } else {
                             command = new Command(
                                 type: 'sh',
-                                name: 'Shell Script Simple',
-                                command: "echo ${step}"
+                                name: 'Shell Script Complex',
+                                command: "echo ${step.run}"
                             )
                         }
                         // Command command = new Command(
