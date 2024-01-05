@@ -4,7 +4,7 @@ import com.jenkins.ci.reference.jobs.Job
 import com.jenkins.ci.reference.workflow.Stage
 
 def call(Configuration config) {
-    env.GIT_COMMIT = GetCommitSha()
+    env.GIT_COMMIT = sh(script: 'git rev-parse --short HEAD')
 
     return { variables ->
         List<Stage> stgs = config.workflow
@@ -25,8 +25,4 @@ def call(Configuration config) {
             }
         }
     }
-}
-
-def GetCommitSha() {
-  return sh script: 'git rev-parse --short HEAD', returnStdout: true
 }
