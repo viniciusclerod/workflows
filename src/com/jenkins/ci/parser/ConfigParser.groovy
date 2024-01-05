@@ -27,13 +27,13 @@ class ConfigParser {
                             Command command = new Command(
                                 type: 'sh',
                                 name: 'Shell Script Complex',
-                                command: "echo ${step[key]}"
+                                command: "echo ${step}"
                             )
                         } else {
                             Command command = new Command(
                                 type: 'sh',
                                 name: 'Shell Script Simple',
-                                command: "echo ${step[key]}"
+                                command: "echo ${step}"
                             )
                         }
                         // Command command = new Command(
