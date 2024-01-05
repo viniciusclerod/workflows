@@ -9,9 +9,13 @@ def call(Configuration config) {
         stgs.each { stg ->
             if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
                 stage(stg.name) {
-                    Job job = config.jobs.find { j -> j.name == stg.key }
-                    job.steps.each { step ->
-                        sh step.command
+                    if (stg.type == 'approval') {
+                        input(message: "Click 'Continue'.")
+                    } else {
+                        Job job = config.jobs.find { j -> j.name == stg.key }
+                        job.steps.each { step ->
+                            sh step.command
+                        }
                     }
                 }
             }
