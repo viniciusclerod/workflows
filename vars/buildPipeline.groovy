@@ -5,8 +5,12 @@ import com.jenkins.ci.reference.workflow.Stage
 
 def call(Configuration config) {
     env.GIT_COMMIT = sh(script: 'git rev-parse --short HEAD')
+    // env.PROJECT=$(git config --local remote.origin.url|sed -n 's#.*/\([^.]*\)\.git#\1#p')
+    // env.TAG=$(git rev-parse --short HEAD)
 
     return { variables ->
+        echo $variables
+        echo $GIT_COMMIT
         List<Stage> stgs = config.workflow
         stgs.each { stg ->
             if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
