@@ -17,11 +17,11 @@ def call(Configuration config) {
                     } else {
                         Job job = config.jobs.find { j -> j.name == stg.key }
                         
-                        jobEnv = jobVal.environment.collect { envKey, envVal -> "${envKey}=${envVal}"}
+                        jobEnv = job.environment.collect { envKey, envVal -> "${envKey}=${envVal}"}
                         job.environment.each { envKey, envVal ->
                             env.setProperty(envKey, envVal)
                             echo "[${envKey}] ${env.getProperty(envKey)}"
-                        } 
+                        }
                         echo "${job.environment}"
                         withEnv(jobEnv) {
                             job.steps.each { step ->
