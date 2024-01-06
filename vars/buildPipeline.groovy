@@ -18,8 +18,8 @@ def call(Configuration config) {
                         Job job = config.jobs.find { j -> j.name == stg.key }
 
                         job.environment.each { envKey, envVal ->
-                            env.setProperty(envKey, sh(script: "echo ${envVal}", returnStdout: true))
-                            echo "[${envKey}] ${env.getProperty(envKey)}"
+                            env.setProperty(envKey, sh(script: "$envKey=$envVal && echo $envKey", returnStdout: true))
+                            echo "[$envKey] ${env.getProperty(envKey)}"
                         }
                         echo "${job.environment}"
 
