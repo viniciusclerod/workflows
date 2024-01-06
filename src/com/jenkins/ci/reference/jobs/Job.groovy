@@ -5,6 +5,6 @@ import com.jenkins.ci.reference.commands.Command
 
 class Job {
     String name
-    List<String> environment
+    List<String> environment = []
     List<Command> steps = []
 }
