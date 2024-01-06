@@ -17,7 +17,7 @@ def call(Configuration config) {
                     } else {
                         Job job = config.jobs.find { j -> j.name == stg.key }
                         echo "${job.environment}"
-                        withEnv(job.environment) {
+                        wrap(job.environment) {
                             job.steps.each { step ->
                                 if (step.type == 'sh') {
                                     sh script: step.command, returnStdout: true, label: step.name
