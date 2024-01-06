@@ -5,6 +5,6 @@ import com.jenkins.ci.reference.commands.Command
 
 class Job {
     String name
-    def environment = []
+    HashMap environment = []
     List<Command> steps = []
 }
