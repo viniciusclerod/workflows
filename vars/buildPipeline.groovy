@@ -16,7 +16,7 @@ def call(Configuration config) {
                         input(message: "Approval is required to proceed.")
                     } else {
                         Job job = config.jobs.find { j -> j.name == stg.key }
-                        echo job.environment
+                        echo "${job.environment}"
                         withEnv(job.environment) {
                             job.steps.each { step ->
                                 if (step.type == 'sh') {
