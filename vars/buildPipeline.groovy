@@ -16,11 +16,11 @@ def call(Configuration config) {
                         input(message: "Approval is required to proceed.")
                     } else {
                         Job job = config.jobs.find { j -> j.name == stg.key }
-                        jobEnv = job.environment.collect { envKey, envVal ->
+                        
+                        jobEnv = jobVal.environment.collect { envKey, envVal -> "${envKey}=${envVal}"}
+                        job.environment.each { envKey, envVal ->
                             env.setProperty(envKey, envVal)
-                            echo "[${envKey}] ${env.getProperty(envVal)}"
-                            // sh "${envKey}=${envVal}"
-                            return "${envKey}=${envVal}"
+                            echo "[${envKey}] ${env.getProperty(envKey)}"
                         } 
                         echo "${job.environment}"
                         withEnv(jobEnv) {
