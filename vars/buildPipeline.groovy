@@ -18,9 +18,12 @@ def call(Configuration config) {
                         input(message: "Approval is required to proceed.")
                     } else {
                         Job job = config.jobs.find { j -> j.name == stg.key }
-                        job.steps.each { step ->
-                            if (step.type == 'sh') {
-                                sh script: step.command, returnStdout: true, label: step.name
+                        jobEnv = job.environment.collect { k, v -> "${k}=${v}"}
+                        withEnv(jobEnv) {
+                            job.steps.each { step ->
+                                if (step.type == 'sh') {
+                                    sh script: step.command, returnStdout: true, label: step.name
+                                }
                             }
                         }
                     }
