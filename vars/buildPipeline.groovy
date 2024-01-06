@@ -4,7 +4,7 @@ import com.jenkins.ci.reference.jobs.Job
 import com.jenkins.ci.reference.workflow.Stage
 
 def call(Configuration config) {
-    buildEnvVars(config.environment)
+    buildEnvVars(config.environment, true)
     return { variables ->
         List<Stage> stgs = config.workflow
         stgs.each { stg ->
