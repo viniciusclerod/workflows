@@ -6,11 +6,12 @@ import com.jenkins.ci.reference.workflow.Stage
 def call(def environment, boolean global = false) {
     // env.PROJECT=$(git config --local remote.origin.url|sed -n 's#.*/\([^.]*\)\.git#\1#p')
     // env.TAG=$(git rev-parse --short HEAD)
-    sh(
+    String output = sh(
         label: "Load environment variables",
         script: environment.collect { k, v -> "${k}=${v}"}.join('\n'),
         returnStdout: true
-    ).each { it -> echo "$it" }
+    ).trim()
+    echo "$output"
     return environment.collect { k, v -> "$k=${env.getProperty(k)}" }
     // return environment.collect { k, v ->
     //     env.setProperty(k, v sh(script: "${envKey}=${envVal} && echo \$${envKey}", returnStdout: true))
