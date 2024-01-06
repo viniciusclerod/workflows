@@ -11,7 +11,8 @@ def call(def environment, boolean global = false) {
         script: environment.collect { k, v -> "${k}=${v}"}.join('\n'),
         returnStdout: true
     )
-    output.eachLine { it -> echo it }
+    echo "FOO $FOO ${env.FOO}"
+    output.eachLine { it -> echo "$it" }
     return environment.collect { k, v -> "${k}=${evaluate(k)}" }
     // return environment.collect { k, v ->
     //     env.setProperty(k, v sh(script: "${envKey}=${envVal} && echo \$${envKey}", returnStdout: true))
