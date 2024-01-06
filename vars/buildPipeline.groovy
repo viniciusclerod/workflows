@@ -17,6 +17,7 @@ def call(Configuration config) {
                     } else {
                         Job job = config.jobs.find { j -> j.name == stg.key }
                         jobEnv = job.environment.collect { k, v -> "${k}=${v}"}
+                        echo "variables ${variables}"
                         echo "jobEnv ${jobEnv}"
                         withEnv(jobEnv) {
                             job.steps.each { step ->
