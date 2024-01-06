@@ -12,13 +12,12 @@ def call(Configuration config) {
         stgs.each { stg ->
             if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
                 stage(stg.name) {
-                    env.GIT_COMMIT = sh(script: 'git rev-parse --short HEAD')
-                    echo "${env.GIT_COMMIT} ${GIT_COMMIT}"
                     if (stg.type == 'approval') {
                         input(message: "Approval is required to proceed.")
                     } else {
                         Job job = config.jobs.find { j -> j.name == stg.key }
                         jobEnv = job.environment.collect { k, v -> "${k}=${v}"}
+                        echo "jobEnv ${jobEnv}"
                         withEnv(jobEnv) {
                             job.steps.each { step ->
                                 if (step.type == 'sh') {
