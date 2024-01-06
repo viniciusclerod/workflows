@@ -16,6 +16,17 @@ def call(Configuration config) {
                         input(message: "Approval is required to proceed.")
                     } else {
                         Job job = config.jobs.find { j -> j.name == stg.key }
+                        // SET ENV VARS
+                        sh(
+                            label: "Load environment variables",
+                            script: job.environment.collect { envKey, envVal -> "${envKey}=${envVal}"}.join('\n'),
+                            returnStdout: true
+                        )
+
+                        job.environment.collect { envKey, envVal ->
+                            env.setProperty(envKey, sh(script: "${envKey}=${envVal} && echo \$${envKey}", returnStdout: true))
+                            echo "[${envKey}] ${env.getProperty(envKey)}"
+                        }
 
                         job.environment.each { envKey, envVal ->
                             env.setProperty(envKey, sh(script: "${envKey}=${envVal} && echo \$${envKey}", returnStdout: true))
