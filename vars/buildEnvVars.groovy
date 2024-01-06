@@ -8,9 +8,9 @@ def call(def environment, boolean global = false) {
     // env.TAG=$(git rev-parse --short HEAD)
     String output = sh(
         label: "Load environment variables",
-        script: "echo " + environment.collect { k, v -> "${k}=${v}"}.join('\n'),
+        script: "echo '"+ environment.collect { k, v -> "${k}=${v}"}.join('\n') + "'",
         returnStdout: true
-    )
+    ).trim()
     def lines = output.split('\n')
     for (line in lines) {
         echo "$line"
