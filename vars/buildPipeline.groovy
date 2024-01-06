@@ -17,7 +17,7 @@ def call(Configuration config) {
                     } else {
                         Job job = config.jobs.find { j -> j.name == stg.key }
                         // SET ENV VARS
-                        def jobEnvs = buildEnvVars(job.environment)
+                        HashMap envVars = job.environment ? buildEnvVars(job.environment) : []
                         
                         // sh(
                         //     label: "Load environment variables",
@@ -35,9 +35,9 @@ def call(Configuration config) {
                         //     echo "[${envKey}] ${env.getProperty(envKey)}"
                         // }
                         // echo "${job.environment}"
-                        // jobEnvs = job.environment.collect { envKey, envVal -> "${envKey}=${envVal}"}
+                        // envVars = job.environment.collect { envKey, envVal -> "${envKey}=${envVal}"}
 
-                        withEnv(jobEnvs) {
+                        withEnv(envVars) {
                             job.steps.each { step ->
                                 if (step.type == 'sh') {
                                     sh script: step.command, returnStdout: true, label: step.name

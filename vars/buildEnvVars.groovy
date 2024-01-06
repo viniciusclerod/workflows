@@ -10,7 +10,7 @@ def call(def environment, boolean global = false) {
         label: "Load environment variables",
         script: environment.collect { k, v -> "${k}=${v}"}.join('\n'),
         returnStdout: true
-    )
+    ).each { it -> echo "$it" }
     return environment.collect { k, v -> "$k=${env.getProperty(k)}" }
     // return environment.collect { k, v ->
     //     env.setProperty(k, v sh(script: "${envKey}=${envVal} && echo \$${envKey}", returnStdout: true))
