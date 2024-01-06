@@ -17,7 +17,7 @@ def call(Configuration config) {
                     } else {
                         Job job = config.jobs.find { j -> j.name == stg.key }
                         // SET ENV VARS
-                        HashMap envVars = job.environment ? buildEnvVars(job.environment) : []
+                        def envVars = job.environment ? buildEnvVars(job.environment) : []
                         
                         // sh(
                         //     label: "Load environment variables",
