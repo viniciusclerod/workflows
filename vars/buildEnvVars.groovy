@@ -11,7 +11,6 @@ def call(def environment, boolean global = false) {
         script: environment.collect { k, v -> "$k=$v && echo $k=\$$k"}.join('\n'),
         returnStdout: true
     ).trim()
-    output.eachLine { it -> echo "$it" }
     return output.split('\n').collect { it ->
         if (global) {
             def (k, v) = it.split('=', 2)
