@@ -8,12 +8,12 @@ def call(Configuration config) {
     // env.TAG=$(git rev-parse --short HEAD)
 
     return { variables ->
-        env.GIT_COMMIT = sh(script: 'git rev-parse --short HEAD')
-        echo "${env.GIT_COMMIT} ${GIT_COMMIT}"
         List<Stage> stgs = config.workflow
         stgs.each { stg ->
             if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
                 stage(stg.name) {
+                    env.GIT_COMMIT = sh(script: 'git rev-parse --short HEAD')
+                    echo "${env.GIT_COMMIT} ${GIT_COMMIT}"
                     if (stg.type == 'approval') {
                         input(message: "Approval is required to proceed.")
                     } else {
