@@ -11,13 +11,16 @@ def call(def environment, boolean global = false) {
         script: environment.collect { k, v -> "$k=$v && echo $k=\$$k"}.join('\n'),
         returnStdout: true
     ).trim()
-    def lines = output.split('\n')
-    for (line in lines) {
-        echo "$line"
+    output.eachLine { it -> echo "$it" }
+    return output.split('\n').collect { it ->
+        if (global) {
+            def (k, v) = it.split('=', 2)
+            env.setProperty(k, v)
+        }
+        return it
     }
     // echo "FOO $FOO ${env.FOO}"
-    // output.eachLine { it -> echo "$it" }
-    return environment.collect { k, v -> "${k}=${v}" }
+    // return environment.collect { k, v -> "${k}=${v}" }
     // return environment.collect { k, v ->
     //     env.setProperty(k, v sh(script: "${envKey}=${envVal} && echo \$${envKey}", returnStdout: true))
     //     echo "[${envKey}] ${env.getProperty(envKey)}"
