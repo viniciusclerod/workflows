@@ -11,9 +11,13 @@ def call(def environment, boolean global = false) {
         script: environment.collect { k, v -> "${k}=${v}"}.join('\n'),
         returnStdout: true
     )
-    echo "FOO $FOO ${env.FOO}"
-    output.eachLine { it -> echo "$it" }
-    return environment.collect { k, v -> "${k}=${evaluate(k)}" }
+    def lines = output.split('\n')
+    for (line in lines) {
+        echo "$line"
+    }
+    // echo "FOO $FOO ${env.FOO}"
+    // output.eachLine { it -> echo "$it" }
+    return environment.collect { k, v -> "${k}=${v}" }
     // return environment.collect { k, v ->
     //     env.setProperty(k, v sh(script: "${envKey}=${envVal} && echo \$${envKey}", returnStdout: true))
     //     echo "[${envKey}] ${env.getProperty(envKey)}"
