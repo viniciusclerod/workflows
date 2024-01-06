@@ -17,10 +17,8 @@ class ConfigParser {
 
     static List<Job> parseJobs(def yamlJobs) {
         List<Job> jobs = yamlJobs.collect { jobKey, jobValue ->
-            Job job = new Job(
-                name: jobKey,
-                environment: jobValue.environment
-            )
+            Job job = new Job(name: jobKey)
+            job.environment = jobValue.environment.collect { k, v -> "${k}=${v}"}
             job.steps = jobValue.steps.collect { step ->
                 String key = step.keySet().first()
                 switch(key) {
