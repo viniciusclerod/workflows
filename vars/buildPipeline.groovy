@@ -17,24 +17,27 @@ def call(Configuration config) {
                     } else {
                         Job job = config.jobs.find { j -> j.name == stg.key }
                         // SET ENV VARS
-                        sh(
-                            label: "Load environment variables",
-                            script: job.environment.collect { envKey, envVal -> "${envKey}=${envVal}"}.join('\n'),
-                            returnStdout: true
-                        )
+                        def jobEnvs = setEnvs(job.environment)
+                        
+                        // sh(
+                        //     label: "Load environment variables",
+                        //     script: job.environment.collect { envKey, envVal -> "${envKey}=${envVal}"}.join('\n'),
+                        //     returnStdout: true
+                        // )
 
-                        job.environment.collect { envKey, envVal ->
-                            env.setProperty(envKey, sh(script: "${envKey}=${envVal} && echo \$${envKey}", returnStdout: true))
-                            echo "[${envKey}] ${env.getProperty(envKey)}"
-                        }
+                        // job.environment.collect { envKey, envVal ->
+                        //     env.setProperty(envKey, sh(script: "${envKey}=${envVal} && echo \$${envKey}", returnStdout: true))
+                        //     echo "[${envKey}] ${env.getProperty(envKey)}"
+                        // }
 
-                        job.environment.each { envKey, envVal ->
-                            env.setProperty(envKey, sh(script: "${envKey}=${envVal} && echo \$${envKey}", returnStdout: true))
-                            echo "[${envKey}] ${env.getProperty(envKey)}"
-                        }
-                        echo "${job.environment}"
+                        // job.environment.each { envKey, envVal ->
+                        //     env.setProperty(envKey, sh(script: "${envKey}=${envVal} && echo \$${envKey}", returnStdout: true))
+                        //     echo "[${envKey}] ${env.getProperty(envKey)}"
+                        // }
+                        // echo "${job.environment}"
+                        // jobEnvs = job.environment.collect { envKey, envVal -> "${envKey}=${envVal}"}
 
-                        withEnv(job.environment.collect { envKey, envVal -> "${envKey}=${envVal}"}) {
+                        withEnv(jobEnvs) {
                             job.steps.each { step ->
                                 if (step.type == 'sh') {
                                     sh script: step.command, returnStdout: true, label: step.name
