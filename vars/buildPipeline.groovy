@@ -5,10 +5,9 @@ import com.jenkins.ci.reference.workflow.Stage
 
 def call(Configuration config) {
     return { variables ->
-        stage("TEST") {
-            withEnv(buildEnvVars(environment: config.environment, global: true)) {
-                sh "echo ${config.environment}"
-            }
+        sh "echo TEST"
+        withEnv(buildEnvVars(environment: config.environment, global: true)) {
+            sh "echo ${config.environment}"
         }
         List<Stage> stgs = config.workflow
         stgs.each { stg ->
