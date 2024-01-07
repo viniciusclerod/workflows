@@ -10,9 +10,15 @@ class ConfigParser {
 
     static Configuration parse(def yaml, def env) {
         Configuration config = new Configuration();
-        config.jobs = parseJobs(yaml.jobs);
-        config.workflow = parseWorkflow(yaml.workflow);
-        return config;
+        config.environment = parseEnvironment(yaml.environment)
+        config.jobs = parseJobs(yaml.jobs)
+        config.workflow = parseWorkflow(yaml.workflow)
+        return config
+    }
+
+    static List<Job> parseEnvironment(def yamlEnvironment) {
+        HashMap environment = yamlEnvironment ?: []
+        return environment
     }
 
     static List<Job> parseJobs(def yamlJobs) {

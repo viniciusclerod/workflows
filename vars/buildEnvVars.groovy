@@ -1,6 +1,6 @@
 @Library('jenkins-orb')
 
-def call(def environment, boolean global = false) {
+def call(HashMap environment, boolean global = false) {
     if (! environment) return []
     String output = sh(
         label: "Load environment variables",

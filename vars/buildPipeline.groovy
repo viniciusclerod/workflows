@@ -6,7 +6,7 @@ import com.jenkins.ci.reference.workflow.Stage
 def call(Configuration config) {
     return { variables ->
         stage("TEST") {
-            withEnv(buildEnvVars(config.environment, true)) {
+            withEnv(buildEnvVars(environment: config.environment, global: true)) {
                 sh "echo ${config.environment}"
             }
         }
