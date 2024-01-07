@@ -4,6 +4,7 @@ import com.jenkins.ci.reference.jobs.Job
 import com.jenkins.ci.reference.workflow.Stage
 
 def call(Stage stg, Configuration config) {
+    echo "BUILD Stage"
     return { variables ->
         if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
             stage(stg.name) {
