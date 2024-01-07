@@ -17,7 +17,7 @@ class ConfigParser {
     }
 
     static List<Job> parseEnvironment(def yamlEnvironment) {
-        Map environment = yamlEnvironment ?: []
+        Map environment = yamlEnvironment ?: [:]
         return environment
     }
 
@@ -25,7 +25,7 @@ class ConfigParser {
         List<Job> jobs = yamlJobs.collect { jobKey, jobVal ->
             Job job = new Job(name: jobKey)
             // job.environment = jobVal.environment.collect { envKey, envVal -> "${envKey}=${envVal}"}
-            job.environment = jobVal.environment ?: []
+            job.environment = jobVal.environment ?: [:]
             job.steps = jobVal.steps.collect { step ->
                 String key = step.keySet().first()
                 switch(key) {

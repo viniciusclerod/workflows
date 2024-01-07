@@ -1,7 +1,7 @@
 @Library('jenkins-orb')
 
-def call(HashMap environment, boolean global = false) {
-    if (! environment) return []
+def call(Map environment, boolean global = false) {
+    if (! environment) return [:]
     String output = sh(
         label: "Load environment variables",
         script: environment.collect { k, v -> "$k=$v && echo $k=\$$k"}.join('\n'),
