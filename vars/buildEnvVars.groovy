@@ -1,9 +1,9 @@
 @Library('jenkins-orb')
 
 def call(Map environment, boolean global = false) {
-    if (! environment) return [:]
+    if (! environment.isEmpty()) return [:]
     String output = sh(
-        label: "Load environment variables",
+        label: "Preparing environment variables",
         script: environment.collect { k, v -> "$k=$v && echo $k=\$$k"}.join('\n'),
         returnStdout: true
     ).trim()

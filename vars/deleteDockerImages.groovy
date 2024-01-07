@@ -1,6 +1,7 @@
 @Library('jenkins-orb')
 import com.jenkins.orb.ProjectConfiguration
 
+// TODO: DEPRECATED
 def call(ProjectConfiguration config) {
     def reference = config.docker.getReference();
     try {

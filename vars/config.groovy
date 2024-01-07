@@ -2,6 +2,7 @@
 import com.jenkins.orb.ProjectConfiguration
 import com.jenkins.orb.parser.ConfigParser
 
+// TODO: DEPRECATED
 def call(String yamlPath) {
   def yaml = readYaml file: yamlPath
   

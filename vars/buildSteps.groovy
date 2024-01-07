@@ -2,6 +2,7 @@
 import com.jenkins.orb.ProjectConfiguration
 import com.jenkins.orb.steps.Step;
 
+// TODO: DEPRECATED
 def call(ProjectConfiguration config, def dockerImage) {
     return { variables ->
         List<Step> stepList = config.steps.list
