@@ -4,8 +4,8 @@ import com.jenkins.ci.reference.jobs.Job
 import com.jenkins.ci.reference.workflow.Stage
 
 def call(Configuration config) {
-    echo buildEnvVars(config.environment, true)
     return { variables ->
+        buildEnvVars(config.environment, true)
         List<Stage> stgs = config.workflow
         stgs.each { stg ->
             if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
