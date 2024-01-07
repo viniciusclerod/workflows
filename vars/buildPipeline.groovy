@@ -4,7 +4,7 @@ import com.jenkins.ci.reference.Configuration
 import com.jenkins.ci.reference.workflow.Stage
 
 def call(Configuration config) {
-    buildEnvVars(MapHelper.merge([
+    buildEnvironment(MapHelper.merge([
         // Built-in environment variables
         'PROJECT_REPONAME': '$(git config --local remote.origin.url | sed -n \'s#.*/\\([^.]*\\)\\.git#\\1#p\')',
         'COMMIT_SHA1': '$(git rev-parse HEAD)',

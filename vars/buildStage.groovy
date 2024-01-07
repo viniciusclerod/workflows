@@ -10,10 +10,14 @@ def call(Stage stg, Configuration config) {
                 input(message: "Approval is required to proceed.")
             } else {
                 Job job = config.jobs.find { j -> j.name == stg.key }
-                withEnv(buildEnvVars(job.environment)) {
+                withEnv(buildEnvironment(job.environment)) {
                     job.steps.each { step ->
                         if (step.type == 'sh') {
-                            sh script: step.command, returnStdout: true, label: step.name
+                            sh(
+                                label: step.name,
+                                script: step.command,
+                                returnStdout: true
+                            )
                         }
                     }
                 }
