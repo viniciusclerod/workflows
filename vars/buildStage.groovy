@@ -11,12 +11,11 @@ def call(Stage stg, Configuration config) {
             } else {
                 Job job = config.jobs.find { j -> j.name == stg.key }
                 withEnv(buildEnvVars(job.environment)) {
-                    job.steps.each { step -> echo "${step.name}" }
-                //     job.steps.each { step ->
-                //         if (step.type == 'sh') {
-                //             sh script: step.command, returnStdout: true, label: step.name
-                //         }
-                //     }
+                    job.steps.each { step ->
+                        if (step.type == 'sh') {
+                            sh script: step.command, returnStdout: true, label: step.name
+                        }
+                    }
                 }
             }
         }
