@@ -7,7 +7,7 @@ def call(Configuration config) {
     return { variables ->
         stage("TEST") {
             withEnv(buildEnvVars(config.environment, true)) {
-                sh "echo $CONTEXT"
+                sh "echo ${config.environment}"
             }
         }
         List<Stage> stgs = config.workflow
