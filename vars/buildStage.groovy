@@ -12,6 +12,7 @@ def call(Stage stg, Configuration config) {
                 Job job = config.jobs.find { j -> j.name == stg.key }
                 echo "${job.environment}"
                 withEnv(buildEnvVars(job.environment)) {
+                withEnv(['MOCK=value']) {
                     job.steps.each { step -> echo "${step.name}" }
                 //     job.steps.each { step ->
                 //         if (step.type == 'sh') {
