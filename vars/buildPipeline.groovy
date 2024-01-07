@@ -2,14 +2,14 @@
 import com.jenkins.ci.reference.Configuration
 import com.jenkins.ci.reference.jobs.Job
 import com.jenkins.ci.reference.workflow.Stage
-
+import com.jenkins.ci.helpers.MapHelper
 
 def call(Configuration config) {
-    HashMap builtInEnvVars = [
+    buildEnvVars(MapHelper.merge([
         'PROJECT_REPONAME': '$(git config --local remote.origin.url | sed -n \'s#.*/\\([^.]*\\)\\.git#\\1#p\')'
-    ]
-    buildEnvVars(builtInEnvVars, true)
-    buildEnvVars(config.environment, true)
+        'COMMIT_SHA1': '$(git rev-parse HEAD)'
+        'COMMIT_SHA1_SHORT': '$(git rev-parse --short HEAD)'
+    ], config.environment), true)
     return { variables ->
         List<Stage> stgs = config.workflow
         stgs.each { stg ->

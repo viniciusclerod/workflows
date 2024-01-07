@@ -5,7 +5,7 @@ import com.jenkins.ci.reference.jobs.Job
 import com.jenkins.ci.reference.workflow.Stage
 
 class Configuration {
-    HashMap environment = []
+    Map environment = []
     List<Job> jobs = []
     List<Stage> workflow = []
 }

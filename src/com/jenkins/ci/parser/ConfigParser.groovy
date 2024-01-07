@@ -17,7 +17,7 @@ class ConfigParser {
     }
 
     static List<Job> parseEnvironment(def yamlEnvironment) {
-        HashMap environment = yamlEnvironment ?: []
+        Map environment = yamlEnvironment ?: []
         return environment
     }
 
