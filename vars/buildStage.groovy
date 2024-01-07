@@ -4,9 +4,10 @@ import com.jenkins.ci.reference.jobs.Job
 import com.jenkins.ci.reference.workflow.Stage
 
 def call(Stage stg, Configuration config) {
-    echo "BUILD Stage"
     return { variables ->
+        echo "${stg.branches} ${env.BRANCH_NAME}"
         if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
+            echo "BUILD Stage"
             stage(stg.name) {
                 if (stg.type == 'approval') {
                     input(message: "Approval is required to proceed.")
