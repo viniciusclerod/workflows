@@ -13,6 +13,7 @@ def call(Stage stg, Configuration config) {
                 echo "${job.environment}"
                 // withEnv(buildEnvVars(job.environment)) {
                 withEnv(['MOCK=value']) {
+                    echo "MOCK=$MOCK"
                     job.steps.each { step -> echo "${step.name}" }
                 //     job.steps.each { step ->
                 //         if (step.type == 'sh') {
