@@ -11,6 +11,8 @@ def call(Configuration config) {
         'COMMIT_SHA1_SHORT': '$(git rev-parse --short HEAD)'
     ], config.environment), true)
     // Build stages
-    List<Stage> stgs = config.workflow
-    stgs.each { stg -> buildStage(stg, config) }
+    return { variables ->
+        List<Stage> stgs = config.workflow
+        stgs.each { stg -> buildStage(stg, config) }
+    }
 }
