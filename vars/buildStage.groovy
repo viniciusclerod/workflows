@@ -30,5 +30,8 @@ def call(Stage stg, Configuration config) {
 }
 
 boolean shouldRun(Map filters) {
-
+    boolean hasNoFilters = (filters == null)
+    if (hasNoFilters) return true
+    boolean hasMatchBranches = (filters.branches == null) || (env.BRANCH_NAME =~ filters.branches).matches()
+    return hasMatchBranches
 }
