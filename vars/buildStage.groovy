@@ -2,7 +2,7 @@
 import com.jenkins.ci.reference.Configuration
 import com.jenkins.ci.reference.Job
 import com.jenkins.ci.reference.Stage
-import com.jenkins.ci.reference.Filters
+import com.jenkins.ci.reference.Filter
 
 def call(Stage stg, Configuration config) {
     shouldRun(stg.filters) && stage(stg.name) {
@@ -26,8 +26,10 @@ def call(Stage stg, Configuration config) {
         }
     }
 }
+    
 
-boolean shouldRun(Filters filters) {
+
+boolean shouldRun(Map<String,Filter> filters) {
     if (filters) {
         if (filters.branches) {
             boolean hasMatchBranches = (env.BRANCH_NAME =~ filters.branches).matches()

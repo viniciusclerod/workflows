@@ -5,6 +5,7 @@ import com.jenkins.ci.reference.Configuration
 import com.jenkins.ci.reference.Job
 import com.jenkins.ci.reference.Command
 import com.jenkins.ci.reference.Stage
+import com.jenkins.ci.reference.Filter
 
 class ConfigParser {
 
