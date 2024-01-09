@@ -1,8 +1,8 @@
 // src/com/jenkins/ci/reference/Configuration.groovy
 package com.jenkins.ci.reference
 
-import com.jenkins.ci.reference.jobs.Job
-import com.jenkins.ci.reference.workflow.Stage
+import com.jenkins.ci.reference.Job
+import com.jenkins.ci.reference.Stage
 
 class Configuration {
     Map environment = [:]

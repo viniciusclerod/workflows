@@ -1,9 +1,12 @@
 @Library('jenkins-orb')
 import com.jenkins.ci.reference.Configuration
-import com.jenkins.ci.reference.jobs.Job
-import com.jenkins.ci.reference.workflow.Stage
+import com.jenkins.ci.reference.Job
+import com.jenkins.ci.reference.Stage
 
 def call(Stage stg, Configuration config) {
+    if (shouldRun(['branches': stg.branches])) {
+        echo "should run"
+    }
     if (stg.branches == null || (env.BRANCH_NAME =~ stg.branches).matches()) {
         stage(stg.name) {
             if (stg.type == 'approval') {
@@ -24,4 +27,8 @@ def call(Stage stg, Configuration config) {
             }
         }
     }
+}
+
+boolean shouldRun(Map filters) {
+
 }

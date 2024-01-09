@@ -2,9 +2,9 @@
 package com.jenkins.ci.parser
 
 import com.jenkins.ci.reference.Configuration
-import com.jenkins.ci.reference.jobs.Job
-import com.jenkins.ci.reference.commands.Command
-import com.jenkins.ci.reference.workflow.Stage
+import com.jenkins.ci.reference.Job
+import com.jenkins.ci.reference.Command
+import com.jenkins.ci.reference.Stage
 
 class ConfigParser {
 
@@ -24,7 +24,6 @@ class ConfigParser {
     static List<Job> parseJobs(def yamlJobs) {
         List<Job> jobs = yamlJobs.collect { jobKey, jobVal ->
             Job job = new Job(name: jobKey)
-            // job.environment = jobVal.environment.collect { envKey, envVal -> "${envKey}=${envVal}"}
             job.environment = jobVal.environment ?: [:]
             job.steps = jobVal.steps.collect { step ->
                 String key = step.keySet().first()
