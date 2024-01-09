@@ -5,20 +5,22 @@ import com.jenkins.ci.reference.Stage
 import com.jenkins.ci.reference.Filter
 
 def call(Stage stg, Configuration config) {
-    shouldRun(stg.filters) && stage(stg.name) {
-        if (stg.type == 'approval') {
-            input(message: "Approval is required to proceed.")
-        } else {
-            Job job = config.jobs.find { j -> j.name == stg.key }
-            withEnv(buildEnvironment(job.environment)) {
-                job.steps.each { step ->
-                    if (step.type == 'sh') {
-                        ansiColor('xterm') {
-                            sh(
-                                label: step.name,
-                                script: step.command,
-                                returnStdout: true
-                            )
+    shouldRun(stg.filters) {
+        stage(stg.name) {
+            if (stg.type == 'approval') {
+                input(message: "Approval is required to proceed.")
+            } else {
+                Job job = config.jobs.find { j -> j.name == stg.key }
+                withEnv(buildEnvironment(job.environment)) {
+                    job.steps.each { step ->
+                        if (step.type == 'sh') {
+                            ansiColor('xterm') {
+                                sh(
+                                    label: step.name,
+                                    script: step.command,
+                                    returnStdout: true
+                                )
+                            }
                         }
                     }
                 }
