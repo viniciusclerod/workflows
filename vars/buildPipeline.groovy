@@ -8,7 +8,7 @@ def call(Configuration config) {
         sh(
             label: "Shell Script in Background",
             script: "BUILD_ID=dontKillMe nohup echo HELLO > /dev/null 2>&1 &",
-            returnStdout: true
+            returnStdout: false
         )
         sh(
             label: "Shell Script not in Background",
