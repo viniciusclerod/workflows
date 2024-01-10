@@ -27,7 +27,7 @@ def call(Stage stg, Configuration config) {
     }
 }
     
-Boolean shouldRun(Map<String, Filter | Boolean> filters) {
+Boolean shouldRun(Map filters) {
     if (filters) {
         if (filters.pull_request) {
             // Boolean shouldBeIgnored = (env.BRANCH_NAME =~ filters.branches.ignore).matches()
