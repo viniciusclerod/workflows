@@ -30,6 +30,9 @@ def call(Stage stg, Configuration config) {
 boolean shouldRun(Map<String,Filter> filters) {
     if (filters) {
         echo "shouldRun has filters=${filters}"
+        if (filters.branches) {
+            echo "shouldRun has filters.branches=${filters.branches}"
+        }
         if (filters.branches && filters.branches.ignore) {
             echo "shouldRun has filters.branches.ignore=${filters.branches.ignore}"
             boolean shouldBeIgnored = (env.BRANCH_NAME =~ filters.branches.ignore).matches()
