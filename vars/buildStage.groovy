@@ -5,16 +5,16 @@ import com.jenkins.ci.reference.Stage
 import com.jenkins.ci.reference.Filter
 
 def call(Stage stg, Configuration config) {
-    stage("TEST") {
-        ansiColor('xterm') {
-            sh(
-                label: "Teste customizado",
-                script: "echo $VERSION",
-                returnStdout: true
-            )
+    shouldRun(stg.filters) {
+        stage("TEST") {
+            ansiColor('xterm') {
+                sh(
+                    label: "Teste customizado",
+                    script: "echo $VERSION",
+                    returnStdout: true
+                )
+            }
         }
-    }
-    // shouldRun(stg.filters) {
     //     stage(stg.name) {
     //         if (stg.type == 'approval') {
     //             input(message: "Approval is required to proceed.")
@@ -35,7 +35,7 @@ def call(Stage stg, Configuration config) {
     //             }
     //         }
     //     }
-    // }
+    }
 }
     
 
