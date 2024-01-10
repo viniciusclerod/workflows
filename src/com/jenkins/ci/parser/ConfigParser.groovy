@@ -34,11 +34,11 @@ class ConfigParser {
                             type: 'sh',
                             name: 'Shell Script'
                         )
-                        if (it[run] instanceof String) {
-                            step.command = step.run
+                        if (it.run] instanceof String) {
+                            step.command = it.run
                         } else {
-                            step.name = it[run].name ?: step.name
-                            step.command = it[run].command
+                            step.name = it.run].name ?: step.name
+                            step.command = it.run].command
                         }
                         return step
                 }
