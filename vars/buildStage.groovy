@@ -30,8 +30,8 @@ def call(Stage stg, Configuration config) {
 Boolean shouldRun(Map filters) {
     if (filters) {
         if (filters.pull_request) {
-            // Boolean shouldBeIgnored = (env.BRANCH_NAME =~ filters.branches.ignore).matches()
-            return false
+            Boolean hasPrOpened = (env.CHANGE_ID != null)
+            if (!hasPrOpened) return false
         }
         if (filters.branches && filters.branches.ignore) {
             Boolean shouldBeIgnored = (env.BRANCH_NAME =~ filters.branches.ignore).matches()

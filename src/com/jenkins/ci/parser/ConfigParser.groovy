@@ -10,9 +10,7 @@ import com.jenkins.ci.reference.Filter
 class ConfigParser {
 
     static Configuration parse(def context, def yaml, def env) {
-        context.sh "echo TESTE DE CONTEXTO"
-        Configuration config = new Configuration(context);
-        config.context.sh "echo TESTE DE CONTEXTO NOVAMENTE"
+        Configuration config = new Configuration(context)
         config.environment = parseEnvironment(yaml.environment)
         config.jobs = parseJobs(yaml.jobs)
         config.workflow = parseWorkflow(yaml.workflow)
