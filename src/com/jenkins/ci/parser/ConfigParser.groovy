@@ -66,7 +66,11 @@ class ConfigParser {
                     filters: [:]
                 )
                 it[key].filters.each { rule, filter ->
-                    stage.filters[rule] = new Filter(filter)
+                    stage.filters[rule] = new Filter(
+                        only: filter.only,
+                        ignore: filter.ignore,
+                        pull_request: filter.pull_request
+                    )
                 }
             }
             return stage
