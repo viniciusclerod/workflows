@@ -7,5 +7,5 @@ class Stage {
     String key
     String type
     String name
-    Map<String,Filter> filters
+    Map<String, Filter | Boolean> filters
 }

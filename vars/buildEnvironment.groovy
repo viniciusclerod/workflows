@@ -1,6 +1,6 @@
 @Library('jenkins-orb')
 
-def call(Map environment, boolean global = false) {
+def call(Map environment, Boolean global = false) {
     if (environment.isEmpty()) return []
     String output = sh(
         label: "Preparing environment variables",

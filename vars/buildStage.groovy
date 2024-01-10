@@ -27,14 +27,18 @@ def call(Stage stg, Configuration config) {
     }
 }
     
-boolean shouldRun(Map<String,Filter> filters) {
+Boolean shouldRun(Map<String, Filter | Boolean> filters) {
     if (filters) {
+        if (filters.pull_request) {
+            // Boolean shouldBeIgnored = (env.BRANCH_NAME =~ filters.branches.ignore).matches()
+            return false
+        }
         if (filters.branches && filters.branches.ignore) {
-            boolean shouldBeIgnored = (env.BRANCH_NAME =~ filters.branches.ignore).matches()
+            Boolean shouldBeIgnored = (env.BRANCH_NAME =~ filters.branches.ignore).matches()
             return !shouldBeIgnored
         }
         if (filters.branches && filters.branches.only) {
-            boolean shouldBeConsiderated = (env.BRANCH_NAME =~ filters.branches.only).matches()
+            Boolean shouldBeConsiderated = (env.BRANCH_NAME =~ filters.branches.only).matches()
             return shouldBeConsiderated
         }
     }

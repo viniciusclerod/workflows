@@ -9,8 +9,8 @@ import com.jenkins.ci.reference.Filter
 
 class ConfigParser {
 
-    static Configuration parse(def yaml, def env) {
-        Configuration config = new Configuration();
+    static Configuration parse(def context, def yaml, def env) {
+        Configuration config = new Configuration(context);
         config.environment = parseEnvironment(yaml.environment)
         config.jobs = parseJobs(yaml.jobs)
         config.workflow = parseWorkflow(yaml.workflow)
@@ -66,10 +66,18 @@ class ConfigParser {
                     filters: [:]
                 )
                 it[key].filters.each { rule, filter ->
-                    stage.filters[rule] = new Filter(
-                        only: filter.only ?: null,
-                        ignore: filter.ignore ?: null
-                    )
+                    switch(rule) {
+                        case 'pull_request':
+                            stage.filters[rule] = filter as Boolean
+                        break
+                        case 'branches':
+                            stage.filters[rule] = new Filter(
+                                only: filter.only ?: null,
+                                ignore: filter.ignore ?: null
+                            )
+                        break
+                    }
+                    
                 }
             }
             return stage
