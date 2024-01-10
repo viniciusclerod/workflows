@@ -63,9 +63,10 @@ class ConfigParser {
                     key: key,
                     name: it[key].name ?: key,
                     type: it[key].type ?: null,
-                    filters: it[key].filters ? it[key].filters.collectEntries { rule, filter ->
-                        return ["${rule}": new Filter(filter) ?: null]
-                    } : null
+                    // filters: it[key].filters ? it[key].filters.collectEntries { rule, filter ->
+                    //     return ["${rule}": new Filter(filter) ?: null]
+                    // } : null
+                    filters: null
                 )
 
             }
