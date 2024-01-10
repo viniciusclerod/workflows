@@ -37,16 +37,15 @@ def call(Stage stg, Configuration config) {
 }
     
 boolean shouldRun(Map<String,Filter> filters) {
-    sh(
-        label: "Next Stage",
-        script: "echo $filters",
-        returnStdout: true
-    )
-    // if (filters) {
-    //     if (filters.branches) {
-    //         boolean hasMatchBranches = (env.BRANCH_NAME =~ filters.branches.only).matches()
-    //         return hasMatchBranches
-    //     }
-    // }
+    if (filters) {
+        if (filters.branches && filters.branches.ignore) {
+            boolean shouldBeIgnored = (env.BRANCH_NAME =~ filters.branches.ignore).matches()
+            return !shouldBeIgnored
+        }
+        if (filters.branches && filters.branches.only) {
+            boolean shouldBeConsiderated = (env.BRANCH_NAME =~ filters.branches.only).matches()
+            return shouldBeConsiderated
+        }
+    }
     return true
 }
