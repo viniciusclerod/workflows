@@ -7,13 +7,11 @@ import com.jenkins.ci.reference.Filter
 def call(Stage stg, Configuration config) {
     if (shouldRun(stg.filters)) {
         stage("TEST") {
-            ansiColor('xterm') {
-                sh(
-                    label: "Teste customizado",
-                    script: "echo $VERSION",
-                    returnStdout: true
-                )
-            }
+            sh(
+                label: "Teste customizado",
+                script: "echo $VERSION",
+                returnStdout: true
+            )
         }
     //     stage(stg.name) {
     //         if (stg.type == 'approval') {
