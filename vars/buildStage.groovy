@@ -30,7 +30,7 @@ def call(Stage stg, Configuration config) {
 boolean shouldRun(Map<String,Filter> filters) {
     if (filters) {
         echo "shouldRun has filters=${filters}"
-        if (filters.branches != null) {
+        if (filters.containsKey('branches')) {
             echo "shouldRun has filters.branches=${filters.branches}"
         }
         if (filters.branches != null && filters.branches.ignore != null) {
