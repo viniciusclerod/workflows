@@ -8,7 +8,7 @@ def call(Stage stg, Configuration config) {
     stage("TEST") {
         sh(
             label: "Teste customizado",
-            script: echo "OK",
+            script: "echo $VERSION",
             returnStdout: true
         )
     }
