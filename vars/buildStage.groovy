@@ -28,7 +28,6 @@ def call(Stage stg, Configuration config) {
 }
     
 Boolean shouldRun(Map filters) {
-    // echo "BRANCH_NAME=${env.BRANCH_NAME}\nCHANGE_BRANCH=${env.CHANGE_BRANCH}\nCHANGE_ID=${env.CHANGE_ID}"
     Boolean proceed = true
     if (filters) {
         if (env.CHANGE_ID != null) {
