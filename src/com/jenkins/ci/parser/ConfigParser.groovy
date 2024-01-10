@@ -11,7 +11,8 @@ class ConfigParser {
 
     static Configuration parse(def context, def yaml, def env) {
         context.sh "echo TESTE DE CONTEXTO"
-        Configuration config = new Configuration();
+        Configuration config = new Configuration(context);
+        config.context.sh "echo TESTE DE CONTEXTO NOVAMENTE"
         config.environment = parseEnvironment(yaml.environment)
         config.jobs = parseJobs(yaml.jobs)
         config.workflow = parseWorkflow(yaml.workflow)
