@@ -39,11 +39,11 @@ def call(Stage stg, Configuration config) {
 }
     
 boolean shouldRun(Map<String,Filter> filters) {
-    if (filters) {
-        if (filters.branches) {
-            boolean hasMatchBranches = (env.BRANCH_NAME =~ filters.branches.only).matches()
-            return hasMatchBranches
-        }
-    }
-    return false
+    // if (filters) {
+    //     if (filters.branches) {
+    //         boolean hasMatchBranches = (env.BRANCH_NAME =~ filters.branches.only).matches()
+    //         return hasMatchBranches
+    //     }
+    // }
+    return true
 }
