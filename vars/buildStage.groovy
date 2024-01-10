@@ -28,7 +28,7 @@ def call(Stage stg, Configuration config) {
 }
     
 Boolean shouldRun(Map filters) {
-    echo "BRANCH_NAME=${env.BRANCH_NAME} CHANGE_ID=${env.CHANGE_ID}"
+    echo "BRANCH_NAME=${env.BRANCH_NAME}\nCHANGE_BRANCH=${env.CHANGE_BRANCH}\nCHANGE_ID=${env.CHANGE_ID}"
     if (filters) {
         if (filters.pull_request) {
             Boolean hasPrOpened = (env.CHANGE_ID != null)
