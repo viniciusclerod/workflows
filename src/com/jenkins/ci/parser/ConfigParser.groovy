@@ -66,18 +66,10 @@ class ConfigParser {
                     filters: [:]
                 )
                 it[key].filters.each { rule, filter ->
-                    switch(rule) {
-                        case 'pull_request':
-                            stage.filters[rule] = filter as Boolean
-                        break
-                        case 'branches':
-                            stage.filters[rule] = new Filter(
-                                only: filter.only ?: null,
-                                ignore: filter.ignore ?: null
-                            )
-                        break
-                    }
-                    
+                    stage.filters[rule] = new Filter(
+                        only: filter.only ?: null,
+                        ignore: filter.ignore ?: null
+                    )
                 }
             }
             return stage
