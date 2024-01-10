@@ -6,11 +6,13 @@ import com.jenkins.ci.reference.Filter
 
 def call(Stage stg, Configuration config) {
     stage("TEST") {
-        sh(
-            label: "Teste customizado",
-            script: "echo $VERSION",
-            returnStdout: true
-        )
+        ansiColor('xterm') {
+            sh(
+                label: "Teste customizado",
+                script: "echo $VERSION",
+                returnStdout: true
+            )
+        }
     }
     // shouldRun(stg.filters) {
     //     stage(stg.name) {
