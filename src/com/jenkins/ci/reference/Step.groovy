@@ -1,7 +1,7 @@
-// src/com/jenkins/ci/reference/Command.groovy
+// src/com/jenkins/ci/reference/Step.groovy
 package com.jenkins.ci.reference;
 
-class Command {
+class Step {
     String type
     String name
     String command

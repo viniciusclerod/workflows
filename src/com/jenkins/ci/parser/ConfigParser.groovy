@@ -3,7 +3,7 @@ package com.jenkins.ci.parser
 
 import com.jenkins.ci.reference.Configuration
 import com.jenkins.ci.reference.Job
-import com.jenkins.ci.reference.Command
+import com.jenkins.ci.reference.Step
 import com.jenkins.ci.reference.Stage
 import com.jenkins.ci.reference.Filter
 
@@ -26,21 +26,21 @@ class ConfigParser {
         List<Job> jobs = yamlJobs.collect { jobKey, jobVal ->
             Job job = new Job(name: jobKey)
             job.environment = jobVal.environment ?: [:]
-            job.steps = jobVal.steps.collect { step ->
-                String key = step.keySet().first()
+            job.steps = jobVal.steps.collect { it ->
+                String key = it.keySet().first()
                 switch(key) {
                     case 'run':
-                        Command command = new Command(
+                        Step step = new Step(
                             type: 'sh',
                             name: 'Shell Script'
                         )
-                        if (step.run instanceof String) {
-                            command.command = step.run
+                        if (it.run instanceof String) {
+                            step.command = step.run
                         } else {
-                            command.name = step.run.name ?: command.name
-                            command.command = step.run.command
+                            step.name = it.run.name ?: step.name
+                            step.command = it.run.command
                         }
-                        return command
+                        return step
                 }
                 return null
             }.findAll { it != null }

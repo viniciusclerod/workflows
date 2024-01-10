@@ -5,6 +5,16 @@ import com.jenkins.ci.reference.Stage
 
 def call(Configuration config) {
     ansiColor('xterm') {
+        sh(
+            label: "Shell Script in Background",
+            script: "BUILD_ID=dontKillMe nohup echo HELLO > /dev/null 2>&1 &",
+            returnStdout: true
+        )
+        sh(
+            label: "Shell Script not in Background",
+            script: "echo HELLO",
+            returnStdout: true
+        )
         // Built-in environment variables
         buildEnvironment(MapHelper.merge([
             'PROJECT_REPONAME': '$(git config --local remote.origin.url | sed -n \'s#.*/\\([^.]*\\)\\.git#\\1#p\')',
