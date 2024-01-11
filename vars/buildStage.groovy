@@ -26,7 +26,7 @@ def call(Stage stg, Configuration config) {
         }
     }
 }
-    
+
 Boolean shouldRun(Map filters) {
     Boolean proceed = true
     if (filters) {
