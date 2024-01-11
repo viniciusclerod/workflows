@@ -9,38 +9,50 @@ def call(String yamlPath) {
     Configuration config = ConfigParser.parse(this, yaml, env)
     // buildPipeline(config)
 
-    Map commands = [
-        run: new Command(
-            context: config.commands,
-            name: 'sh',
-            parameters: [
-                name: [                        
-                    type: String,
-                    default: "Hello World"
-                ],
-                command: [                        
-                    type: String,
-                    default: "echo Hello"
-                ]
-            ],
-            steps: [
-                sh: new Step(
-                    name: 'sh',
-                    arguments: [
-                        label: "<< parameters.name >>",
-                        script: "echo Hello"
-                    ],
-                    command: new Command(
-                        context: this,
-                        name: 'sh',
-                    )
-                )
+    // List<Command> commands = [
+    //     run: new Command(
+    //         name: 'sh',
+    //         parameters: [
+    //             name: [                        
+    //                 type: String,
+    //                 default: "Hello World"
+    //             ],
+    //             command: [                        
+    //                 type: String,
+    //                 default: "echo Hello"
+    //             ]
+    //         ],
+    //         steps: [
+    //             sh: new Step(
+    //                 name: 'sh',
+    //                 arguments: [
+    //                     label: "<< parameters.name >>",
+    //                     script: "echo Hello"
+    //                 ],
+    //                 command: new Command(
+    //                     context: this,
+    //                     name: 'sh'
+    //                 )
+    //             )
                 
-            ]
+    //         ]
+    //     )
+    // ]
+    // commands.run.call([
+    //     name: "Teste",
+    //     command: "echo Teste"
+    // ])
+
+    Step step = new Step(
+        name: 'sh',
+        arguments: [
+            label: "<< parameters.name >>",
+            script: "echo Hello"
+        ],
+        command: new Command(
+            context: this,
+            name: 'sh'
         )
-    ]
-    command.run.call([
-        name: "Teste",
-        command: "echo Teste"
-    ])
+    )
+    step.call()
 }
