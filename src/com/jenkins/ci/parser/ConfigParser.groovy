@@ -48,7 +48,8 @@ class ConfigParser {
                     command: commands[name],
                     arguments: it[name]
                 )
-                context.echo "Step: ${step}"
+                context.echo "Step: ${step as Map}"
+                context.echo "arguments: ${arguments}"
                 return step
             }
             return job
