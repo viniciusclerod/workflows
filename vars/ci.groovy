@@ -71,11 +71,9 @@ def call(String yamlPath) {
     ])
 
     class Command {
-        def context
         String name
-
-        def call(Map arguments = [:]) {
-            this.context.invokeMethod(this.name, arguments)
+        def call(def context, Map arguments = [:]) {
+            context.invokeMethod(this.name, arguments)
         }
     }
 
@@ -83,7 +81,7 @@ def call(String yamlPath) {
         context: this,
         name: 'sh'
     )
-    command.call([
+    command.call(this, [
         label: "Hello Command",
         script: "echo Hello"
     ])
