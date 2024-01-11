@@ -13,6 +13,8 @@ class Command {
 
     def call(Map arguments = [:]) {
         if (this.steps.isEmpty()) {
+            def params = this.getParams(arguments)
+            echo "params=${params}"
             this.context.invokeMethod(this.name, this.getParams(arguments))
         } else {
             this.steps.each { step ->
@@ -29,11 +31,11 @@ class Command {
     def getParams(Map arguments = [:]) {
         Map defaultParams = this.parameters.collectEntries { key, val ->
             ["${key}": val.default]
-        }.findAll { it.value != null }
+        }.findAll { it.value != null } ?: [:]
         Map stepParams = arguments.collectEntries { key, val ->
             String type = value.getClass().getSimpleName().toLowerCase()
             return ["${key}": (type == this.parameters[key].type) ? val : null]
-        }.findAll { it.value != null }
+        }.findAll { it.value != null } ?: [:]
         return MapHelper.merge(defaultParams, stepParams)
     }
 
