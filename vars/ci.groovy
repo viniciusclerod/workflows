@@ -56,11 +56,16 @@ def call(String yamlPath) {
     // )
     // step.call()
 
-    Command command = new Command(
-        context: this,
-        name: 'sh'
-    )
-    command.call([
+    // Command command = new Command(
+    //     context: this,
+    //     name: 'sh'
+    // )
+    // command.call([
+    //     label: "Hello",
+    //     script: "echo Hello"
+    // ])
+
+    this.invokeMethod('sh', [
         label: "Hello",
         script: "echo Hello"
     ])
