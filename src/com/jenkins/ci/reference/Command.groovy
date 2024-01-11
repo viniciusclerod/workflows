@@ -11,7 +11,7 @@ class Command {
     Map parameters = [:]
     String description
 
-    def call(arguments) {
+    def call(Map arguments = [:]) {
         if (this.steps.isEmpty()) {
             this.context.invokeMethod(this.name, this.getArgs(arguments))
         } else {
