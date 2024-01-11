@@ -44,28 +44,10 @@ class ConfigParser {
                 Step step = new Step(
                     name: name,
                     command: commands[name],
-                    arguments: it[name]
+                    arguments: it[name] as Map
                 )
                 return step
             }
-            // job.steps = jobVal.steps.collect { it ->
-            //     String key = it.keySet().first()
-            //     switch(key) {
-            //         case 'run':
-            //             Step step = new Step(
-            //                 type: 'sh',
-            //                 name: 'Shell Script'
-            //             )
-            //             if (it.run instanceof String) {
-            //                 step.command = it.run
-            //             } else {
-            //                 step.name = it.run.name ?: step.name
-            //                 step.command = it.run.command
-            //             }
-            //             return step
-            //     }
-            //     return null
-            // }.findAll { it != null }
             return job
         }
         return jobs
