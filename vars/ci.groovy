@@ -13,6 +13,6 @@ def call(String yamlPath) {
         returnStdout: true
     ])
 
-    Configuration config = ConfigParser.parse(this, yaml, env)
-    buildPipeline(config)
+    // Configuration config = ConfigParser.parse(this, yaml, env)
+    // buildPipeline(config)
 }
