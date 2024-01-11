@@ -1,5 +1,6 @@
 @Library('jenkins-orb')
 import com.jenkins.ci.reference.Configuration
+import com.jenkins.ci.reference.Step
 import com.jenkins.ci.reference.Command
 import com.jenkins.ci.parser.ConfigParser
 
