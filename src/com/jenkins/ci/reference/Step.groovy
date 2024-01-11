@@ -5,7 +5,7 @@ class Step {
     String type
     String name
     Command command
-    Map arguments
+    def arguments
     def call() {
         command.call()
     }
