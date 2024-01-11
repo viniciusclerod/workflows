@@ -41,8 +41,8 @@ class ConfigParser {
             job.environment = jobVal.environment ?: [:]
             job.steps = jobVal.steps.collect { it ->
                 String name = it.keySet().first()
-                Map arguments = it[name] instanceof String ?
-                    [script: it[name]] : it[name] as Map
+                // Map arguments = it[name] instanceof String ?
+                //     [script: it[name]] : it[name] as Map
                 Step step = new Step(
                     name: name,
                     command: commands[name],
