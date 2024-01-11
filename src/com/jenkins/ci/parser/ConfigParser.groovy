@@ -46,6 +46,7 @@ class ConfigParser {
                     command: commands[name],
                     arguments: it[name]
                 )
+                return step
             }
             // job.steps = jobVal.steps.collect { it ->
             //     String key = it.keySet().first()
