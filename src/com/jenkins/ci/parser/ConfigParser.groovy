@@ -44,8 +44,9 @@ class ConfigParser {
                 Step step = new Step(
                     name: name,
                     command: commands[name],
-                    arguments: it[name] as Map
+                    arguments: it[name]
                 )
+                echo "Step: ${step}"
                 return step
             }
             return job
