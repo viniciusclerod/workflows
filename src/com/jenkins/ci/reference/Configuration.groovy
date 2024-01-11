@@ -8,6 +8,7 @@ class Configuration {
     def context
     
     Map environment = [:]
+    Map commands = [:]
     List<Job> jobs = []
     List<Stage> workflow = []
 

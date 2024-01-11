@@ -1,9 +1,11 @@
 // src/com/jenkins/ci/parser/ConfigParser.groovy
 package com.jenkins.ci.parser
 
+import com.jenkins.ci.helpers.MapHelper
 import com.jenkins.ci.reference.Configuration
 import com.jenkins.ci.reference.Job
 import com.jenkins.ci.reference.Step
+import com.jenkins.ci.reference.Command
 import com.jenkins.ci.reference.Stage
 import com.jenkins.ci.reference.Filter
 
@@ -12,14 +14,27 @@ class ConfigParser {
     static Configuration parse(def context, def yaml, def env) {
         Configuration config = new Configuration(context)
         config.environment = parseEnvironment(yaml.environment)
+        config.commands = parseCommands(context, yaml.commands)
         config.jobs = parseJobs(yaml.jobs)
         config.workflow = parseWorkflow(yaml.workflow)
         return config
     }
 
-    static List<Job> parseEnvironment(def yamlEnvironment) {
+    static Map parseEnvironment(def yamlEnvironment) {
         Map environment = yamlEnvironment ?: [:]
         return environment
+    }
+
+    static Map parseCommands(def context, def yamlCommands) {
+        // Map commands = MapHelper.merge([
+        //     run: new Command(context: context, name: 'sh')
+        // ], yamlCommands.collectEntries { key, value ->
+        //     return ["${key}": Command(context: context, name: 'sh')]
+        // } ?: [:])
+        Map commands = [
+            run: new Command(context: context, name: 'sh')
+        ]
+        return commands
     }
 
     static List<Job> parseJobs(def yamlJobs) {
