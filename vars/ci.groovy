@@ -4,6 +4,13 @@ import com.jenkins.ci.reference.Step
 import com.jenkins.ci.reference.Command
 import com.jenkins.ci.parser.ConfigParser
 
+class Command {
+    String name
+    def call(def context, Map arguments = [:]) {
+        context.invokeMethod(this.name, arguments)
+    }
+}
+
 def call(String yamlPath) {
     def yaml = readYaml file: yamlPath
     // Configuration config = ConfigParser.parse(this, yaml, env)
@@ -69,13 +76,6 @@ def call(String yamlPath) {
         label: "Hello Invocation",
         script: "echo Hello"
     ])
-
-    class Command {
-        String name
-        def call(def context, Map arguments = [:]) {
-            context.invokeMethod(this.name, arguments)
-        }
-    }
 
     Command command = new Command(
         context: this,
