@@ -1,5 +1,5 @@
 // src/com/jenkins/ci/reference/Stage.groovy
-package com.jenkins.ci.reference;
+package com.jenkins.ci.reference
 
 import com.jenkins.ci.reference.Filter
 

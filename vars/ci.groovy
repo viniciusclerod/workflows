@@ -5,13 +5,13 @@ import com.jenkins.ci.parser.ConfigParser
 
 def call(String yamlPath) {
     def yaml = readYaml file: yamlPath
-    
-    Command command = new Command(name: 'sh', arguments: [
+
+    Command command = new Command(context: this, name: 'sh')
+    command.call([
         label: 'Test Command Invocation',
         script: 'echo INVOKED!',
         returnStdout: true
     ])
-    command.invoke(this)
 
     Configuration config = ConfigParser.parse(this, yaml, env)
     buildPipeline(config)

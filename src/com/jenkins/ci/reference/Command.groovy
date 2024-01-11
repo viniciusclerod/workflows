@@ -1,14 +1,20 @@
 // src/com/jenkins/ci/reference/Command.groovy
-package com.jenkins.ci.reference;
+package com.jenkins.ci.reference
+
+import com.jenkins.ci.reference.Step
 
 class Command {
+    def context
     String name
-    // String script
-    // List<Step> steps = []
-    Map arguments = [:]
+    List<Step> steps = []
+    // Map parameters = [:]
     // String description
 
-    def invoke(context) {
-        context.invokeMethod(this.name, this.arguments)
+    def call(arguments) {
+        if (this.steps.isEmpty()) {
+            this.context.invokeMethod(this.name, arguments)
+        } else {
+            this.steps.each { step -> step.call() }
+        }
     }
 }
