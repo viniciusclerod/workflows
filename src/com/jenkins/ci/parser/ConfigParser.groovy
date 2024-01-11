@@ -43,13 +43,13 @@ class ConfigParser {
                 steps: [
                     sh: new Step(
                         name: 'sh',
+                        arguments: [
+                            label: "<< parameters.name >>",
+                            script: "echo Hello"
+                        ],
                         command: new Command(
                             context: context,
                             name: 'sh',
-                            arguments: [
-                                label: "<< parameters.name >>",
-                                script: "echo Hello"
-                            ]
                         )
                     )
                     
