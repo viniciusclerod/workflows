@@ -5,6 +5,7 @@ import com.jenkins.ci.helpers.MapHelper
 import com.jenkins.ci.reference.Step
 
 class Command {
+
     def context
     String name
     List<Step> steps = []
