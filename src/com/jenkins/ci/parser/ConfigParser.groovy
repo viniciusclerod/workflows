@@ -15,7 +15,7 @@ class ConfigParser {
         Configuration config = new Configuration(context)
         config.environment = parseEnvironment(yaml.environment)
         config.commands = parseCommands(context, yaml.commands)
-        config.jobs = parseJobs(yaml.jobs)
+        config.jobs = parseJobs(yaml.jobs, config.commands)
         config.workflow = parseWorkflow(yaml.workflow)
         return config
     }
@@ -26,39 +26,45 @@ class ConfigParser {
     }
 
     static Map parseCommands(def context, def yamlCommands) {
-        // Map commands = MapHelper.merge([
-        //     run: new Command(context: context, name: 'sh')
-        // ], yamlCommands.collectEntries { key, value ->
-        //     return ["${key}": Command(context: context, name: 'sh')]
-        // } ?: [:])
-        Map commands = [
+        Map builtInCommands = [
             run: new Command(context: context, name: 'sh')
         ]
-        return commands
+        // Map commands = yamlCommands.collectEntries { key, value ->
+        //     return ["${key}": Command(context: context, name: 'sh')]
+        // } ?: [:]
+        return MapHelper.merge(builtInCommands, [:])
     }
 
-    static List<Job> parseJobs(def yamlJobs) {
+    static List<Job> parseJobs(def yamlJobs, commands) {
         List<Job> jobs = yamlJobs.collect { jobKey, jobVal ->
             Job job = new Job(name: jobKey)
             job.environment = jobVal.environment ?: [:]
             job.steps = jobVal.steps.collect { it ->
-                String key = it.keySet().first()
-                switch(key) {
-                    case 'run':
-                        Step step = new Step(
-                            type: 'sh',
-                            name: 'Shell Script'
-                        )
-                        if (it.run instanceof String) {
-                            step.command = it.run
-                        } else {
-                            step.name = it.run.name ?: step.name
-                            step.command = it.run.command
-                        }
-                        return step
-                }
-                return null
-            }.findAll { it != null }
+                String name = it.keySet().first()
+                Step step = new Step(
+                    name: name,
+                    command: commands[name],
+                    arguments: it[key]
+                )
+            }
+            // job.steps = jobVal.steps.collect { it ->
+            //     String key = it.keySet().first()
+            //     switch(key) {
+            //         case 'run':
+            //             Step step = new Step(
+            //                 type: 'sh',
+            //                 name: 'Shell Script'
+            //             )
+            //             if (it.run instanceof String) {
+            //                 step.command = it.run
+            //             } else {
+            //                 step.name = it.run.name ?: step.name
+            //                 step.command = it.run.command
+            //             }
+            //             return step
+            //     }
+            //     return null
+            // }.findAll { it != null }
             return job
         }
         return jobs
