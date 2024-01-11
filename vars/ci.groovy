@@ -43,16 +43,25 @@ def call(String yamlPath) {
     //     command: "echo Teste"
     // ])
 
-    Step step = new Step(
-        name: 'sh',
-        arguments: [
-            label: "<< parameters.name >>",
-            script: "echo Hello"
-        ],
-        command: new Command(
-            context: this,
-            name: 'sh'
-        )
+    // Step step = new Step(
+    //     name: 'sh',
+    //     arguments: [
+    //         label: "<< parameters.name >>",
+    //         script: "echo Hello"
+    //     ],
+    //     command: new Command(
+    //         context: this,
+    //         name: 'sh'
+    //     )
+    // )
+    // step.call()
+
+    Command command = new Command(
+        context: this,
+        name: 'sh'
     )
-    step.call()
+    step.call([
+        label: "<< parameters.name >>",
+        script: "echo Hello"
+    ])
 }
