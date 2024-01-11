@@ -14,7 +14,7 @@ class ConfigParser {
     static Configuration parse(def context, def yaml, def env) {
         Configuration config = new Configuration(context)
         config.environment = parseEnvironment(yaml.environment)
-        config.commands = parseCommands(context, yaml.commands, config)
+        // config.commands = parseCommands(context, yaml.commands, config)
         config.jobs = parseJobs(context, yaml.jobs, config.commands)
         config.workflow = parseWorkflow(yaml.workflow)
         return config
@@ -25,42 +25,42 @@ class ConfigParser {
         return environment
     }
 
-    static Map parseCommands(def context, def yamlCommands, Configuration config) {
-        Map builtInCommands = [
-            run: new Command(
-                context: config.commands,
-                name: 'sh',
-                parameters: [
-                    name: [                        
-                        type: String,
-                        default: "Hello World"
-                    ],
-                    command: [                        
-                        type: String,
-                        default: "echo Hello"
-                    ]
-                ],
-                steps: [
-                    sh: new Step(
-                        name: 'sh',
-                        arguments: [
-                            label: "<< parameters.name >>",
-                            script: "echo Hello"
-                        ],
-                        command: new Command(
-                            context: context,
-                            name: 'sh',
-                        )
-                    )
+    // static Map parseCommands(def context, def yamlCommands, Configuration config) {
+    //     Map builtInCommands = [
+    //         run: new Command(
+    //             context: config.commands,
+    //             name: 'sh',
+    //             parameters: [
+    //                 name: [                        
+    //                     type: String,
+    //                     default: "Hello World"
+    //                 ],
+    //                 command: [                        
+    //                     type: String,
+    //                     default: "echo Hello"
+    //                 ]
+    //             ],
+    //             steps: [
+    //                 sh: new Step(
+    //                     name: 'sh',
+    //                     arguments: [
+    //                         label: "<< parameters.name >>",
+    //                         script: "echo Hello"
+    //                     ],
+    //                     command: new Command(
+    //                         context: context,
+    //                         name: 'sh',
+    //                     )
+    //                 )
                     
-                ]
-            )
-        ]
-        // Map commands = yamlCommands.collectEntries { key, value ->
-        //     return ["${key}": Command(context: context, name: 'sh')]
-        // } ?: [:]
-        return MapHelper.merge(builtInCommands, [:])
-    }
+    //             ]
+    //         )
+    //     ]
+    //     // Map commands = yamlCommands.collectEntries { key, value ->
+    //     //     return ["${key}": Command(context: context, name: 'sh')]
+    //     // } ?: [:]
+    //     return MapHelper.merge(builtInCommands, [:])
+    // }
 
     static List<Job> parseJobs(def context, def yamlJobs, Map commands) {
         List<Job> jobs = yamlJobs.collect { jobKey, jobVal ->
