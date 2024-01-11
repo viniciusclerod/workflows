@@ -15,7 +15,7 @@ class ConfigParser {
         Configuration config = new Configuration(context)
         config.environment = parseEnvironment(yaml.environment)
         config.commands = parseCommands(context, yaml.commands)
-        config.jobs = parseJobs(yaml.jobs, config.commands)
+        config.jobs = parseJobs(context,yaml.jobs, config.commands)
         config.workflow = parseWorkflow(yaml.workflow)
         return config
     }
@@ -35,20 +35,20 @@ class ConfigParser {
         return MapHelper.merge(builtInCommands, [:])
     }
 
-    static List<Job> parseJobs(def yamlJobs, commands) {
+    static List<Job> parseJobs(def context, def yamlJobs, Map commands) {
         List<Job> jobs = yamlJobs.collect { jobKey, jobVal ->
             Job job = new Job(name: jobKey)
             job.environment = jobVal.environment ?: [:]
             job.steps = jobVal.steps.collect { it ->
                 String name = it.keySet().first()
-                // Map arguments = it[name] instanceof String ?
-                //     [script: it[name]] : it[name] as Map
+                Map arguments = it[name] instanceof String ?
+                    [script: it[name]] : it[name] as Map
                 Step step = new Step(
                     name: name,
                     command: commands[name],
                     arguments: it[name]
                 )
-                echo "Step: ${step}"
+                context.echo "Step: ${step}"
                 return step
             }
             return job
