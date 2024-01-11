@@ -27,7 +27,16 @@ class ConfigParser {
 
     static Map parseCommands(def context, def yamlCommands) {
         Map builtInCommands = [
-            run: new Command(context: context, name: 'sh')
+            run: new Command(
+                context: context,
+                name: 'sh',
+                // steps: [new Step(
+                //     name: 'sh',
+                //     arguments: [
+                //         script:
+                //     ]
+                // )]
+            )
         ]
         // Map commands = yamlCommands.collectEntries { key, value ->
         //     return ["${key}": Command(context: context, name: 'sh')]
@@ -42,13 +51,12 @@ class ConfigParser {
             jobVal.steps.each { it ->
                 String name = it.keySet().first()
                 Map arguments = it[name] instanceof String ?
-                    [script: it[name]] : it[name]
+                    [script: it[name]] : it[name] as Map
                 Step step = new Step(
                     name: name,
                     command: commands[name],
-                    arguments: it[name]
+                    arguments: arguments
                 )
-                // context.echo "Step: ${step as Map}"
                 context.echo "arguments: ${arguments}"
                 
                 job.steps.add(step)
