@@ -66,7 +66,25 @@ def call(String yamlPath) {
     // ])
 
     this.invokeMethod('sh', [
-        label: "Hello",
+        label: "Hello Invocation",
+        script: "echo Hello"
+    ])
+
+    class Command {
+        def context
+        String name
+
+        def call(Map arguments = [:]) {
+            this.context.invokeMethod(this.name, arguments)
+        }
+    }
+
+    Command command = new Command(
+        context: this,
+        name: 'sh'
+    )
+    command.call([
+        label: "Hello Command",
         script: "echo Hello"
     ])
 }
