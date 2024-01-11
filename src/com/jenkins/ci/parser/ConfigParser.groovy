@@ -44,7 +44,7 @@ class ConfigParser {
                 Step step = new Step(
                     name: name,
                     command: commands[name],
-                    arguments: it[key]
+                    arguments: it[name]
                 )
             }
             // job.steps = jobVal.steps.collect { it ->
