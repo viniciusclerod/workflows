@@ -39,7 +39,7 @@ class ConfigParser {
         List<Job> jobs = yamlJobs.collect { jobKey, jobVal ->
             Job job = new Job(name: jobKey)
             job.environment = jobVal.environment ?: [:]
-            job.steps = jobVal.steps.collect { it ->
+            jobVal.steps.each { it ->
                 String name = it.keySet().first()
                 Map arguments = it[name] instanceof String ?
                     [script: it[name]] : it[name] as Map
@@ -50,8 +50,9 @@ class ConfigParser {
                 )
                 context.echo "Step: ${step as Map}"
                 context.echo "arguments: ${arguments}"
-                return step
-            } ?: []
+                
+                job.steps.add(step)
+            }
             return job
         }
         return jobs
