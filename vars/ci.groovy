@@ -77,10 +77,7 @@ def call(String yamlPath) {
         script: "echo Hello"
     ])
 
-    Command command = new Command(
-        context: this,
-        name: 'sh'
-    )
+    Command command = new Command(name: 'sh')
     command.call(this, [
         label: "Hello Command",
         script: "echo Hello"
