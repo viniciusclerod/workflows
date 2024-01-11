@@ -51,7 +51,7 @@ class ConfigParser {
                 context.echo "Step: ${step as Map}"
                 context.echo "arguments: ${arguments}"
                 return step
-            }
+            } ?: []
             return job
         }
         return jobs
