@@ -23,5 +23,5 @@ def call(String yamlPath) {
         returnStdout: true
     ])
 
-    // buildPipeline(config)
+    buildPipeline(config)
 }

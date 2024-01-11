@@ -2,11 +2,10 @@
 package com.jenkins.ci.reference
 
 class Step {
-    String type
     String name
     Command command
     def arguments
     def call() {
-        command.call()
+        command.call(this.arguments)
     }
 }
