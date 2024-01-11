@@ -13,18 +13,20 @@ class Command {
 
     def call(Map arguments = [:]) {
         if (this.steps.isEmpty()) {
-            this.context.invokeMethod(this.name, this.getArgs(arguments))
+            this.context.invokeMethod(this.name, this.getParams(arguments))
         } else {
-            this.steps.each { step -> 
+            this.steps.each { step ->
                 Map args = step.arguments.collectEntries {
-                    ["${it.key}": this.parseAttribute(it.value)]
+                    ["${it.key}": this.parseAttribute([
+                        parameters: this.getParams(arguments)
+                    ], it.value)]
                 }
                 step.call(args)
             }
         }
     }
 
-    def getArgs(arguments) {
+    def getParams(Map arguments = [:]) {
         Map defaultParams = this.parameters.collectEntries { key, val ->
             ["${key}": val.default]
         }.findAll { it.value != null }
@@ -35,10 +37,10 @@ class Command {
         return MapHelper.merge(defaultParams, stepParams)
     }
 
-    def parseAttribute(String text) {
+    def parseAttribute(def context = this, String text) {
         return text.replaceAll(/<<\s*([\S]+)\s*>>/) { match ->
             def keys = match[1].split("\\.")
-            def value = this
+            def value = context
             keys.each { key -> value = value[key] }
             return value
         }
