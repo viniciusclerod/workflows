@@ -6,7 +6,7 @@ import com.jenkins.ci.parser.ConfigParser
 
 def call(String yamlPath) {
     def yaml = readYaml file: yamlPath
-    Configuration config = ConfigParser.parse(this, yaml, env)
+    // Configuration config = ConfigParser.parse(this, yaml, env)
     // buildPipeline(config)
 
     // List<Command> commands = [
