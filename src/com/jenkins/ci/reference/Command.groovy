@@ -15,8 +15,8 @@ class Command {
     def call(Map arguments = [:]) {
         if (this.steps.isEmpty()) {
             def params = this.getParams(arguments)
-            echo "params=${params}"
-            this.context.invokeMethod(this.name, this.getParams(arguments))
+            this.context.echo "params=${params}"
+            this.context.invokeMethod(this.name, params)
         } else {
             this.steps.each { step ->
                 Map args = step.arguments.collectEntries {
