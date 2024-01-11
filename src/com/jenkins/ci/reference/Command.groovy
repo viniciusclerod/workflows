@@ -11,10 +11,10 @@ class Command {
     // String description
 
     def call(arguments) {
-        if (this.steps) {
-            this.steps.each { step -> step.call() }
-        } else {
+        if (this.steps.isEmpty()) {
             this.context.invokeMethod(this.name, arguments)
+        } else {
+            this.steps.each { step -> step.call() }
         }
     }
 }
