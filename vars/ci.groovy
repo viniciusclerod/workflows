@@ -60,8 +60,8 @@ def call(String yamlPath) {
         context: this,
         name: 'sh'
     )
-    step.call([
-        label: "<< parameters.name >>",
+    command.call([
+        label: "Hello",
         script: "echo Hello"
     ])
 }
