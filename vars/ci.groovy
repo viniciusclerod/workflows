@@ -6,7 +6,7 @@ import com.jenkins.ci.parser.ConfigParser
 def call(String yamlPath) {
     def yaml = readYaml file: yamlPath
 
-    List<Command> commands = [
+    Map commands = [
         run: new Command(context: this, name: 'sh')
     ]
     commands.run.call([
