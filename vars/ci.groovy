@@ -31,7 +31,7 @@ def call(String yamlPath) {
                         script: "echo Hello"
                     ],
                     command: new Command(
-                        context: context,
+                        context: this,
                         name: 'sh',
                     )
                 )
