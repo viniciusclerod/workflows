@@ -39,7 +39,7 @@ class ConfigParser {
                         type: String,
                         default: "echo Hello"
                     ]
-                ]
+                ],
                 steps: [
                     sh: new Step(
                         name: 'sh',
