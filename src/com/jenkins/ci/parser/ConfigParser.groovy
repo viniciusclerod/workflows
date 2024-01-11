@@ -14,8 +14,8 @@ class ConfigParser {
     static Configuration parse(def context, def yaml, def env) {
         Configuration config = new Configuration(context)
         config.environment = parseEnvironment(yaml.environment)
-        config.commands = parseCommands(context, yaml.commands)
-        config.jobs = parseJobs(context,yaml.jobs, config.commands)
+        config.commands = parseCommands(context, yaml.commands, config)
+        config.jobs = parseJobs(context, yaml.jobs, config.commands)
         config.workflow = parseWorkflow(yaml.workflow)
         return config
     }
@@ -25,17 +25,35 @@ class ConfigParser {
         return environment
     }
 
-    static Map parseCommands(def context, def yamlCommands) {
+    static Map parseCommands(def context, def yamlCommands, Configuration config) {
         Map builtInCommands = [
             run: new Command(
-                context: context,
+                context: config.commands,
                 name: 'sh',
-                // steps: [new Step(
-                //     name: 'sh',
-                //     arguments: [
-                //         script:
-                //     ]
-                // )]
+                parameters: [
+                    name: [                        
+                        type: String,
+                        default: "Hello World"
+                    ],
+                    command: [                        
+                        type: String,
+                        default: "echo Hello"
+                    ]
+                ]
+                steps: [
+                    sh: new Step(
+                        name: 'sh',
+                        command: new Command(
+                            context: context,
+                            name: 'sh',
+                            arguments: [
+                                label: "<< parameters.name >>",
+                                script: "echo Hello"
+                            ]
+                        )
+                    )
+                    
+                ]
             )
         ]
         // Map commands = yamlCommands.collectEntries { key, value ->
