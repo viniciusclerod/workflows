@@ -5,7 +5,7 @@ class Command {
     String name
     String description
     Map parameters = [:]
-    List<Step> steps = []
+    List<Map> steps = []
 
     def call(def ctx, Map arguments = [:]) {
         ctx.invokeMethod(this.name, arguments)
