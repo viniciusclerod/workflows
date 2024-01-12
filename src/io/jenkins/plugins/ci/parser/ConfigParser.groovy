@@ -2,6 +2,7 @@ package io.jenkins.plugins.ci.parser
 
 import io.jenkins.plugins.ci.model.Configuration
 import io.jenkins.plugins.ci.model.Command
+import io.jenkins.plugins.ci.helper.MapHelper
 
 class ConfigParser {
 
@@ -13,6 +14,9 @@ class ConfigParser {
 
 
     static Map<String,Command> parseCommands(def ctx, Map map) {
+        Map builtInCommands = [
+            run: new Command(name: 'sh')
+        ]
         // Map<String,Command> commands = map.collectEntries { name, value ->
         //     Command command = new Command([
         //         name: name,
@@ -22,11 +26,7 @@ class ConfigParser {
         //     ])
         //     return ["${name}": command]
         // } ?: [:]
-        Map<String,Command> commands = [:]
-        commands += [
-            sh: new Command(name: 'sh')
-        ]
-        return commands
+        return MapHelper.merge(builtInCommands,[:]) as Map<String,Command>
     }
 
     // static Command buildCommand(Map map) {

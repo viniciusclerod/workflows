@@ -30,10 +30,9 @@ class Pipeline {
     def buildSetupStage(def ctx) {
         def script = {
             stage('Setup') {
-                this.config.commands.run.execute(ctx, [
-                    label: "Hello Command",
-                    script: "echo Hello"
-                ])
+                checkout ctx.scm
+                def yaml = readYaml file: this.yamlPath
+                this.config = ConfigParser.parse(ctx, yaml)
             }
         }
         script.delegate = ctx
@@ -42,7 +41,7 @@ class Pipeline {
 
     def buildStages(def ctx) {
         def script = {
-            stage('Execution Test') {
+            stage('Test') {
                 this.config.commands.run.execute(ctx, [
                     label: "Hello Command",
                     script: "echo Hello"
