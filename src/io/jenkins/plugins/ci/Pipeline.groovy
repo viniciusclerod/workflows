@@ -2,9 +2,7 @@ package io.jenkins.plugins.ci
 
 class Pipeline {
 
-    // Configuration config
-    
-    // Pipeline(String yamlPath) {}
+    Configuration config
 
     def execute(def ctx) {
         this.buildNode(ctx)
@@ -14,6 +12,7 @@ class Pipeline {
         def closure = {
             node {
                 stage('Setup') {
+                    def yaml = readYaml file: '.jenkins/config.yaml'
                     echo "${ctx.scm}=${ctx.scm.getProperties()}"
                     checkout ctx.scm
                 }
