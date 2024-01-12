@@ -21,7 +21,7 @@ class Pipeline {
             node {
                 this.buildSetupStage(ctx)
                 stage('Test Commands') {
-                    this.config.commands.sh(ctx, [
+                    this.config.commands.sh.execute(ctx, [
                         label: "Hello Command",
                         script: "echo Hello"
                     ])
