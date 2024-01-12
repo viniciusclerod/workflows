@@ -23,7 +23,7 @@ class ConfigParser {
     static Map<String,Step> parseSteps(def ctx, Map map, Map<String,Command> commands) {
         Map steps = [
             new Step(
-                command: commands.run
+                command: commands.run,
                 arguments: [
                     label: "Hello from run command",
                     script: "echo Hello"
