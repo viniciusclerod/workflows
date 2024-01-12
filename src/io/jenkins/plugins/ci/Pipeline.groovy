@@ -7,7 +7,7 @@ class Pipeline {
     // Pipeline(String yamlPath) {}
 
     def execute(def ctx) {
-        this.buildNode()
+        this.buildNode(ctx)
     }
 
     def buildNode(def ctx) {
