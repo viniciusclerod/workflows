@@ -7,14 +7,19 @@ class Pipeline {
     // Pipeline(String yamlPath) {}
 
     def execute(def ctx) {
-        this.buildNode(ctx)
+        def closure = {
+            this.buildNode()
+        }
+        closure.delegate = ctx
+        closure.call()
+        
     }
 
-    def buildNode(def ctx) {
-        ctx.node {
-            ctx.stage('Setup') {
-                ctx.echo "Executed (ctx is ${ctx.getClass()} class)"
-                ctx.checkout scm
+    def buildNode() {
+        node {
+            stage('Setup') {
+                echo "Executed (ctx is ${ctx.getClass()} class)"
+                checkout scm
             }
             //   ci '.jenkins/config.yaml'
         }
