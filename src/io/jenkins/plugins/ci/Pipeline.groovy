@@ -32,7 +32,10 @@ class Pipeline {
                 checkout ctx.scm
                 def yaml = readYaml file: this.yamlPath
                 this.config = ConfigParser.parse(ctx, yaml)
-                echo "${this.config.commands}"
+                this.config.commands.run.execute(ctx, [
+                    label: "Hello Command",
+                    script: "echo Hello"
+                ])
             }
         }
         script.delegate = ctx
