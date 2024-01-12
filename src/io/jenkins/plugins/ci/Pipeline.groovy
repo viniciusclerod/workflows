@@ -14,8 +14,8 @@ class Pipeline {
         def closure = {
             node {
                 stage('Setup') {
-                    echo "scm=${ctx.scm}"
-                    // checkout scm
+                    echo "${ctx.scm}=${ctx.scm.getProperties()}"
+                    checkout ctx.scm
                 }
                 //   ci '.jenkins/config.yaml'
             }
