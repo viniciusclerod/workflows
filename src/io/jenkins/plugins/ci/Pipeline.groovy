@@ -6,7 +6,7 @@ import io.jenkins.plugins.ci.parser.ConfigParser
 class Pipeline {
 
     String yamlPath
-    Map config
+    Configuration config
 
     def execute(def ctx) {
         this.buildPipeline(ctx)
@@ -28,7 +28,7 @@ class Pipeline {
                 checkout ctx.scm
                 def yaml = readYaml file: yamlPath
                 echo "${yaml}"
-                this.config = ConfigurationParser.parse(ctx, yaml)
+                this.config = ConfigParser.parse(ctx, yaml)
             }
         }
         closure.delegate = ctx
