@@ -8,6 +8,10 @@ class Pipeline {
     String yamlPath
     Configuration config
 
+    Pipeline(String yamlPath) {
+        this.yamlPath = yamlPath ?: '.jenkins/config.yaml'
+    }
+
     def execute(def ctx) {
         this.buildPipeline(ctx)
     }
@@ -26,7 +30,7 @@ class Pipeline {
         def closure = {
             stage('Setup') {
                 checkout ctx.scm
-                def yaml = readYaml file: yamlPath
+                def yaml = readYaml file: this.yamlPath
                 echo "${yaml}"
                 this.config = ConfigParser.parse(ctx, yaml)
             }
