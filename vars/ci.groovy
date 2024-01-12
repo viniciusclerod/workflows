@@ -12,9 +12,9 @@ import io.jenkins.plugins.ci.Pipeline
 //     }
 // }
 
-def call(String yamlPath) {
+def call(String yamlPath = '.jenkins/config.yaml') {
 
-    Pipeline pipe = new Pipeline()
+    Pipeline pipe = new Pipeline(yamlPath)
     pipe.execute(this)
 
     // def yaml = readYaml file: yamlPath

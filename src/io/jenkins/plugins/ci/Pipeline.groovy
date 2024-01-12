@@ -1,28 +1,34 @@
 package io.jenkins.plugins.ci
 
+import io.jenkins.plugins.ci.model.Configuration
+import io.jenkins.plugins.ci.parser.ConfigParser
+
 class Pipeline {
 
+    String yamlPath
     Map config
 
     def execute(def ctx) {
-        this.buildNode(ctx)
+        this.buildPipeline(ctx)
     }
 
-    def buildNode(def ctx) {
+    def buildPipeline(def ctx) {
         def closure = {
             node {
-                this.buildStage(ctx)
+                this.buildSetupStage(ctx)
             }
         }
         closure.delegate = ctx
         closure.call()
     }
 
-    def buildStage(def ctx) {
+    def buildSetupStage(def ctx) {
         def closure = {
             stage('Setup') {
                 checkout ctx.scm
-                def yaml = readYaml file: '.jenkins/config.yaml'
+                def yaml = readYaml file: yamlPath
+                echo "${yaml}"
+                this.config = ConfigurationParser.parse(ctx, yaml)
             }
         }
         closure.delegate = ctx
