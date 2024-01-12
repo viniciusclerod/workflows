@@ -9,24 +9,28 @@ class ConfigParser {
     static Configuration parse(def ctx, def yaml) {
         Configuration config = new Configuration()
         config.commands = parseCommands(ctx, yaml.commands)
+        config.steps = parseSteps(ctx, yaml.steps, config.commands)
         return config
     }
-
 
     static Map<String,Command> parseCommands(def ctx, Map map) {
         Map builtInCommands = [
             run: new Command(name: 'sh')
         ]
-        // Map<String,Command> commands = map.collectEntries { name, value ->
-        //     Command command = new Command([
-        //         name: name,
-        //         description: value.description,
-        //         parameters: value.parameters ?: [:],
-        //         steps: value.steps ?: []
-        //     ])
-        //     return ["${name}": command]
-        // } ?: [:]
         return MapHelper.merge(builtInCommands,[:]) as Map<String,Command>
+    }
+
+    static Map<String,Step> parseSteps(def ctx, Map map, Map<String,Command> commands) {
+        Map steps = [
+            new Step(
+                command: commands.run
+                arguments: [
+                    label: "Hello from run command",
+                    script: "echo Hello"
+                ]
+            )
+        ]
+        return step as Map<String,Step>
     }
 
     // static Command buildCommand(Map map) {
