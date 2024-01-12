@@ -31,7 +31,7 @@ class ConfigParser {
                 ]
             )
         ]
-        return step as Map<String,Step>
+        return steps as Map<String,Step>
     }
 
     // static Command buildCommand(Map map) {
