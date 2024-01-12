@@ -11,12 +11,18 @@ class Pipeline {
     def buildNode(def ctx) {
         def closure = {
             node {
-                stage('Setup') {
-                    def yaml = readYaml file: '.jenkins/config.yaml'
-                    echo "${ctx.scm}=${ctx.scm.getProperties()}"
-                    checkout ctx.scm
-                }
-                //   ci '.jenkins/config.yaml'
+                this.buildStage(ctx)
+            }
+        }
+        closure.delegate = ctx
+        closure.call()
+    }
+
+    def buildStage(def ctx) {
+        def closure = {
+            stage('Setup') {
+                checkout ctx.scm
+                def yaml = readYaml file: '.jenkins/config.yaml'
             }
         }
         closure.delegate = ctx
