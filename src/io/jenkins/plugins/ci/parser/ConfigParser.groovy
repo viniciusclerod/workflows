@@ -23,9 +23,9 @@ class ConfigParser {
         //     return ["${name}": command]
         // } ?: [:]
         Map<String,Command> commands = [:]
-        commands.add([
+        commands += [
             sh: new Command(name: 'sh')
-        ])
+        ]
         return commands
     }
 
