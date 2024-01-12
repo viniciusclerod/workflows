@@ -13,15 +13,18 @@ class ConfigParser {
 
 
     static Map<String,Command> parseCommands(def ctx, Map map) {
-        Map<String,Command> commands = map.collectEntries { name, value ->
-            Command command = new Command([
-                name: name,
-                description: value.description,
-                parameters: value.parameters ?: [:],
-                steps: value.steps ?: []
-            ])
-            return ["${name}": command]
-        } ?: [:]
+        // Map<String,Command> commands = map.collectEntries { name, value ->
+        //     Command command = new Command([
+        //         name: name,
+        //         description: value.description,
+        //         parameters: value.parameters ?: [:],
+        //         steps: value.steps ?: []
+        //     ])
+        //     return ["${name}": command]
+        // } ?: [:]
+        Map<String,Command> commands = [
+            sh: new Command(name: 'sh')
+        ]
         return commands
     }
 

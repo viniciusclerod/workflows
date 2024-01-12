@@ -20,6 +20,12 @@ class Pipeline {
         def closure = {
             node {
                 this.buildSetupStage(ctx)
+                stage('Test Commands') {
+                    config.commands.sh(ctx, [
+                        label: "Hello Command",
+                        script: "echo Hello"
+                    ])
+                }
             }
         }
         closure.delegate = ctx
