@@ -20,13 +20,6 @@ class Pipeline {
         def closure = {
             node {
                 this.buildSetupStage(ctx)
-                stage('Test Commands') {
-                    echo "${this.config.commands}" 
-                    // this.config.commands.sh.execute(ctx, [
-                    //     label: "Hello Command",
-                    //     script: "echo Hello"
-                    // ])
-                }
             }
         }
         closure.delegate = ctx
@@ -39,7 +32,7 @@ class Pipeline {
                 checkout ctx.scm
                 def yaml = readYaml file: this.yamlPath
                 def config = ConfigParser.parse(ctx, yaml)
-                echo "${config}"
+                echo "${config as Map}"
             }
         }
         closure.delegate = ctx
