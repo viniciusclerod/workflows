@@ -2,6 +2,7 @@ package io.jenkins.plugins.ci.parser
 
 import io.jenkins.plugins.ci.model.Configuration
 import io.jenkins.plugins.ci.model.Command
+import io.jenkins.plugins.ci.model.Step
 import io.jenkins.plugins.ci.helper.MapHelper
 
 class ConfigParser {
