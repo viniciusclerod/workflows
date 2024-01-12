@@ -31,8 +31,8 @@ class Pipeline {
             stage('Setup') {
                 checkout ctx.scm
                 def yaml = readYaml file: this.yamlPath
-                echo "${yaml}"
                 this.config = ConfigParser.parse(ctx, yaml)
+                echo "${this.config as Map}"
             }
         }
         closure.delegate = ctx
