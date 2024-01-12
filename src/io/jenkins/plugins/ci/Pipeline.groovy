@@ -2,7 +2,7 @@ package io.jenkins.plugins.ci
 
 class Pipeline {
 
-    Configuration config
+    Map config
 
     def execute(def ctx) {
         this.buildNode(ctx)
