@@ -20,6 +20,7 @@ class Pipeline {
         def script = {
             node {
                 this.buildSetupStage(ctx)
+                this.buildStages(ctx)
             }
         }
         script.delegate = ctx
@@ -29,9 +30,6 @@ class Pipeline {
     def buildSetupStage(def ctx) {
         def script = {
             stage('Setup') {
-                checkout ctx.scm
-                def yaml = readYaml file: this.yamlPath
-                this.config = ConfigParser.parse(ctx, yaml)
                 this.config.commands.run.execute(ctx, [
                     label: "Hello Command",
                     script: "echo Hello"
@@ -40,6 +38,20 @@ class Pipeline {
         }
         script.delegate = ctx
         script.call()
+    }
+
+    def buildStages(def ctx) {
+        def script = {
+            stage('Execution Test') {
+                this.config.commands.run.execute(ctx, [
+                    label: "Hello Command",
+                    script: "echo Hello"
+                ])
+            }
+        }
+        script.delegate = ctx
+        script.call()
+
     }
 
 }
