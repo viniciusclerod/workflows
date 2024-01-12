@@ -17,26 +17,26 @@ class Pipeline {
     }
 
     def buildPipeline(def ctx) {
-        def closure = {
+        def script = {
             node {
                 this.buildSetupStage(ctx)
             }
         }
-        closure.delegate = ctx
-        closure.call()
+        script.delegate = ctx
+        script.call()
     }
 
     def buildSetupStage(def ctx) {
-        def closure = {
+        def script = {
             stage('Setup') {
                 checkout ctx.scm
                 def yaml = readYaml file: this.yamlPath
-                def config = ConfigParser.parse(ctx, yaml)
-                echo "${config.commands}"
+                this.config = ConfigParser.parse(ctx, yaml)
+                echo "${this.config.commands}"
             }
         }
-        closure.delegate = ctx
-        closure.call()
+        script.delegate = ctx
+        script.call()
     }
 
 }
