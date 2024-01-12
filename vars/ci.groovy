@@ -1,85 +1,34 @@
 @Library('jenkins-orb')
-import com.jenkins.ci.reference.Configuration
-import com.jenkins.ci.reference.Step
-import com.jenkins.ci.reference.Command
-import com.jenkins.ci.parser.ConfigParser
+// import com.jenkins.ci.reference.Configuration
+// import com.jenkins.ci.reference.Step
+// import com.jenkins.ci.reference.Command
+// import com.jenkins.ci.parser.ConfigParser
+import io.jenkins.plugins.yaml-ci.Pipeline
 
-class Command {
-    String name
-    def call(def context, Map arguments = [:]) {
-        context.invokeMethod(this.name, arguments)
-    }
-}
+// class Command {
+//     String name
+//     def call(def context, Map arguments = [:]) {
+//         context.invokeMethod(this.name, arguments)
+//     }
+// }
 
 def call(String yamlPath) {
-    def yaml = readYaml file: yamlPath
+    
+    Pipeline pipe = new Pipeline()
+    pipe.execute()
+
+    // def yaml = readYaml file: yamlPath
     // Configuration config = ConfigParser.parse(this, yaml, env)
     // buildPipeline(config)
 
-    // List<Command> commands = [
-    //     run: new Command(
-    //         name: 'sh',
-    //         parameters: [
-    //             name: [                        
-    //                 type: String,
-    //                 default: "Hello World"
-    //             ],
-    //             command: [                        
-    //                 type: String,
-    //                 default: "echo Hello"
-    //             ]
-    //         ],
-    //         steps: [
-    //             sh: new Step(
-    //                 name: 'sh',
-    //                 arguments: [
-    //                     label: "<< parameters.name >>",
-    //                     script: "echo Hello"
-    //                 ],
-    //                 command: new Command(
-    //                     context: this,
-    //                     name: 'sh'
-    //                 )
-    //             )
-                
-    //         ]
-    //     )
-    // ]
-    // commands.run.call([
-    //     name: "Teste",
-    //     command: "echo Teste"
-    // ])
-
-    // Step step = new Step(
-    //     name: 'sh',
-    //     arguments: [
-    //         label: "<< parameters.name >>",
-    //         script: "echo Hello"
-    //     ],
-    //     command: new Command(
-    //         context: this,
-    //         name: 'sh'
-    //     )
-    // )
-    // step.call()
-
-    // Command command = new Command(
-    //     context: this,
-    //     name: 'sh'
-    // )
-    // command.call([
-    //     label: "Hello",
+    // this.invokeMethod('sh', [
+    //     label: "Hello Invocation",
     //     script: "echo Hello"
     // ])
 
-    this.invokeMethod('sh', [
-        label: "Hello Invocation",
-        script: "echo Hello"
-    ])
-
-    Command command = new Command(name: 'sh')
-    command.call(this, [
-        label: "Hello Command",
-        script: "echo Hello"
-    ])
+    // Command command = new Command(name: 'sh')
+    // command.call(this, [
+    //     label: "Hello Command",
+    //     script: "echo Hello"
+    // ])
 }
