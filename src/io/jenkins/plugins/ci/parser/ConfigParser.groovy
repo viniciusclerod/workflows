@@ -17,8 +17,8 @@ class ConfigParser {
             Command command = new Command([
                 name: name,
                 description: description,
-                parameters: value.parameters :? [:],
-                steps: value.steps :? []
+                parameters: value.parameters ?: [:],
+                steps: value.steps ?: []
             ])
             return ["${name}": command]
         } ?: [:]
@@ -28,8 +28,8 @@ class ConfigParser {
     // static Command buildCommand(Map map) {
     //     Command command = new Command([
     //         name: name,
-    //         parameters: value.parameters :? [:],
-    //         steps: value.steps :? []
+    //         parameters: value.parameters ?: [:],
+    //         steps: value.steps ?: []
     //     ])
     //     return command
     // }
