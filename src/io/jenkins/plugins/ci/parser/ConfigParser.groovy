@@ -21,8 +21,8 @@ class ConfigParser {
         return MapHelper.merge(builtInCommands,[:]) as Map<String,Command>
     }
 
-    static Map<String,Step> parseSteps(def ctx, Map map, Map<String,Command> commands) {
-        Map steps = [
+    static List<Step> parseSteps(def ctx, Map map, Map<String,Command> commands) {
+        List steps = [
             new Step(
                 command: commands.run,
                 arguments: [
