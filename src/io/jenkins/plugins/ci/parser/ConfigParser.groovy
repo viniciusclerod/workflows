@@ -18,7 +18,7 @@ class ConfigParser {
                 name: name,
                 description: value.description,
                 parameters: value.parameters ?: [:],
-                steps: value.steps as Map ?: []
+                steps: value.steps ?: []
             ])
             return ["${name}": command]
         } ?: [:]
