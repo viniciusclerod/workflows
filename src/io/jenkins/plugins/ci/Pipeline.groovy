@@ -15,7 +15,7 @@ class Pipeline {
             node {
                 stage('Setup') {
                     echo "Executed (ctx is ${ctx.getClass()} class)"
-                    checkout scm
+                    // checkout scm
                 }
                 //   ci '.jenkins/config.yaml'
             }
