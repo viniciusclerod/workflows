@@ -3,7 +3,7 @@
 // import com.jenkins.ci.reference.Step
 // import com.jenkins.ci.reference.Command
 // import com.jenkins.ci.parser.ConfigParser
-import io.jenkins.plugins.yaml-ci.Pipeline
+import io.jenkins.plugins.ci.Pipeline
 
 // class Command {
 //     String name
@@ -13,9 +13,9 @@ import io.jenkins.plugins.yaml-ci.Pipeline
 // }
 
 def call(String yamlPath) {
-    
+
     Pipeline pipe = new Pipeline()
-    pipe.execute()
+    pipe.execute(this)
 
     // def yaml = readYaml file: yamlPath
     // Configuration config = ConfigParser.parse(this, yaml, env)

@@ -1,4 +1,4 @@
-package io.jenkins.plugins.yaml-ci
+package io.jenkins.plugins.ci
 
 class Pipeline {
 
