@@ -5,5 +5,5 @@ import io.jenkins.plugins.ci.model.Step
 
 class Configuration {
     Map<String,Command> commands = [:]
-    Map<String,Step> steps = []
+    List<Step> steps = []
 }
