@@ -6,7 +6,7 @@ class Pipeline {
     
     // Pipeline(String yamlPath) {}
 
-    execute(def ctx) {
+    def execute(def ctx) {
         ctx.echo "Executed"
     }
 
