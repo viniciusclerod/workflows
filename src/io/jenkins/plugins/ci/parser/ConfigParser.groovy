@@ -16,7 +16,7 @@ class ConfigParser {
         Map<String,Command> commands = map.collectEntries { name, values ->
             Command command = new Command([
                 name: name,
-                description: description,
+                description: value.description,
                 parameters: value.parameters ?: [:],
                 steps: value.steps as Map ?: []
             ])
