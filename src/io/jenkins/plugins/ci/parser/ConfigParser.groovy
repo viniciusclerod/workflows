@@ -1,6 +1,7 @@
 package io.jenkins.plugins.ci.parser
 
 import io.jenkins.plugins.ci.model.Configuration
+import io.jenkins.plugins.ci.model.Command
 
 class ConfigParser {
 
@@ -14,7 +15,10 @@ class ConfigParser {
     static Map<String,Command> parseCommands(def ctx, Map map) {
         Map<String,Command> commands = map.collectEntries { name, values ->
             Command command = new Command([
-                name: name
+                name: name,
+                description: description,
+                parameters: value.parameters :? [:],
+                steps: value.steps :? []
             ])
             return ["${name}": command]
         } ?: [:]
