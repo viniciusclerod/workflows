@@ -13,7 +13,7 @@ class ConfigParser {
 
 
     static Map<String,Command> parseCommands(def ctx, Map map) {
-        Map<String,Command> commands = map.collectEntries { name, values ->
+        Map<String,Command> commands = map.collectEntries { name, value ->
             Command command = new Command([
                 name: name,
                 description: value.description,
