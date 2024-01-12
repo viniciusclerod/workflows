@@ -32,7 +32,7 @@ class Pipeline {
                 checkout ctx.scm
                 def yaml = readYaml file: this.yamlPath
                 def config = ConfigParser.parse(ctx, yaml)
-                echo "${config.getParameters()}"
+                echo "${config.commands}"
             }
         }
         closure.delegate = ctx
