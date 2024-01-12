@@ -3,7 +3,7 @@
 // import com.jenkins.ci.reference.Step
 // import com.jenkins.ci.reference.Command
 // import com.jenkins.ci.parser.ConfigParser
-import io.jenkins.plugins.ci.yaml.Pipeline
+import io.jenkins.plugins.ci.Pipeline
 
 // class Command {
 //     String name
