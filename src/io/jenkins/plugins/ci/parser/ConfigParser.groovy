@@ -25,7 +25,7 @@ class ConfigParser {
         List steps = map.collect { name, value ->
             Command command = commands.find { it.key == name }?.value
                 ?: new Command(name: name)
-            Map arguments = arguments instanceof String ? [ script: value ] : value as Map 
+            Map arguments = (value instanceof String ? [ script: value ] : value) as Map 
             Step step = new Step(
                 command: command,
                 arguments: arguments
