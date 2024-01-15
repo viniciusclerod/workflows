@@ -6,7 +6,7 @@ class Step {
     Map arguments
 
     def execute(def ctx) {
-        this.command.execute(ctx, this.arguments)
+        this.command.execute(this.arguments)
     }
 
 }

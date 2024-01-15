@@ -10,7 +10,7 @@ class Command {
     Map parameters = [:]
     List<Step> steps = []
 
-    def execute(def ctx, Map arguments = [:]) {
+    def execute(Map arguments = [:]) {
         this.context.invokeMethod(this.name, arguments)
     }
 

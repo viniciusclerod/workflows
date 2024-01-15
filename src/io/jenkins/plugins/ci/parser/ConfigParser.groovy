@@ -27,6 +27,7 @@ class ConfigParser {
                 parameters: value.parameters,
                 steps: steps
             )
+            ctx.echo "${key}.context=${command.context}"
             config.commands[key] = command
         }
     }
