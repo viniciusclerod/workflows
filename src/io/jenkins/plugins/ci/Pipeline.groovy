@@ -41,12 +41,6 @@ class Pipeline {
 
     def buildStages(def ctx) {
         def script = {
-            stage('Commands Test') {
-                this.config.commands.run.execute(ctx, [
-                    label: "Hello Command",
-                    script: "echo Hello"
-                ])
-            }
             stage('Steps Test') {
                 this.config.steps.each { step ->
                     step.execute(ctx)

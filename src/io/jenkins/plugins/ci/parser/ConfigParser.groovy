@@ -22,25 +22,26 @@ class ConfigParser {
     }
 
     static List<Step> parseSteps(def ctx, Map map, Map<String,Command> commands) {
-        List steps = [
-            new Step(
-                command: commands.run,
-                arguments: [
-                    label: "Hello from run command",
-                    script: "echo Hello"
-                ]
+        List steps = map.collect { name, value ->
+            Command command = commands.find { it.key == name }?.value
+                ?: new Command(name: name)
+            Map arguments = arguments instanceof String ? [ script: value ] : value as Map 
+            Step step = new Step(
+                command: command,
+                arguments: arguments
             )
-        ]
+            return step
+        }
+        // List steps = [
+        //     new Step(
+        //         command: commands.run,
+        //         arguments: [
+        //             label: "Hello from run command",
+        //             script: "echo Hello"
+        //         ]
+        //     )
+        // ]
         return steps as List<Step>
     }
-
-    // static Command buildCommand(Map map) {
-    //     Command command = new Command([
-    //         name: name,
-    //         parameters: value.parameters ?: [:],
-    //         steps: value.steps ?: []
-    //     ])
-    //     return command
-    // }
 
 }
