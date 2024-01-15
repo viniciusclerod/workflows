@@ -36,7 +36,11 @@ class ConfigParser {
         List steps = list.collect { item ->
             String key = item.keySet().first()
             Command command = config.commands.find { it.key == key }?.value
-            if (command == null) { command = new Command(context: ctx, name: key) }
+            if (command == null) {
+                command = new Command(context: ctx, name: key)
+                ctx.echo "${key}.context=${command.context}"
+            }
+            ctx.echo "${item[key]} as ${item[key].getClass()}"
             Step step = new Step(command: command, arguments: item[key])
             return step
         }
