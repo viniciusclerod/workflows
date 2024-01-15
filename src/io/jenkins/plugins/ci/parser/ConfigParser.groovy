@@ -21,10 +21,10 @@ class ConfigParser {
             // List<Step> steps = value.steps ? parseSteps(ctx, value.steps, commands) : []
             List<Step> steps = []
             Command command = new Command(
-                name: key,
-                description: value.description,
-                parameters: value.parameters,
-                steps: steps
+                name: key
+                // description: value.description,
+                // parameters: value.parameters,
+                // steps: steps
             )
             commands[key] = command
         }
