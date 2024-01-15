@@ -9,8 +9,8 @@ class ConfigParser {
 
     static Configuration parse(def ctx, def yaml) {
         Configuration config = new Configuration()
-        config.commands = parseCommands(ctx, yaml.commands)
-        config.steps = parseSteps(ctx, yaml.steps, config.commands)
+        config.commands = ConfigParser.parseCommands(ctx, yaml.commands)
+        config.steps = ConfigParser.parseSteps(ctx, yaml.steps, config.commands)
         return config
     }
 
@@ -18,7 +18,7 @@ class ConfigParser {
         Map commands = [:]
         map.each { key, value ->
             ctx.echo "${value.steps}"
-            List<Step> steps = value.steps ? parseSteps(ctx, value.steps as List, commands) : []
+            List<Step> steps = value.steps ? ConfigParser.parseSteps(ctx, value.steps as List, commands as Map<String,Command>) : []
             Command command = new Command(
                 name: key,
                 parameters: value.parameters,
