@@ -22,10 +22,10 @@ class ConfigParser {
     }
 
     static List<Step> parseSteps(def ctx, def map, def commands) {
+        ctx.echo "map=${map}"
         List steps = map.collect { item ->
             String key = item.keySet().first()
-            Map value = item[key] as Map
-            ctx.echo "key=${key} item[key]=${item[key]}"
+            ctx.echo "key=${key} value=${item[key]}"
             Command command = commands.find { it.key == key }?.value
                 ?: new Command(name: key)
             Map arguments = (item[key] instanceof String ? [ script: item[key] ] : item[key]) as Map 
