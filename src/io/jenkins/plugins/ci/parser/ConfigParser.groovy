@@ -10,7 +10,7 @@ class ConfigParser {
     static Configuration parse(def ctx, def yaml) {
         Configuration config = new Configuration()
         config.commands = parseCommands(ctx, yaml.commands)
-        config.steps = parseSteps(ctx, yaml.steps as Map, config.commands)
+        config.steps = parseSteps(ctx, yaml.steps, config.commands)
         return config
     }
 
