@@ -20,7 +20,7 @@ class ConfigParser {
             Command command = new Command(
                 name: key,
                 description: value.description,
-                parameters: value.parameters as Map
+                parameters: value.parameters as Map,
                 steps: parseSteps(ctx, value.steps, commands)
             )
             commands.add(["${key}": command])
