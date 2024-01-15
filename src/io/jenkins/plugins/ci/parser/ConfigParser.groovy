@@ -15,10 +15,22 @@ class ConfigParser {
     }
 
     static Map<String,Command> parseCommands(def ctx, Map map) {
-        Map builtInCommands = [
-            run: new Command(name: 'sh')
-        ]
-        return MapHelper.merge(builtInCommands,[:]) as Map<String,Command>
+        Map commands = [:]
+        map.each { key, value ->
+            Command command = new Command(
+                name: key,
+                description: value.description,
+                parameters: value.parameters as Map
+                steps: parseSteps(ctx, value.steps, commands)
+            )
+            commands.add(["${key}": command])
+        }
+        return commands
+        
+        // Map builtInCommands = [
+        //     run: new Command(name: 'sh')
+        // ]
+        // return MapHelper.merge(builtInCommands,[:]) as Map<String,Command>
     }
 
     static List<Step> parseSteps(def ctx, List list, Map<String,Command> commands) {
