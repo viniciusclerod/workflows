@@ -10,7 +10,7 @@ class ConfigParser {
     static Configuration parse(def ctx, def yaml) {
         Configuration config = new Configuration()
         config.commands = parseCommands(ctx, yaml.commands)
-        config.steps = parseSteps(ctx, yaml.steps, config.commands)
+        config.steps = parseSteps(ctx, yaml.steps as Map, config.commands)
         return config
     }
 
@@ -21,7 +21,7 @@ class ConfigParser {
         return MapHelper.merge(builtInCommands,[:]) as Map<String,Command>
     }
 
-    static List<Step> parseSteps(def ctx, Map map, Map<String,Command> commands) {
+    static List<Step> parseSteps(def ctx, def map, def commands) {
         List steps = map.collect { name, value ->
             Command command = commands.find { it.key == name }?.value
                 ?: new Command(name: name)
