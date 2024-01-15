@@ -4,12 +4,14 @@ import io.jenkins.plugins.ci.model.Step
 
 class Command {
 
+    def context
+
     String name
     Map parameters = [:]
     List<Step> steps = []
 
     def execute(def ctx, Map arguments = [:]) {
-        ctx.invokeMethod(this.name, arguments)
+        this.context.invokeMethod(this.name, arguments)
     }
 
 }
