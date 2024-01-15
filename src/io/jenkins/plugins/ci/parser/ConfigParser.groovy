@@ -26,7 +26,7 @@ class ConfigParser {
                 parameters: value.parameters,
                 steps: steps
             )
-            commands.add(["${key}": command])
+            commands[key] = command
         }
         return commands
         
