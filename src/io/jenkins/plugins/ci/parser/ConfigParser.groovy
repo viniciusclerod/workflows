@@ -22,8 +22,7 @@ class ConfigParser {
             List<Step> steps = []
             Command command = new Command(
                 name: key,
-                description: value.description
-                // parameters: value.parameters,
+                parameters: value.parameters,
                 // steps: steps
             )
             commands[key] = command
