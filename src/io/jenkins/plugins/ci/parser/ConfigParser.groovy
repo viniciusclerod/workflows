@@ -23,7 +23,7 @@ class ConfigParser {
             Command command = new Command(
                 name: key,
                 parameters: value.parameters,
-                // steps: steps
+                steps: steps
             )
             commands[key] = command
         }
