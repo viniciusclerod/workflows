@@ -21,7 +21,7 @@ class ConfigParser {
         return MapHelper.merge(builtInCommands,[:]) as Map<String,Command>
     }
 
-    static List<Step> parseSteps(def ctx, def map, def commands) {
+    static List<Step> parseSteps(def ctx, Map map, Map commands) {
         List steps = map.collect { item ->
             String key = item.keySet().first()
             Command command = commands.find { it.key == key }?.value ?: new Command(name: key)
