@@ -11,7 +11,13 @@ class Command {
     List<Step> steps = []
 
     def execute(Map arguments = [:]) {
-        this.context.invokeMethod(this.name, arguments)
+      switch (this.context) {
+        case Configuration:
+          this.context.commands.invokeMethod(this.name, arguments)
+          break
+        default:
+          this.context.invokeMethod(this.name, arguments)
+      }
     }
 
 }

@@ -3,9 +3,9 @@ package io.jenkins.plugins.ci.model
 class Step {
 
     Command command
-    Map arguments
+    def arguments
 
-    def execute(def ctx) {
+    def execute() {
         this.command.execute(this.arguments)
     }
 

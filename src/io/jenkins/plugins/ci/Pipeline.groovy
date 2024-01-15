@@ -43,7 +43,7 @@ class Pipeline {
         def script = {
             stage('Steps Test') {
                 this.config.steps.each { step ->
-                    step.execute(ctx)
+                    step.execute()
                 }
             }
         }
