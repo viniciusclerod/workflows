@@ -17,7 +17,8 @@ class ConfigParser {
     static Map<String,Command> parseCommands(def ctx, Map map) {
         Map commands = [:]
         map.each { key, value ->
-            List<Step> steps = value.steps ? parseSteps(ctx, value.steps, commands) : []
+            ctx.echo "${value.steps}"
+            List<Step> steps = value.steps ? parseSteps(ctx, value.steps as List, commands) : []
             Command command = new Command(
                 name: key,
                 parameters: value.parameters,
