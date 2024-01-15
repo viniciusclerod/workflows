@@ -9,39 +9,33 @@ class ConfigParser {
 
     static Configuration parse(def ctx, def yaml) {
         Configuration config = new Configuration()
-        config.commands = ConfigParser.parseCommands(ctx, yaml.commands)
-        ctx.echo "${config.commands}"
-        config.steps = ConfigParser.parseSteps(ctx, yaml.steps, config.commands)
+        ConfigParser.buildCommands(ctx, config, yaml.commands)
+        config.steps = ConfigParser.parseSteps(ctx, config, yaml.steps)
         return config
     }
 
-    static Map<String,Command> parseCommands(def ctx, Map map) {
-        Map commands = [:]
+    static void buildCommands(def ctx, Configuration config, Map map) {
+        // Map builtInCommands = [
+        //     run: new Command(name: 'sh')
+        // ]
         map.each { key, value ->
-            List<Step> steps = value.steps ? ConfigParser.parseSteps(
-                ctx, 
-                value.steps as List, 
-                commands as Map<String,Command>
-            ) : []
+            Boolean isLeaf = !(value.steps) as Boolean
+            List<Step> steps = isLeaf ? [] : ConfigParser.parseSteps(ctx, config, value.steps)
             Command command = new Command(
+                context: isLeaf ? ctx : config.commands,
                 name: key,
                 parameters: value.parameters,
                 steps: steps
             )
-            commands[key] = command
+            config.commands[key] = command
         }
-        return commands
-        
-        // Map builtInCommands = [
-        //     run: new Command(name: 'sh')
-        // ]
-        // return MapHelper.merge(builtInCommands,[:]) as Map<String,Command>
     }
 
-    static List<Step> parseSteps(def ctx, List list, Map<String,Command> commands) {
+    static List<Step> parseSteps(def ctx, Configuration config, List list) {
         List steps = list.collect { item ->
             String key = item.keySet().first()
-            Command command = commands.find { it.key == key }?.value ?: new Command(context: ctx, name: key)
+            Command command = config.commands.find { it.key == key }?.value
+            if (command == null) { command = new Command(context: ctx, name: key) }
             Map arguments = (item[key] instanceof String ? [ script: item[key] ] : item[key]) as Map 
             Step step = new Step(command: command, arguments: arguments)
             return step
