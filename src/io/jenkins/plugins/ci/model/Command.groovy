@@ -55,8 +55,10 @@ class Command {
           // }.findAll { it.value != null } ?: [:]
           if (defaultArgs) return MapHelper.merge(defaultArgs, arguments)
           break
+        case String:
         default:
           // TODO
+          break
       }
       return arguments
     }
