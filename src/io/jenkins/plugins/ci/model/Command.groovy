@@ -15,7 +15,7 @@ class Command {
 
     def execute(def arguments) {
       if (this.steps.isEmpty()) {
-        this.invoke(this.getMergedArgs(arguments))
+        this.invoke(arguments)
       } else {
         this.steps.each { source ->
           Step target = new Step(source.properties.findAll { it.key != 'class' })
@@ -54,6 +54,9 @@ class Command {
           //     return ["${key}": (type == this.parameters[key]?.type) ? value : null]
           // }.findAll { it.value != null } ?: [:]
           if (defaultArgs) return MapHelper.merge(defaultArgs, arguments)
+          break
+        case NullObject:
+          if (defaultArgs) return defaultArgs
           break
         case String:
         default:
