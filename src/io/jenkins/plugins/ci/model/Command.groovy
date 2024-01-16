@@ -20,11 +20,12 @@ class Command {
         this.steps.each { source ->
           Step target = new Step(source.properties.findAll { it.key != 'class' })
           this.ctx.echo "source.properties=${source.properties}\ntarget.properties=${target.properties}"
-          target.arguments.each {
-            target.arguments[it.key] = this.parseAttrs([
-                parameters: this.getMergedArgs(arguments)
-            ], it.value)
-          }
+          // target.arguments.each {
+          //   target.arguments[it.key] = this.parseAttrs([
+          //       parameters: this.getMergedArgs(arguments)
+          //   ], it.value)
+          // }
+          target.arguments = this.getMergedArgs(arguments)
           target.execute()
         }
       }
