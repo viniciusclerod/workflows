@@ -45,11 +45,11 @@ class Command {
         Map defaultArgs = this.parameters.collectEntries { key, value ->
             ["${key}": value.default]
         }.findAll { it.value != null } ?: [:]
-        Map externalArgs = arguments.collectEntries { key, value ->
-            String type = value.getClass().getSimpleName().toLowerCase()
-            return ["${key}": (type == this.parameters[key].type) ? value : null]
-        }.findAll { it.value != null } ?: [:]
-        return MapHelper.merge(defaultArgs, externalArgs)
+        // Map externalArgs = arguments.collectEntries { key, value ->
+        //     String type = value.getClass().getSimpleName().toLowerCase()
+        //     return ["${key}": (type == this.parameters[key]?.type) ? value : null]
+        // }.findAll { it.value != null } ?: [:]
+        return MapHelper.merge(defaultArgs, arguments)
     }
 
     def parseAttrs(def context = this, String text) {
