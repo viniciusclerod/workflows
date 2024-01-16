@@ -49,7 +49,7 @@ class Command {
               String type = value.getClass().getSimpleName().toLowerCase()
               return ["${key}": (type == this.parameters[key]?.type) ? value : null]
           }.findAll { it.value != null } ?: [:]
-          return MapHelper.merge(defaultArgs, arguments)
+          return MapHelper.merge(defaultArgs, externalArgs)
         }
         return arguments
     }
