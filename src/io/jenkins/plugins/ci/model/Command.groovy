@@ -14,7 +14,7 @@ class Command {
 
     def execute(def arguments) {
       if (this.steps.isEmpty()) {
-        this.invoke(arguments)
+        this.invoke(this.getMergedArgs(arguments))
       } else {
         this.steps.each { source ->
           Step target = new Step(source.properties.findAll { it.key != 'class' })
@@ -35,8 +35,8 @@ class Command {
           context = this.context.commands
           break
         default:
-          context.echo "arguments=${arguments}"
           context = this.context
+          context.echo "arguments=${arguments}"
       }
       context.invokeMethod(this.name, arguments)
     }
