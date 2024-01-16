@@ -7,6 +7,7 @@ import io.jenkins.plugins.ci.model.Step
 class Command {
 
     def context
+    def ctx
 
     String name
     Map parameters = [:]
@@ -18,6 +19,7 @@ class Command {
       } else {
         this.steps.each { source ->
           Step target = new Step(source.properties.findAll { it.key != 'class' })
+          this.ctx.echo "source.properties=${source.properties}\ntarget.properties=${target.properties}"
           target.arguments.each {
             target.arguments[it.key] = this.parseAttrs([
                 parameters: this.getMergedArgs(arguments)
@@ -41,6 +43,7 @@ class Command {
     }
 
     def getMergedArgs(def arguments) {
+        this.ctx.echo "arguments=${arguments} as ${arguments.getClass()}"
         if (arguments instanceof Map) {
           Map defaultArgs = this.parameters.collectEntries { key, value ->
               ["${key}": value.default]

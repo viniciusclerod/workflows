@@ -22,6 +22,7 @@ class ConfigParser {
             Boolean isLeaf = !(value.steps) as Boolean
             List<Step> steps = isLeaf ? [] : ConfigParser.parseSteps(ctx, config, value.steps)
             Command command = new Command(
+                ctx: ctx,
                 context: isLeaf ? ctx : config,
                 name: key,
                 parameters: value.parameters,
@@ -34,7 +35,7 @@ class ConfigParser {
     static List<Step> parseSteps(def ctx, Configuration config, List list) {
         List steps = list.collect { item ->
             String name
-            def arguments
+            def arguments = [:]
             switch (item) {
                 case Map:
                     name = item.keySet().first()
@@ -42,13 +43,13 @@ class ConfigParser {
                     break
                 default:
                     name = item
-                    arguments = [:]
             }
             Command command = config.commands.find { it.key == name }?.value
-            ctx.echo "step is ${item.getClass()} name=${name} arguments=${arguments} command=${command}"
             if (command == null) {
-                command = new Command(context: ctx, name: name)
+                config.commands[name] = new Command(ctx: ctx, context: ctx, name: name)
+                command = config.commands[name]
             }
+            ctx.echo "name=${name} arguments=${arguments} command=${command} step is ${item.getClass()}"
             Step step = new Step(command: command, arguments: arguments)
             return step
         }
