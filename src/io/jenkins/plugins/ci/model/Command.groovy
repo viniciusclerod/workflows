@@ -12,13 +12,26 @@ class Command {
     List<Step> steps = []
 
     def execute(def arguments) {
+      if (this.steps.isEmpty()) {
+        this.invoke(arguments)
+      } else {
+        this.steps.each { step ->
+          step.execute()
+        }
+      }
+
+    }
+
+    def invoke(def arguments) {
+      def context
       switch (this.context) {
         case Configuration:
-          this.context.commands.invokeMethod(this.name, arguments)
+          context = this.context.commands
           break
         default:
-          this.context.invokeMethod(this.name, arguments)
+          context = this.context
       }
+      context.invokeMethod(this.name, arguments)
     }
 
 }
