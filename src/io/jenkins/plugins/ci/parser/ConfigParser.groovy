@@ -35,7 +35,7 @@ class ConfigParser {
     static List<Step> parseSteps(def ctx, Configuration config, List list) {
         List steps = list.collect { item ->
             String name
-            def arguments = [:]
+            def arguments
             switch (item) {
                 case Map:
                     name = item.keySet().first()

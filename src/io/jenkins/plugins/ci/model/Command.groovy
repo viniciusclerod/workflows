@@ -43,18 +43,22 @@ class Command {
     }
 
     def getMergedArgs(def arguments) {
-        this.ctx.echo "arguments=${arguments} as ${arguments.getClass()}"
-        if (arguments instanceof Map) {
-          Map defaultArgs = this.parameters.collectEntries { key, value ->
-              ["${key}": value.default]
-          }.findAll { it.value != null } ?: [:]
+      this.ctx.echo "arguments=${arguments} as ${arguments.getClass()}"
+      Map defaultArgs = this.parameters.collectEntries { key, value ->
+          ["${key}": value.default]
+      }.findAll { it.value != null } ?: [:]
+      switch (arguments) {
+        case Map:
           // Map externalArgs = arguments.collectEntries { key, value ->
           //     String type = value.getClass().getSimpleName().toLowerCase()
           //     return ["${key}": (type == this.parameters[key]?.type) ? value : null]
           // }.findAll { it.value != null } ?: [:]
-          return MapHelper.merge(defaultArgs, arguments)
-        }
-        return arguments
+          if (defaultArgs) return MapHelper.merge(defaultArgs, arguments)
+          break
+        default:
+          // TODO
+      }
+      return arguments
     }
 
     def parseAttrs(def context = this, String text) {
