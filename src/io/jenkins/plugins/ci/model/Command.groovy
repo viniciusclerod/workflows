@@ -1,5 +1,6 @@
 package io.jenkins.plugins.ci.model
 
+import io.jenkins.plugins.ci.helper.MapHelper
 import io.jenkins.plugins.ci.model.Configuration
 import io.jenkins.plugins.ci.model.Step
 
