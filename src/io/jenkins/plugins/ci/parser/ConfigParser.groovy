@@ -33,13 +33,17 @@ class ConfigParser {
 
     static List<Step> parseSteps(def ctx, Configuration config, List list) {
         List steps = list.collect { item ->
-            String key = item.keySet().first()
-            Command command = config.commands.find { it.key == key }?.value
-            if (command == null) {
-                command = new Command(context: ctx, name: key)
+            if (item instanceof Map) {
+                String key = item.keySet().first()
+                Command command = config.commands.find { it.key == key }?.value
+                if (command == null) {
+                    command = new Command(context: ctx, name: key)
+                }
+                Step step = new Step(command: command, arguments: item[key])
+                return step
+            } else {
+                ctx.echo "${item}"
             }
-            Step step = new Step(command: command, arguments: item[key])
-            return step
         }
         return steps as List<Step>
     }
