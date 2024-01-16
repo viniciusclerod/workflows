@@ -38,7 +38,7 @@ class ConfigParser {
             switch (item) {
                 case Map:
                     name = item.keySet().first()
-                    arguments = item[key]
+                    arguments = item[name]
                     break
                 default:
                     name = item
