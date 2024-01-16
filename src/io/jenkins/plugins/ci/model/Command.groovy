@@ -41,15 +41,18 @@ class Command {
       context.invokeMethod(this.name, arguments)
     }
 
-    def getMergedArgs(Map arguments = [:]) {
-        Map defaultArgs = this.parameters.collectEntries { key, value ->
-            ["${key}": value.default]
-        }.findAll { it.value != null } ?: [:]
-        // Map externalArgs = arguments.collectEntries { key, value ->
-        //     String type = value.getClass().getSimpleName().toLowerCase()
-        //     return ["${key}": (type == this.parameters[key]?.type) ? value : null]
-        // }.findAll { it.value != null } ?: [:]
-        return MapHelper.merge(defaultArgs, arguments)
+    def getMergedArgs(def arguments) {
+        if (arguments instanceof Map) {
+          Map defaultArgs = this.parameters.collectEntries { key, value ->
+              ["${key}": value.default]
+          }.findAll { it.value != null } ?: [:]
+          Map externalArgs = arguments.collectEntries { key, value ->
+              String type = value.getClass().getSimpleName().toLowerCase()
+              return ["${key}": (type == this.parameters[key]?.type) ? value : null]
+          }.findAll { it.value != null } ?: [:]
+          return MapHelper.merge(defaultArgs, arguments)
+        }
+        return arguments
     }
 
     def parseAttrs(def context = this, String text) {
