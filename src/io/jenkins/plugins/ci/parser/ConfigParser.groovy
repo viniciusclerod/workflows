@@ -44,8 +44,8 @@ class ConfigParser {
                     name = item
                     arguments = [:]
             }
-            ctx.echo "name=${name} arguments=${arguments}"
             Command command = config.commands.find { it.key == name }?.value
+            ctx.echo "step is ${item.getClass()} name=${name} arguments=${arguments} command=${command}"
             if (command == null) {
                 command = new Command(context: ctx, name: name)
             }
