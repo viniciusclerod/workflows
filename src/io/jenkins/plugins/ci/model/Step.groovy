@@ -20,13 +20,12 @@ class Step {
     def parseArguments(def context, def arguments) {
         switch (arguments) {
             case Map:
-                arguments.collectEntries { it ->
+                return arguments.collectEntries { it ->
                     def value = it.value instanceof String 
                         ? this.parseArgument(context, it.value) 
                         : it.value
                     return ["${it.key}": value]
                 }
-                break
             case String:
                 return this.parseArgument(context, arguments)
             default:
