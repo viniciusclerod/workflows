@@ -1,5 +1,6 @@
 package io.jenkins.plugins.ci.model
 
+import io.jenkins.plugins.ci.helper.MapHelper
 import io.jenkins.plugins.ci.model.Command
 
 class Step {
@@ -25,7 +26,7 @@ class Step {
             case Map:
                 return arguments.collectEntries { it ->
                     def value = it.value instanceof String ? this.parseArgument(context, it.value) : it.value
-                    // if (this.ctx) this.ctx.echo "context=${context} it.value=${it.value} value=${value}" // TODO: REMOVE
+                    if (this.ctx) this.ctx.echo "context=${context} it.value=${it.value} value=${value}" // TODO: REMOVE
                     return [(it.key): value]
                 }
             case String:
@@ -38,15 +39,8 @@ class Step {
     def parseArgument(def context, String text) {
         return text.replaceAll(/<<\s*([\S]+)\s*>>/) { match ->
             def keyList = match[1].split("\\.")
-            def findValueFromMap = { map, keys ->
-                if (this.ctx) this.ctx.echo "map=${map}\nkeys=${keys}\nmap[keys[0]]=${map[keys[0]]}\n" // TODO: REMOVE
-                if (keys.size() == 1) return map[keys[0]]
-                else {
-                    if (this.ctx) this.ctx.echo "map[keys[0]] ${(map[keys[0]]).getClass()}\nkeys[1..-1] ${(keys[1..-1]).getClass()}\n" // TODO: REMOVE
-                    return findValueFromMap(map[keys[0]], keys[1..-1])
-                }
-            }
-            return findValueFromMap(context, keyList)
+            def value = MapHelper.getValueByKeys(context, keyList)
+            return value
         }
     }
 
