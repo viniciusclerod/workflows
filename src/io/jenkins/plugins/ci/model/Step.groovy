@@ -10,7 +10,7 @@ class Step {
     def execute(Map parameters) {
         def arguments = this.arguments
         if (parameters) {
-            arguments = parseArguments([ parameters: parameters ])
+            arguments = this.parseArguments([ parameters: parameters ])
         }
         this.command.execute(arguments)
     }
