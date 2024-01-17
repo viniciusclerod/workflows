@@ -45,12 +45,12 @@ class Step {
             // keys.each { key ->
             //     value = value[key]
             // }
-            def getValueFromNestedMap = { map, keys ->
+            def getValueFromNestedMap(nested_map, keys) {
                 if (keys.size() == 1) {
                     if (this.ctx) this.ctx.echo "map=${map}\nkeys=${keys}\nmap[keys[0]]=${map[keys[0]]}" // TODO: REMOVE
-                    return map[keys[0]]
+                    return nested_map[keys[0]]
                 } else {
-                    return getValueFromNestedMap(map[keys[0]], keys[1..-1])
+                    return getValueFromNestedMap(nested_map[keys[0]], keys[1..-1])
                 }
             }
             return getValueFromNestedMap(context, keys)
