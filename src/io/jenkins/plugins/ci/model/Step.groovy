@@ -13,9 +13,9 @@ class Step {
         def arguments = this.arguments
         if (parameters) {
             if (ctx) this.ctx = ctx // TODO: REMOVE
-            if (this.ctx) this.ctx.echo "BEGIN arguments=${arguments} parameters=${parameters}" // TODO: REMOVE
+            // if (this.ctx) this.ctx.echo "BEGIN arguments=${arguments} parameters=${parameters}" // TODO: REMOVE
             arguments = this.parseArguments([ parameters: parameters ], arguments)
-            if (this.ctx) this.ctx.echo "END arguments=${arguments} parameters=${parameters}" // TODO: REMOVE
+            // if (this.ctx) this.ctx.echo "END arguments=${arguments} parameters=${parameters}" // TODO: REMOVE
         }
         this.command.execute(arguments)
     }
@@ -25,7 +25,7 @@ class Step {
             case Map:
                 return arguments.collectEntries { it ->
                     def value = it.value instanceof String ? this.parseArgument(context, it.value) : it.value
-                    if (this.ctx) this.ctx.echo "context=${context} it.value=${it.value} value=${value}" // TODO: REMOVE
+                    // if (this.ctx) this.ctx.echo "context=${context} it.value=${it.value} value=${value}" // TODO: REMOVE
                     return ["${it.key}": value]
                 }
             case String:
@@ -38,9 +38,9 @@ class Step {
     def parseArgument(def context, String text) {
         return text.replaceAll(/<<\s*([\S]+)\s*>>/) { match ->
             def keys = match[1].split("\\.")
-            def value = keys.inject(context) { map, key ->
-                if (this.ctx) this.ctx.echo "${map.getClass()} map=${map}\n${key.getClass()} key=${key}\n${map.get(key).getClass()} map.get(key)=${map.get(key)}" // TODO: REMOVE
-                return map.get("${key}") as Map
+            def value = keys.inject(context) { map, key, value ->
+                if (this.ctx) this.ctx.echo "${map.getClass()} map=${map}\n${key.getClass()} key=${key}\n${value.getClass()} value=${value}\n${map.get(key).getClass()} map.get(${key})=${map.get(key)}" // TODO: REMOVE
+                return map.get(key) as Map
             }
             // keys.each { key ->
             //     value = value[key]
