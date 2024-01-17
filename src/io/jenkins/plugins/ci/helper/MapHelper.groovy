@@ -8,7 +8,7 @@ class MapHelper {
         }
     }
 
-    static def getValueByKeys(Map map, List<String> keys) {
+    static def getValueByKeys(def map, def keys) {
         if (keys.size() == 1) return map[keys[0]]
         else return MapHelper.getValueByKeys(map[keys[0]], keys[1..-1])
     }
