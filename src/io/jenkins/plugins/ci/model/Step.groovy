@@ -39,8 +39,10 @@ class Step {
         return text.replaceAll(/<<\s*([\S]+)\s*>>/) { match ->
             def keys = match[1].split("\\.")
             def value = context
-            if (this.ctx) this.ctx.echo "context=${context} keys=${keys} value=${value}" // TODO: REMOVE
-            keys.each { key -> value = value[key] }
+            keys.each { key ->
+                value = value[key]
+                if (this.ctx) this.ctx.echo "key=${key} value=${value}" // TODO: REMOVE
+            }
             return value
         }
     }
