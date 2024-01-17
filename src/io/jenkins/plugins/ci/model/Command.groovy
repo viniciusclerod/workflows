@@ -37,7 +37,7 @@ class Command {
     }
 
     def getParams(def arguments) {
-      Map params = this.parameters.collectEntries { key, value ->
+      def params = this.parameters.collectEntries { key, value ->
           ["${key}": value.default]
       }.findAll { it.value != null } ?: [:]
       if (!arguments as Boolean) return params
@@ -47,16 +47,15 @@ class Command {
           //     String type = value.getClass().getSimpleName().toLowerCase()
           //     return ["${key}": (type == this.parameters[key]?.type) ? value : null]
           // }.findAll { it.value != null } ?: [:]
-          params = MapHelper.merge(params, arguments)
+          return MapHelper.merge(params, arguments)
           break
         // case NullObject:
         //   if (defaultArgs) return defaultArgs
         //   break
         // case String:
         default:
-          break
+          return arguments
       }
-      return params
     }
     
     // def execStep(Step source, def arguments) {
