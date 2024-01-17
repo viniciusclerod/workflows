@@ -4,15 +4,18 @@ import io.jenkins.plugins.ci.model.Command
 
 class Step {
 
+    def ctx // TODO: REMOVE
+
     Command command
     def arguments
 
     def execute(def parameters = null, def ctx = null) {
         def arguments = this.arguments
         if (parameters) {
-            if (ctx) ctx.echo "arguments=${arguments} parameters=${parameters}"
+            if (ctx) this.ctx = ctx // TODO: REMOVE
+            if (this.ctx) this.ctx.echo "arguments=${arguments} parameters=${parameters}" // TODO: REMOVE
             arguments = this.parseArguments([ parameters: parameters ], arguments)
-            if (ctx) ctx.echo "arguments=${arguments} parameters=${parameters}"
+            if (this.ctx) this.ctx.echo "arguments=${arguments} parameters=${parameters}" // TODO: REMOVE
         }
         this.command.execute(arguments)
     }
@@ -21,9 +24,8 @@ class Step {
         switch (arguments) {
             case Map:
                 return arguments.collectEntries { it ->
-                    def value = it.value instanceof String 
-                        ? this.parseArgument(context, it.value) 
-                        : it.value
+                    def value = it.value instanceof String ? this.parseArgument(context, it.value) : it.value
+                    if (this.ctx) this.ctx.echo "it.value=${it.value} value=${value}" // TODO: REMOVE
                     return ["${it.key}": value]
                 }
             case String:
