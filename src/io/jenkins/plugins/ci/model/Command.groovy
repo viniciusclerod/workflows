@@ -19,8 +19,7 @@ class Command {
       } else {
         this.steps.each { step ->
           def parameters = this.getParameters(arguments)
-          this.ctx.echo "parameters=${parameters}"
-          step.execute(parameters)
+          step.execute(parameters, this.ctx)
         }
       }
     }
@@ -48,7 +47,6 @@ class Command {
           //     String type = value.getClass().getSimpleName().toLowerCase()
           //     return ["${key}": (type == this.parameters[key]?.type) ? value : null]
           // }.findAll { it.value != null } ?: [:]
-          this.ctx.echo "parameters=${parameters} arguments=${arguments} ${(parameters.keySet() + arguments.keySet())}"
           return MapHelper.merge(parameters, arguments, { a, b -> b ?: a })
         // case NullObject:
         //   if (defaultArgs) return defaultArgs
