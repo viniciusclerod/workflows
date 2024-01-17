@@ -37,7 +37,7 @@ class Step {
 
     def parseArgument(def context, String text) {
         return text.replaceAll(/<<\s*([\S]+)\s*>>/) { match ->
-            def keys = match[1].split("\\.")
+            def keyList = match[1].split("\\.")
             // def value = keys.inject(context) { map, key ->
             //     if (this.ctx) this.ctx.echo "${map.getClass()} map=${map}\n${key.getClass()} key=${key}\n${map.get(key).getClass()} map.get(${key})=${map.get(key)}" // TODO: REMOVE
             //     return map.get(key) as Map
@@ -45,15 +45,14 @@ class Step {
             // keys.each { key ->
             //     value = value[key]
             // }
-            def getValueFromNestedMap(map, keys) {
+            def getValueFromNestedMap = { map, keys ->
                 if (keys.size() == 1) {
-                    if (this.ctx) this.ctx.echo "map=${map}\nkeys=${keys}\nmap[keys[0]]=${map[keys[0]]}" // TODO: REMOVE
                     return map[keys[0]]
                 } else {
                     return getValueFromNestedMap(map[keys[0]], keys[1..-1])
                 }
             }
-            return getValueFromNestedMap(context, keys)
+            return getValueFromNestedMap(context, keyList)
         }
     }
 
