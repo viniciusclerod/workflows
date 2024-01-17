@@ -48,7 +48,7 @@ class Command {
           //     String type = value.getClass().getSimpleName().toLowerCase()
           //     return ["${key}": (type == this.parameters[key]?.type) ? value : null]
           // }.findAll { it.value != null } ?: [:]
-          this.ctx.echo "parameters=${parameters} arguments=${arguments}"
+          this.ctx.echo "parameters=${parameters} arguments=${arguments} ${(parameters.keySet() + arguments.keySet())}"
           return MapHelper.merge(parameters, arguments, { a, b -> b ?: a })
         // case NullObject:
         //   if (defaultArgs) return defaultArgs
