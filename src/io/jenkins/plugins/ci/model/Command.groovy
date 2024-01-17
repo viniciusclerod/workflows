@@ -38,7 +38,7 @@ class Command {
 
     def getParameters(def arguments) {
       def parameters = this.parameters.collectEntries { key, value ->
-          ["${key}": value.default]
+          [(key): value.default]
       }.findAll { it.value != null } ?: [:]
       if (!arguments as Boolean) return parameters
       switch (arguments) {

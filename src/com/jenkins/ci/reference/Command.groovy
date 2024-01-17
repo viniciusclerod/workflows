@@ -20,7 +20,7 @@ class Command {
         } else {
             this.steps.each { step ->
                 Map args = step.arguments.collectEntries {
-                    ["${it.key}": this.parseAttribute([
+                    [(it.key): this.parseAttribute([
                         parameters: this.getParams(arguments)
                     ], it.value)]
                 }
@@ -31,11 +31,11 @@ class Command {
 
     def getParams(Map arguments = [:]) {
         Map defaultParams = this.parameters.collectEntries { key, val ->
-            ["${key}": val.default]
+            [(key): val.default]
         }.findAll { it.value != null } ?: [:]
         Map stepParams = arguments.collectEntries { key, val ->
             String type = value.getClass().getSimpleName().toLowerCase()
-            return ["${key}": (type == this.parameters[key].type) ? val : null]
+            return [(key): (type == this.parameters[key].type) ? val : null]
         }.findAll { it.value != null } ?: [:]
         return MapHelper.merge(defaultParams, stepParams)
     }
