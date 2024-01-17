@@ -40,7 +40,7 @@ class Step {
             def keys = match[1].split("\\.")
             def value = keys.inject(context) { map, key ->
                 if (this.ctx) this.ctx.echo "${map.getClass()} map=${map}\n${key.getClass()} key=${key}\n${map.get(key).getClass()} map.get(key)=${map.get(key)}" // TODO: REMOVE
-                return map.get(key)
+                return map.get("${key}")
             }
             // keys.each { key ->
             //     value = value[key]
