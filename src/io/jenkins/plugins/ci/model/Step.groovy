@@ -14,7 +14,7 @@ class Step {
         if (parameters) {
             if (ctx) this.ctx = ctx // TODO: REMOVE
             if (this.ctx) this.ctx.echo "BEGIN arguments=${arguments} parameters=${parameters}" // TODO: REMOVE
-            arguments = this.parseArguments([ parameters: parameters as Map ], arguments)
+            arguments = this.parseArguments([ parameters: parameters ], arguments)
             if (this.ctx) this.ctx.echo "END arguments=${arguments} parameters=${parameters}" // TODO: REMOVE
         }
         this.command.execute(arguments)
@@ -40,7 +40,7 @@ class Step {
             def keys = match[1].split("\\.")
             def value = keys.inject(context) { map, key ->
                 if (this.ctx) this.ctx.echo "${map.getClass()} map=${map}\n${key.getClass()} key=${key}\n${map.get(key).getClass()} map.get(key)=${map.get(key)}" // TODO: REMOVE
-                return map.get("${key}")
+                return map.get("${key}") as Map
             }
             // keys.each { key ->
             //     value = value[key]
