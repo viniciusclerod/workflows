@@ -41,7 +41,7 @@ class Pipeline {
 
     def buildStages(def ctx) {
         def script = {
-            stage('Steps Test') {
+            stage('Schrödinger Cat') {
                 this.config.steps.each { step ->
                     step.execute()
                 }
