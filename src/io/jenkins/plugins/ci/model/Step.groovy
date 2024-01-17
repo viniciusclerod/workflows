@@ -19,7 +19,7 @@ class Step {
         switch (arguments) {
             case Map:
                 arguments.collectEntries { it ->
-                    value = it.value instanceof String 
+                    def value = it.value instanceof String 
                         ? this.parseArgument(context, it.value) 
                         : it.value
                     return ["${it.key}": value]
