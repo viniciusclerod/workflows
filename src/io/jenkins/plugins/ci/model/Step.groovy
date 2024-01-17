@@ -14,7 +14,7 @@ class Step {
         if (parameters) {
             if (ctx) this.ctx = ctx // TODO: REMOVE
             if (this.ctx) this.ctx.echo "BEGIN arguments=${arguments} parameters=${parameters}" // TODO: REMOVE
-            arguments = this.parseArguments([ parameters: parameters ], arguments)
+            arguments = this.parseArguments([ parameters: parameters as Map ], arguments)
             if (this.ctx) this.ctx.echo "END arguments=${arguments} parameters=${parameters}" // TODO: REMOVE
         }
         this.command.execute(arguments)
