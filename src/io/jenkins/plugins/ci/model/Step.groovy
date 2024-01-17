@@ -38,7 +38,7 @@ class Step {
     def parseArgument(def context, String text) {
         return text.replaceAll(/<<\s*([\S]+)\s*>>/) { match ->
             def keys = match[1].split("\\.")
-            def value = context.getIn(keys)
+            def value = keys.inject(context) { map, key -> map[key] }
             // keys.each { key ->
             //     value = value[key]
             //     if (this.ctx) this.ctx.echo "key=${key} value=${value}" // TODO: REMOVE
