@@ -7,12 +7,12 @@ class Step {
     Command command
     def arguments
 
-    def execute(def parameters, def ctx) {
+    def execute(def parameters = null, def ctx = null) {
         def arguments = this.arguments
         if (parameters) {
-            ctx.echo "parameters=${parameters}"
+            if (ctx) ctx.echo "arguments=${arguments} parameters=${parameters}"
             arguments = this.parseArguments([ parameters: parameters ], arguments)
-            ctx.echo "parameters=${parameters}"
+            if (ctx) ctx.echo "arguments=${arguments} parameters=${parameters}"
         }
         this.command.execute(arguments)
     }
