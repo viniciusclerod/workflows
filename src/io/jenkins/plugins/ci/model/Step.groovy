@@ -7,15 +7,15 @@ class Step {
     Command command
     def arguments
 
-    def execute(Map parameters) {
+    def execute(def parameters) {
         def arguments = this.arguments
         if (parameters) {
-            arguments = this.parseArguments([ parameters: parameters ])
+            arguments = this.parseArguments([ parameters: parameters ], arguments)
         }
         this.command.execute(arguments)
     }
 
-    def parseArguments(def context = this, def arguments = this.arguments) {
+    def parseArguments(def context, def arguments) {
         switch (arguments) {
             case Map:
                 arguments.collectEntries { it ->
@@ -32,7 +32,7 @@ class Step {
         }
     }
 
-    def parseArgument(def context = this, String text) {
+    def parseArgument(def context, String text) {
         return text.replaceAll(/<<\s*([\S]+)\s*>>/) { match ->
             def keys = match[1].split("\\.")
             def value = context
