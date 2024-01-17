@@ -39,7 +39,7 @@ class Step {
         return text.replaceAll(/<<\s*([\S]+)\s*>>/) { match ->
             def keys = match[1].split("\\.")
             def value = keys.inject(context) { map, key ->
-                if (this.ctx) this.ctx.echo "map=${map} key=${key} map[key]=${map[key]}" // TODO: REMOVE
+                if (this.ctx) this.ctx.echo "${map.getClass()} map=${map}\n${key.getClass()} key=${key}\n${map[key].getClass()} map[key]=${map[key]}" // TODO: REMOVE
                 return map[key]
             }
             // keys.each { key ->
