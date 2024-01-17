@@ -19,6 +19,7 @@ class Command {
       } else {
         this.steps.each { step ->
           def parameters = this.getParameters(arguments)
+          this.ctx.echo "parameters=${parameters}"
           step.execute(parameters)
         }
       }
