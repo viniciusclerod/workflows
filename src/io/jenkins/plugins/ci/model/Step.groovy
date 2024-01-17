@@ -41,7 +41,7 @@ class Step {
             def findValueFromMap = { map, keys ->
                 if (this.ctx) this.ctx.echo "map=${map}\nkeys=${keys}\nmap[keys[0]]=${map[keys[0]]}" // TODO: REMOVE
                 if (keys.size() == 1) return map[keys[0]]
-                else return findValueFromMap(map[keys[0]], keys[1..-1])
+                else return findValueFromMap(map[keys[0]] as Map, keys[1..-1] as List)
             }
             return findValueFromMap(context, keyList)
         }
