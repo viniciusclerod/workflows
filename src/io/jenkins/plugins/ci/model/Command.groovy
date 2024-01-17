@@ -49,7 +49,7 @@ class Command {
           //     return ["${key}": (type == this.parameters[key]?.type) ? value : null]
           // }.findAll { it.value != null } ?: [:]
           this.ctx.echo "parameters=${parameters} arguments=${arguments}"
-          return MapHelper.merge(parameters, arguments)
+          return MapHelper.merge(parameters, arguments, { a, b -> b ?: a })
         // case NullObject:
         //   if (defaultArgs) return defaultArgs
         //   break
