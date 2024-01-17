@@ -17,16 +17,9 @@ class Command {
       if (this.steps.isEmpty()) {
         this.invoke(arguments)
       } else {
-        this.steps.each { source ->
-          Step target = new Step(source.properties.findAll { it.key != 'class' })
-          this.ctx.echo "source.properties=${source.properties}\ntarget.properties=${target.properties}"
-          // target.arguments.each {
-          //   target.arguments[it.key] = this.parseAttrs([
-          //       parameters: this.getMergedArgs(arguments)
-          //   ], it.value)
-          // }
-          target.arguments = this.getMergedArgs(arguments)
-          target.execute()
+        this.steps.each { step ->
+          def params = this.getParams(arguments)
+          step.execute()
         }
       }
     }
@@ -42,6 +35,41 @@ class Command {
       }
       context.invokeMethod(this.name, arguments)
     }
+
+    def getParams(def arguments) {
+      Map params = this.parameters.collectEntries { key, value ->
+          ["${key}": value.default]
+      }.findAll { it.value != null } ?: [:]
+      if (!arguments as Boolean) return params
+      switch (arguments) {
+        case Map:
+          // Map externalArgs = arguments.collectEntries { key, value ->
+          //     String type = value.getClass().getSimpleName().toLowerCase()
+          //     return ["${key}": (type == this.parameters[key]?.type) ? value : null]
+          // }.findAll { it.value != null } ?: [:]
+          params = MapHelper.merge(params, arguments)
+          break
+        // case NullObject:
+        //   if (defaultArgs) return defaultArgs
+        //   break
+        // case String:
+        default:
+          break
+      }
+      return params
+    }
+    
+    // def execStep(Step source, def arguments) {
+    //   // Step target = new Step(source.properties.findAll { it.key != 'class' }) // COPY
+
+    //   // target.arguments.each {
+    //   //   target.arguments[it.key] = this.parseAttrs([
+    //   //       parameters: this.getMergedArgs(arguments)
+    //   //   ], it.value)
+    //   // }
+    //   // target.arguments = this.getMergedArgs(arguments)
+    //   // target.execute()
+    // }
 
     def getMergedArgs(def arguments) {
       this.ctx.echo "arguments=${arguments} as ${arguments.getClass()}"
