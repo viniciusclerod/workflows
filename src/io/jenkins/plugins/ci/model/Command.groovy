@@ -18,8 +18,8 @@ class Command {
         this.invoke(arguments)
       } else {
         this.steps.each { step ->
-          def params = this.getParams(arguments)
-          step.execute()
+          def parameters = this.getParameters(arguments)
+          step.execute(parameters)
         }
       }
     }
@@ -36,19 +36,18 @@ class Command {
       context.invokeMethod(this.name, arguments)
     }
 
-    def getParams(def arguments) {
-      def params = this.parameters.collectEntries { key, value ->
+    def getParameters(def arguments) {
+      def parameters = this.parameters.collectEntries { key, value ->
           ["${key}": value.default]
       }.findAll { it.value != null } ?: [:]
-      if (!arguments as Boolean) return params
+      if (!arguments as Boolean) return parameters
       switch (arguments) {
         case Map:
           // Map externalArgs = arguments.collectEntries { key, value ->
           //     String type = value.getClass().getSimpleName().toLowerCase()
           //     return ["${key}": (type == this.parameters[key]?.type) ? value : null]
           // }.findAll { it.value != null } ?: [:]
-          return MapHelper.merge(params, arguments)
-          break
+          return MapHelper.merge(parameters, arguments)
         // case NullObject:
         //   if (defaultArgs) return defaultArgs
         //   break
@@ -70,37 +69,37 @@ class Command {
     //   // target.execute()
     // }
 
-    def getMergedArgs(def arguments) {
-      this.ctx.echo "arguments=${arguments} as ${arguments.getClass()}"
-      Map defaultArgs = this.parameters.collectEntries { key, value ->
-          ["${key}": value.default]
-      }.findAll { it.value != null } ?: [:]
-      switch (arguments) {
-        case Map:
-          // Map externalArgs = arguments.collectEntries { key, value ->
-          //     String type = value.getClass().getSimpleName().toLowerCase()
-          //     return ["${key}": (type == this.parameters[key]?.type) ? value : null]
-          // }.findAll { it.value != null } ?: [:]
-          if (defaultArgs) return MapHelper.merge(defaultArgs, arguments)
-          break
-        case NullObject:
-          if (defaultArgs) return defaultArgs
-          break
-        case String:
-        default:
-          // TODO
-          break
-      }
-      return arguments
-    }
+    // def getMergedArgs(def arguments) {
+    //   this.ctx.echo "arguments=${arguments} as ${arguments.getClass()}"
+    //   Map defaultArgs = this.parameters.collectEntries { key, value ->
+    //       ["${key}": value.default]
+    //   }.findAll { it.value != null } ?: [:]
+    //   switch (arguments) {
+    //     case Map:
+    //       // Map externalArgs = arguments.collectEntries { key, value ->
+    //       //     String type = value.getClass().getSimpleName().toLowerCase()
+    //       //     return ["${key}": (type == this.parameters[key]?.type) ? value : null]
+    //       // }.findAll { it.value != null } ?: [:]
+    //       if (defaultArgs) return MapHelper.merge(defaultArgs, arguments)
+    //       break
+    //     case NullObject:
+    //       if (defaultArgs) return defaultArgs
+    //       break
+    //     case String:
+    //     default:
+    //       // TODO
+    //       break
+    //   }
+    //   return arguments
+    // }
 
-    def parseAttrs(def context = this, String text) {
-        return text.replaceAll(/<<\s*([\S]+)\s*>>/) { match ->
-            def keys = match[1].split("\\.")
-            def value = context
-            keys.each { key -> value = value[key] }
-            return value
-        }
-    }
+    // def parseAttrs(def context = this, String text) {
+    //     return text.replaceAll(/<<\s*([\S]+)\s*>>/) { match ->
+    //         def keys = match[1].split("\\.")
+    //         def value = context
+    //         keys.each { key -> value = value[key] }
+    //         return value
+    //     }
+    // }
 
 }
