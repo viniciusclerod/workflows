@@ -62,10 +62,10 @@ class Pipeline {
         def script = {
             String output = sh(
                 label: "Preparing environment variables",
-                script: environment.collect { k, v -> "$k=$v && echo $k=\$$k"}.join('\n'),
+                script: this.config.environment.collect { k, v -> "$k=$v && echo $k=\$$k"}.join('\n'),
                 returnStdout: true
             ).trim()
-            return output.split('\n').collect { env -> env }
+            return output.split('\n')
         }
         script.delegate = ctx
         return script.call()
