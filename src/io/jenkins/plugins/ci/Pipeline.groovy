@@ -59,16 +59,12 @@ class Pipeline {
     }
 
     def getEnvironment(def ctx) {
-        def script = {
-            String output = sh(
-                label: "Preparing environment variables",
-                script: this.config.environment.collect { k, v -> "$k=$v && echo $k=\$$k"}.join('\n'),
-                returnStdout: true
-            ).trim()
-            return output.split('\n')
-        }
-        script.delegate = ctx
-        return script.call()
+        String output = ctx.sh(
+            label: "Preparing environment variables",
+            script: this.config.environment.collect { k, v -> "$k=$v && echo $k=\$$k"}.join('\n'),
+            returnStdout: true
+        ).trim()
+        return output.split('\n')
     }
 
 }
