@@ -20,7 +20,6 @@ class Pipeline {
         def script = {
             node {
                 this.buildSetupStage(ctx)
-                this.buildBuiltIn(ctx)
                 this.buildStages(ctx)
             }
         }
