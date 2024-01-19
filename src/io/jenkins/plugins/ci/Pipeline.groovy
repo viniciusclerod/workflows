@@ -65,7 +65,7 @@ class Pipeline {
                 script: environment.collect { k, v -> "$k=$v && echo $k=\$$k"}.join('\n'),
                 returnStdout: true
             ).trim()
-            return output.split('\n').collect { it -> it }
+            return output.split('\n').collect { env -> env }
         }
         script.delegate = ctx
         return script.call()
