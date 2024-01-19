@@ -9,9 +9,14 @@ class ConfigParser {
 
     static Configuration parse(def ctx, def yaml) {
         Configuration config = new Configuration()
+        ConfigParser.buildEnvironment(ctx, config, yaml.environment)
         ConfigParser.buildCommands(ctx, config, yaml.commands)
         config.steps = ConfigParser.parseSteps(ctx, config, yaml.steps)
         return config
+    }
+
+    static void buildEnvironment(def ctx, Configuration config, Map map) {
+        config.environment = map ?: [:]
     }
 
     static void buildCommands(def ctx, Configuration config, Map map) {
