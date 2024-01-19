@@ -34,7 +34,7 @@ class Pipeline {
                 def yaml = readYaml file: this.yamlPath
                 this.config = ConfigParser.parse(ctx, yaml)
                 if (this.config.environment) {
-                    List<String> environment = this.buildEnvironment(def ctx)
+                    List<String> environment = this.buildEnvironment(ctx)
                     environment.each {
                         def (key, value) = it.split('=', 2)
                         ctx.env.setProperty(k, v)
