@@ -34,8 +34,7 @@ class Pipeline {
                 def yaml = readYaml file: this.yamlPath
                 this.config = ConfigParser.parse(ctx, yaml)
                 if (this.config.environment) {
-                    echo "${this.config.environment}"
-                    // List<String> environment = this.getEnvironment(ctx)
+                    List<String> environment = this.getEnvironment(ctx)
                     // environment.each { env ->
                     //     def (key, value) = env.split('=', 2)
                     //     env.setProperty(key, value)
@@ -59,13 +58,14 @@ class Pipeline {
         script.call()
     }
 
-    // def getEnvironment(def ctx) {
+    def getEnvironment(def ctx) {
+        ctx.echo "ENV"
     //     String output = ctx.sh(
     //         label: "Preparing environment variables",
     //         script: this.config.environment.collect { k, v -> "$k=$v && echo $k=\$$k"}.join('\n'),
     //         returnStdout: true
     //     ).trim()
     //     return output.split('\n')
-    // }
+    }
 
 }
