@@ -2,6 +2,7 @@ package io.jenkins.plugins.ci
 
 import io.jenkins.plugins.ci.model.Configuration
 import io.jenkins.plugins.ci.parser.ConfigParser
+import groovy.lang.GroovyShell
 
 class Pipeline {
 
@@ -20,6 +21,7 @@ class Pipeline {
         def script = {
             node {
                 this.buildSetupStage(ctx)
+                this.buildBuiltIn(ctx)
                 this.buildStages(ctx)
             }
         }
@@ -49,6 +51,18 @@ class Pipeline {
         }
         script.delegate = ctx
         script.call()
+    }
+
+    def buildBuiltIn(def ctx) {
+        def script = {
+            def script(String code) {
+                def shell new GroovyShell()
+                shell.evaluate(code)
+            }
+        }
+        script.delegate = ctx
+        script.call()
+        
     }
 
 }

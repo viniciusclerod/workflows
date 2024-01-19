@@ -8,7 +8,7 @@ class Step {
     Command command
     def arguments
 
-    def execute(def parameters = null, def ctx = null) {
+    def execute(def parameters = null) {
         def arguments = this.arguments
         if (parameters) {
             arguments = this.parseArguments([ parameters: parameters ], arguments)
