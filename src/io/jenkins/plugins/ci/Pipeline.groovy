@@ -35,11 +35,10 @@ class Pipeline {
                 this.config = ConfigParser.parse(ctx, yaml)
                 if (this.config.environment) {
                     List<String> environment = this.getEnvironment(ctx)
-                    echo "environment=${environment}"
-                    // environment.each { env ->
-                    //     def (key, value) = env.split('=', 2)
-                    //     env.setProperty(key, value)
-                    // }
+                    environment.each { env ->
+                        def (key, value) = env.split('=', 2)
+                        env.setProperty(key, value)
+                    }
                 }
             }
         }
