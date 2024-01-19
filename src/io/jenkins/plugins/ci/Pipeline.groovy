@@ -58,6 +58,7 @@ class Pipeline {
             def shell = new GroovyShell()
             shell.evaluate(code)
         }
+        ctx.script.delegate = ctx
         // def clousure = {
         //     // def script = (String code) {
         //     // }
