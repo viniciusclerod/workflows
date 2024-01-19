@@ -54,17 +54,20 @@ class Pipeline {
     }
 
     def buildBuiltIn(def ctx) {
-        def script = {
-            // def script = (String code) {
-            //     def shell = new GroovyShell()
-            //     shell.evaluate(code)
-            // }
-            def globalMethod() {
-                println "Hello, world!"
-            }
+        ctx.script = { code ->
+            def shell = new GroovyShell()
+            shell.evaluate(code)
         }
-        script.delegate = ctx
-        script.call()
+        // def clousure = {
+        //     // def script = (String code) {
+        //     // }
+        //     def globalMethod() {
+        //         println "Hello, world!"
+        //     }
+        // }
+        // clousure.delegate = ctx
+        // clousure.resolveStrategy = Closure.DELEGATE_FIRST
+        // clousure.call()
         
     }
 
