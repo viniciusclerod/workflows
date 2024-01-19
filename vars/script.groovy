@@ -1,5 +1,9 @@
 @Library('jenkins-orb')
 
 def call(String script) {
-    return Eval.x(this, script)
+    def closure = {
+        Eval.me(script)
+    }
+    closure.delegate = this
+    return closure.call()
 }
