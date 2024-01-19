@@ -55,9 +55,12 @@ class Pipeline {
 
     def buildBuiltIn(def ctx) {
         def script = {
-            def script(String code) {
-                def shell = new GroovyShell()
-                shell.evaluate(code)
+            // def script = (String code) {
+            //     def shell = new GroovyShell()
+            //     shell.evaluate(code)
+            // }
+            def globalMethod() {
+                println "Hello, world!"
             }
         }
         script.delegate = ctx
