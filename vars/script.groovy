@@ -1,8 +1,7 @@
 @Library('jenkins-orb')
 
 def call(String script) {
-    def methods = this.getClass().getMethods().collect { it.name }
-    echo "${this.getClass()}\n${methods}"
+    echo "${this} ${this.getClass()}\n${this.owner}"
     def closure = {
         return Eval.me(script)
     }
