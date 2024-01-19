@@ -2,7 +2,6 @@ package io.jenkins.plugins.ci
 
 import io.jenkins.plugins.ci.model.Configuration
 import io.jenkins.plugins.ci.parser.ConfigParser
-import groovy.lang.GroovyShell
 
 class Pipeline {
 
@@ -51,25 +50,6 @@ class Pipeline {
         }
         script.delegate = ctx
         script.call()
-    }
-
-    def buildBuiltIn(def ctx) {
-        ctx.script = { code ->
-            def shell = new GroovyShell()
-            shell.evaluate(code)
-        }
-        ctx.script.delegate = ctx
-        // def clousure = {
-        //     // def script = (String code) {
-        //     // }
-        //     def globalMethod() {
-        //         println "Hello, world!"
-        //     }
-        // }
-        // clousure.delegate = ctx
-        // clousure.resolveStrategy = Closure.DELEGATE_FIRST
-        // clousure.call()
-        
     }
 
 }
