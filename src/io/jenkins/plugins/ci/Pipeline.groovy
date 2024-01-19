@@ -37,7 +37,7 @@ class Pipeline {
                     List<String> environment = this.getEnvironment(ctx)
                     environment.each { item ->
                         def (key, value) = item.split('=', 2)
-                        env.setProperty(key, value)
+                        ctx.env.setProperty(key, value)
                     }
                 }
             }
