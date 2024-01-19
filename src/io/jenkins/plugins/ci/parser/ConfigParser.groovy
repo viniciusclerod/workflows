@@ -11,6 +11,7 @@ class ConfigParser {
         Configuration config = new Configuration()
         ConfigParser.buildEnvironment(ctx, config, yaml.environment)
         ConfigParser.buildCommands(ctx, config, yaml.commands)
+        ConfigParser.buildJobs(ctx, config, yaml.jobs)
         config.steps = ConfigParser.parseSteps(ctx, config, yaml.steps)
         return config
     }
@@ -20,9 +21,6 @@ class ConfigParser {
     }
 
     static void buildCommands(def ctx, Configuration config, Map map) {
-        // Map builtInCommands = [
-        //     run: new Command(name: 'sh')
-        // ]
         map.each { key, value ->
             Boolean isLeaf = !(value.steps) as Boolean
             List<Step> steps = isLeaf ? [] : ConfigParser.parseSteps(ctx, config, value.steps)
@@ -33,6 +31,17 @@ class ConfigParser {
                 steps: steps
             )
             config.commands[key] = command
+        }
+    }
+
+    static void buildJobs(def ctx, Configuration config, Map map) {
+        map.each { key, value ->
+            Job job = new Job(
+                name: key,
+                environment: value.environment ?: [:],
+                steps: ConfigParser.parseSteps(ctx, config, value.steps) ?: []
+            )
+            config.jobs[key] = job
         }
     }
 
