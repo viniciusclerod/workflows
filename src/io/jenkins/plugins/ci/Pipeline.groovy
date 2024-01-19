@@ -33,6 +33,13 @@ class Pipeline {
                 checkout ctx.scm
                 def yaml = readYaml file: this.yamlPath
                 this.config = ConfigParser.parse(ctx, yaml)
+                if (this.config.environment) {
+                    List<String> environment = this.buildEnvironment(def ctx)
+                    environment.each {
+                        def (key, value) = it.split('=', 2)
+                        ctx.env.setProperty(k, v)
+                    }
+                }
             }
         }
         script.delegate = ctx
@@ -49,6 +56,19 @@ class Pipeline {
         }
         script.delegate = ctx
         script.call()
+    }
+
+    def getEnvironment(def ctx) {
+        def script = {
+            String output = sh(
+                label: "Preparing environment variables",
+                script: environment.collect { k, v -> "$k=$v && echo $k=\$$k"}.join('\n'),
+                returnStdout: true
+            ).trim()
+            return output.split('\n').collect { it -> it }
+        }
+        script.delegate = ctx
+        return script.call()
     }
 
 }
