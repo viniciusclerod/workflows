@@ -3,7 +3,7 @@
 def call(String script) {
     echo "${this}"
     def closure = {
-        Eval.me(script)
+        return Eval.me(script)
     }
     closure.delegate = this
     return closure.call()
