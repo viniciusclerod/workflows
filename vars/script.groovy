@@ -6,5 +6,6 @@ def call(String script) {
         return Eval.me(script)
     }
     closure.delegate = this
+    closure.resolveStrategy = Closure.DELEGATE_FIRST
     return closure.call()
 }
