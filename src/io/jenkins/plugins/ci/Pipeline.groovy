@@ -51,7 +51,7 @@ class Pipeline {
             this.config.jobs.each { key, job ->
                 echo "${key}=${job}\n${job.properties}"
                 stage(job.name) {
-                    def env = this.getEnvironment(ctx, job.environment)
+                    List<String> env = this.getEnvironment(ctx, job.environment)
                     withEnv([]) {
                         echo "Env: ${env}"
                         // job.execute()
