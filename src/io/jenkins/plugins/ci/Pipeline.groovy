@@ -50,9 +50,12 @@ class Pipeline {
         def script = {
             this.config.jobs.each { key, job ->
                 withEnv(this.getEnvironment(ctx, job.environment)) {
-                    stage(job.name) {
-                        job.execute()
+                    stage("Job") {
+                        echo "OK"
                     }
+                    // stage(job.name) {
+                    //     job.execute()
+                    // }
                 }
             }
         }
@@ -66,7 +69,7 @@ class Pipeline {
             script: environment.collect { k, v -> "$k=$v && echo $k=\$$k"}.join('\n'),
             returnStdout: true
         ).trim()
-        ctx.echo "${output}"
+        ctx.echo "getEnvironment=${output}.split('\n')"
         return output.split('\n')
     }
 
