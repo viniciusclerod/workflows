@@ -67,7 +67,7 @@ class Pipeline {
             script: environment.collect { k, v -> "$k=$v && echo $k=\$$k"}.join('\n'),
             returnStdout: true
         ).trim()
-        return output.split('\n')
+        return output.split('\n') as List<String>
     }
 
 }
