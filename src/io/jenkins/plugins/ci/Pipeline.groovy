@@ -51,8 +51,7 @@ class Pipeline {
             this.config.jobs.each { key, job ->
                 stage(job.name) {
                     withEnv(this.getEnvironment(ctx, job.environment)) {
-                        echo "${key}=${job}\n${job.properties}"
-                        // job.execute()
+                        job.execute()
                     }
                 }
             }
