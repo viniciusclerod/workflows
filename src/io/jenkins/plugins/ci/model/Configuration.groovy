@@ -7,6 +7,6 @@ class Configuration {
     
     Map environment = [:]
     Map<String,Command> commands = [:]
-    List<Step> steps = []
+    Map<String,Job> jobs = [:]
 
 }

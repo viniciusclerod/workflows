@@ -36,13 +36,12 @@ class ConfigParser {
 
     static void buildJobs(def ctx, Configuration config, Map map) {
         map.each { key, value ->
-            ctx.echo "${key}, ${value}"
-            // Job job = new Job(
-            //     name: key,
-            //     environment: value.environment ?: [:],
-            //     steps: ConfigParser.parseSteps(ctx, config, value.steps) ?: []
-            // )
-            // config.jobs[key] = job
+            Job job = new Job(
+                name: key,
+                environment: value.environment ?: [:],
+                steps: ConfigParser.parseSteps(ctx, config, value.steps) ?: []
+            )
+            config.jobs[key] = job
         }
     }
 
