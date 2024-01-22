@@ -19,38 +19,48 @@ class Pipeline {
     def buildPipeline(def ctx) {
         def script = {
             node {
-                def workflow1 = {
-                    // Steps for Workflow 1
-                    stage('Setup') {
-                        echo "Setup 1"
-                    }
-                    stage('Another Stage') {
-                        echo "Stage from 1"
-                    }
-                }
-
-                def workflow2 = {
-                    // Steps for Workflow 2
-                    stage('Setup') {
-                        echo "Setup 2"
-                    }
-                    stage('Another Stage') {
-                        echo "Stage from 2"
-                    }
-                }
-
-                parallel workflow1: {
-                    workflow1()
-                }, workflow2: {
-                    workflow2()
-                }
-                // this.buildSetupStage(ctx)
+                this.buildSetupStage(ctx)
+                this.buildWorkflows(ctx)
                 // this.buildStages(ctx)
             }
         }
         script.delegate = ctx
         script.call()
     }
+
+    def buildWorkflows(def ctx) {
+        def script = {
+            def workflow1 = {
+                // Steps for Workflow 1
+                stage('Setup') {
+                    echo "Setup 1"
+                }
+                stage('Another Stage') {
+                    echo "Stage from 1"
+                }
+            }
+
+            def workflow2 = {
+                // Steps for Workflow 2
+                stage('Setup') {
+                    echo "Setup 2"
+                }
+                stage('Another Stage') {
+                    echo "Stage from 2"
+                }
+            }
+
+            parallel workflow1: {
+                workflow1()
+            }, workflow2: {
+                workflow2()
+            }
+        }
+        script.delegate = ctx
+        script.call()
+    }
+
+
 
     def buildSetupStage(def ctx) {
         def script = {
