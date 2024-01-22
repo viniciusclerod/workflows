@@ -13,7 +13,6 @@ class ConfigParser {
         ConfigParser.buildEnvironment(ctx, config, yaml.environment)
         ConfigParser.buildCommands(ctx, config, yaml.commands)
         ConfigParser.buildJobs(ctx, config, yaml.jobs)
-        config.steps = ConfigParser.parseSteps(ctx, config, yaml.steps)
         return config
     }
 
