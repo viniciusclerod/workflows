@@ -49,7 +49,7 @@ class Pipeline {
     def buildStages(def ctx) {
         def script = {
             this.config.jobs.each { job ->
-                withEnv(buildEnvironment(job.environment)) {
+                withEnv(this.getEnvironment(ctx, job.environment)) {
                     stage(job.name) {
                         job.execute()
                     }
@@ -60,10 +60,10 @@ class Pipeline {
         script.call()
     }
 
-    def getEnvironment(def ctx) {
+    def getEnvironment(def ctx, Map environment = this.config.environment) {
         String output = ctx.sh(
             label: "Preparing environment variables",
-            script: this.config.environment.collect { k, v -> "$k=$v && echo $k=\$$k"}.join('\n'),
+            script: environment.collect { k, v -> "$k=$v && echo $k=\$$k"}.join('\n'),
             returnStdout: true
         ).trim()
         return output.split('\n')
