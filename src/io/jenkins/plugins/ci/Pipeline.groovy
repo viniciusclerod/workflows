@@ -49,13 +49,12 @@ class Pipeline {
     def buildStages(def ctx) {
         def script = {
             this.config.jobs.each { key, job ->
-                withEnv(this.getEnvironment(ctx, job.environment)) {
-                    stage("Job") {
+                // stage(job.name) {
+                stage("Job") {
+                    withEnv(this.getEnvironment(ctx, job.environment)) {
                         echo "OK"
+                        // job.execute()
                     }
-                    // stage(job.name) {
-                    //     job.execute()
-                    // }
                 }
             }
         }
