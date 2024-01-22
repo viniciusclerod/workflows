@@ -49,8 +49,10 @@ class Pipeline {
     def buildStages(def ctx) {
         def script = {
             this.config.jobs.each { job ->
-                stage(job.name) {
-                    job.execute()
+                withEnv(buildEnvironment(job.environment)) {
+                    stage(job.name) {
+                        job.execute()
+                    }
                 }
             }
         }
