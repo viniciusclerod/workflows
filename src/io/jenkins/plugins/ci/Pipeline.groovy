@@ -19,8 +19,33 @@ class Pipeline {
     def buildPipeline(def ctx) {
         def script = {
             node {
-                this.buildSetupStage(ctx)
-                this.buildStages(ctx)
+                def workflow1 = {
+                    // Steps for Workflow 1
+                    stage('Setup') {
+                        echo "Setup 1"
+                    }
+                    stage('Another Stage') {
+                        echo "Stage from 1"
+                    }
+                }
+
+                def workflow2 = {
+                    // Steps for Workflow 2
+                    stage('Setup') {
+                        echo "Setup 2"
+                    }
+                    stage('Another Stage') {
+                        echo "Stage from 2"
+                    }
+                }
+
+                parallel workflow1: {
+                    workflow1()
+                }, workflow2: {
+                    workflow2()
+                }
+                // this.buildSetupStage(ctx)
+                // this.buildStages(ctx)
             }
         }
         script.delegate = ctx
