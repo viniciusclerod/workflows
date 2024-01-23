@@ -70,7 +70,7 @@ class ConfigParser {
         map.each { key, value ->
             ctx.echo "${key}=${value}"
             Workflow workflow = new Workflow(
-                name: value?.name ?: key
+                name: value?.name ?: key,
                 stages: ConfigParser.parseStages(ctx, config, value.jobs) ?: []
             )
             config.workflows[key] = workflow
