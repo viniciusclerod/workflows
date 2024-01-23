@@ -89,6 +89,7 @@ class ConfigParser {
                     break
                 default:
                     key = item
+                    value = [:]
             }
             Job job = config.jobs[key]
             Stage stage = new Stage(
