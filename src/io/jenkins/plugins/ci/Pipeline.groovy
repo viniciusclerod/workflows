@@ -20,7 +20,7 @@ class Pipeline {
         def script = {
             node {
                 this.buildSetupStage(ctx)
-                this.buildWorkflows(ctx)
+                // this.buildWorkflows(ctx)
                 // this.buildStages(ctx)
             }
         }
