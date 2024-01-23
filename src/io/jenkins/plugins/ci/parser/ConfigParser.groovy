@@ -82,16 +82,17 @@ class ConfigParser {
         List stages = list.collect { it ->
             Stage stage = null
             if (it instanceof String) {
+                ctx.echo "it=${it}"
                 stage = new Stage(name: it, type: 'job')
             } else {
                 String key = it.keySet().first()
+                ctx.echo "key=${key}"
                 stage = new Stage(
                     name: it[key].name ?: key,
                     type: it[key].type ?: null,
                     job: config.jobs[key],
                     filters: [:]
                 )
-                ctx.echo "${stage.parameters}"
 
 
                 // it[key].filters.each { rule, filter ->
