@@ -79,28 +79,38 @@ class ConfigParser {
     }
 
     static List<Stage> parseStages(def ctx, Configuration config, List list) {
-        List stages = list.collect { item ->
-            String key
-            String value
-            switch (item) {
-                case Map:
-                    key = item.keySet().first()
-                    value = item[key]
-                    break
-                default:
-                    key = item
-                    value = [:]
+        List stages = list.collect { it ->
+            Stage stage = null
+            if (it instanceof String) {
+                stage = new Stage(name: it, type: 'job')
+            } else {
+                String key = it.keySet().first()
+                stage = new Stage(
+                    name: it[key].name ?: key,
+                    type: it[key].type ?: null,
+                    job: config.jobs[key],
+                    filters: [:]
+                )
+                ctx.echo "${stage.parameters}"
+
+
+                // it[key].filters.each { rule, filter ->
+                //     stage.filters[rule] = new Filter(
+                //         only: filter.only ?: null,
+                //         ignore: filter.ignore ?: null
+                //     )
+                // }
+
+                // Stage stage = new Stage(
+                //     name: value?.name ?: key,
+                //     type: value?.type ?: 'job',
+                //     job: job,
+                //     filters: value?.filters.collect { rule, filter -> new Filter(
+                //         only: filter.only ?: null,
+                //         ignore: filter.ignore ?: null
+                //     ) } ?: [:]
+                // )
             }
-            Job job = config.jobs[key]
-            Stage stage = new Stage(
-                name: value?.name ?: key,
-                type: value?.type ?: 'job',
-                job: job,
-                filters: value?.filters.collect { rule, filter -> new Filter(
-                    only: filter.only ?: null,
-                    ignore: filter.ignore ?: null
-                ) } ?: [:]
-            )
             return stage
         }
         return stages as List<Stage>
