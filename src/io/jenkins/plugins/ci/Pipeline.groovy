@@ -30,29 +30,16 @@ class Pipeline {
 
     def buildWorkflows(def ctx) {
         def script = {
-            def workflow1 = {
-                // Steps for Workflow 1
-                stage('Setup') {
-                    echo "Setup 1"
-                }
-                stage('Another Stage') {
-                    echo "Stage from 1"
-                }
+            Map workflows = this.config.workflows.collectEntries { workflow ->
+                return [(workflow.name): {
+                    stage('Setup') {
+                        echo "Setup"
+                    }
+                    stage('Another Stage') {
+                        echo "Stage from"
+                    }
+                }]
             }
-
-            def workflow2 = {
-                // Steps for Workflow 2
-                stage('Setup') {
-                    echo "Setup 2"
-                }
-                stage('Another Stage') {
-                    echo "Stage from 2"
-                }
-            }
-            def workflows = [
-                w1: { workflow1() },
-                w2: { workflow2() }
-            ]
             parallel(workflows)
         }
         script.delegate = ctx

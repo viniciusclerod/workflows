@@ -1,10 +1,7 @@
 package io.jenkins.plugins.ci.parser
 
 import io.jenkins.plugins.ci.helper.MapHelper
-import io.jenkins.plugins.ci.model.Command
-import io.jenkins.plugins.ci.model.Configuration
-import io.jenkins.plugins.ci.model.Job
-import io.jenkins.plugins.ci.model.Step
+import io.jenkins.plugins.ci.model.*
 
 class ConfigParser {
 
@@ -13,6 +10,7 @@ class ConfigParser {
         ConfigParser.buildEnvironment(ctx, config, yaml.environment)
         ConfigParser.buildCommands(ctx, config, yaml.commands)
         ConfigParser.buildJobs(ctx, config, yaml.jobs)
+        ConfigParser.buildWorkflows(ctx, config, yaml.workflows)
         return config
     }
 
@@ -66,6 +64,43 @@ class ConfigParser {
             return step
         }
         return steps as List<Step>
+    }
+
+    static void buildWorkflows(def ctx, Configuration config, Map map) {
+        map.each { key, value ->
+            Workflow workflow = new Workflow(
+                name: value.name ?: key,
+                stages: ConfigParser.parseStages(ctx, config, value.jobs) ?: []
+            )
+            config.workflows[key] = workflow
+        }
+    }
+
+    static List<Stage> parseStages(def ctx, Configuration config, List list) {
+        List stages = list.collect { item ->
+            String key
+            String value
+            switch (item) {
+                case Map:
+                    key = item.keySet().first()
+                    value = item[key]
+                    break
+                default:
+                    key = item
+            }
+            Job job = config.jobs[key]
+            Stage stage = new Stage(
+                name: value.name ?: key,
+                type: value.type,
+                job: job,
+                filters: value.filters.collect { rule, filter -> new Filter(
+                    only: filter.only ?: null,
+                    ignore: filter.ignore ?: null
+                ) } ?: [:]
+            )
+            return stage
+        }
+        return stages as List<Stage>
     }
 
 }
