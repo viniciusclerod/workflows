@@ -49,12 +49,11 @@ class Pipeline {
                     echo "Stage from 2"
                 }
             }
-
-            parallel workflow1: {
-                workflow1()
-            }, workflow2: {
-                workflow2()
-            }
+            def workflows = [
+                w1: { workflow1() },
+                w2: { workflow2() }
+            ]
+            parallel(workflows)
         }
         script.delegate = ctx
         script.call()
