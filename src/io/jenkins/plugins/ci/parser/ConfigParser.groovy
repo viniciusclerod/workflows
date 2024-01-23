@@ -86,13 +86,13 @@ class ConfigParser {
                 stage = new Stage(name: it, type: 'job')
             } else {
                 String key = it.keySet().first()
-                ctx.echo "key=${key}"
-                stage = new Stage(
-                    name: it[key].name ?: key,
-                    type: it[key].type ?: null,
-                    job: config.jobs[key],
-                    filters: [:]
-                )
+                ctx.echo "${key}=${it[key]}"
+                // stage = new Stage(
+                //     name: it[key].name ?: key,
+                //     type: it[key].type ?: null,
+                //     job: config.jobs[key],
+                //     filters: [:]
+                // )
 
 
                 // it[key].filters.each { rule, filter ->
