@@ -71,9 +71,10 @@ class ConfigParser {
             ctx.echo "${key}=${value}"
             Workflow workflow = new Workflow(
                 name: value?.name ?: key
-                // stages: ConfigParser.parseStages(ctx, config, value.jobs) ?: []
+                stages: ConfigParser.parseStages(ctx, config, value.jobs) ?: []
             )
-            // config.workflows[key] = workflow
+            config.workflows[key] = workflow
+            ctx.echo "${config.workflows}"
         }
     }
 
@@ -91,10 +92,10 @@ class ConfigParser {
             }
             Job job = config.jobs[key]
             Stage stage = new Stage(
-                name: value.name ?: key,
-                type: value.type ?: 'job',
+                name: value?.name ?: key,
+                type: value?.type ?: 'job',
                 job: job,
-                filters: value.filters.collect { rule, filter -> new Filter(
+                filters: value?.filters.collect { rule, filter -> new Filter(
                     only: filter.only ?: null,
                     ignore: filter.ignore ?: null
                 ) } ?: [:]
