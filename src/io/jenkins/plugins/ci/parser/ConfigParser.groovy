@@ -69,13 +69,11 @@ class ConfigParser {
 
     static void buildWorkflows(def ctx, Configuration config, Map map) {
         map.each { key, value ->
-            ctx.echo "${key}=${value}"
             Workflow workflow = new Workflow(
                 name: value?.name ?: key,
                 actions: ConfigParser.parseActions(ctx, config, value.jobs) ?: []
             )
             config.workflows[key] = workflow
-            ctx.echo "${config.workflows}"
         }
     }
 
@@ -106,24 +104,6 @@ class ConfigParser {
                         job: config.jobs[key]
                     )
             }
-
-
-                // it[key].filters.each { rule, filter ->
-                //     stage.filters[rule] = new Filter(
-                //         only: filter.only ?: null,
-                //         ignore: filter.ignore ?: null
-                //     )
-                // }
-
-                // Stage stage = new Stage(
-                //     name: value?.name ?: key,
-                //     type: value?.type ?: 'job',
-                //     job: job,
-                //     filters: value?.filters.collect { rule, filter -> new Filter(
-                //         only: filter.only ?: null,
-                //         ignore: filter.ignore ?: null
-                //     ) } ?: [:]
-                // )
             return action
         }
         return actions as List<Action>
