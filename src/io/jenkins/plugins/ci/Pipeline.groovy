@@ -62,7 +62,7 @@ class Pipeline {
     }
 
     def buildStages(def ctx, List actions) {
-        return {
+        def script = {
             actions.each { key, action ->
                 stage(action.name) {
                     withEnv(this.getEnvironment(ctx, action.job.environment)) {
@@ -71,6 +71,8 @@ class Pipeline {
                 }
             }
         }
+        script.delegate = ctx
+        script.call()
     }
 
     List<String> getEnvironment(def ctx, Map environment = this.config.environment) {
