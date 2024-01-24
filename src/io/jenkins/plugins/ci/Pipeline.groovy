@@ -30,9 +30,7 @@ class Pipeline {
     def buildWorkflows(def ctx) {
         def script = {
             Map workflows = this.config.workflows.collectEntries { key, workflow ->
-                return [(workflow.name): {
-                    this.buildStages(ctx, workflow.actions)
-                }]
+                [(workflow.name): { this.buildActions(ctx, workflow.actions)}]
             }
             parallel(workflows)
         }
@@ -61,12 +59,12 @@ class Pipeline {
         script.call()
     }
 
-    def buildStages(def ctx, List actions) {
+    def buildActions(def ctx, List actions) {
         def script = {
             actions.each { action ->
                 stage(action.name) {
-                    withEnv(this.getEnvironment(ctx, action.job.environment)) {
-                        action.job.execute()
+                    withEnv(this.getEnvironment(ctx, action.job.environment ?: [])) {
+                        action.execute()
                     }
                 }
             }
