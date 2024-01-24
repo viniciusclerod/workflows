@@ -87,9 +87,11 @@ class ConfigParser {
             } else {
                 String key = it.keySet().first()
                 ctx.echo "${key}=${it[key]}"
+                action = new Action(name: key, type: 'job')
+
                 // action = new Action(
                 //     name: it[key].name ?: key,
-                //     type: it[key].type ?: null,
+                //     type: it[key].type ?: 'job',
                 //     job: config.jobs[key],
                 //     filters: [:]
                 // )
