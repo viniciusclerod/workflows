@@ -2,7 +2,7 @@ package io.jenkins.plugins.ci.model
 
 import io.jenkins.plugins.ci.model.Job
 
-class Stage {
+class Action {
 
     String name
     String type

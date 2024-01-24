@@ -71,23 +71,23 @@ class ConfigParser {
             ctx.echo "${key}=${value}"
             Workflow workflow = new Workflow(
                 name: value?.name ?: key,
-                stages: ConfigParser.parseStages(ctx, config, value.jobs) ?: []
+                actions: ConfigParser.parseActions(ctx, config, value.jobs) ?: []
             )
             config.workflows[key] = workflow
             ctx.echo "${config.workflows}"
         }
     }
 
-    static List<Stage> parseStages(def ctx, Configuration config, List list) {
-        List stages = list.collect { it ->
-            Stage stage = null
+    static List<Action> parseActions(def ctx, Configuration config, List list) {
+        List actions = list.collect { it ->
+            Action action = null
             if (it instanceof String) {
                 ctx.echo "it=${it}"
-                stage = new Stage(name: it, type: 'job')
+                action = new Action(name: it, type: 'job')
             } else {
                 String key = it.keySet().first()
                 ctx.echo "${key}=${it[key]}"
-                // stage = new Stage(
+                // action = new Action(
                 //     name: it[key].name ?: key,
                 //     type: it[key].type ?: null,
                 //     job: config.jobs[key],
@@ -112,9 +112,9 @@ class ConfigParser {
                 //     ) } ?: [:]
                 // )
             }
-            return stage
+            return action
         }
-        return stages as List<Stage>
+        return actions as List<Action>
     }
 
 }

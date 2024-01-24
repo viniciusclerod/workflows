@@ -1,15 +1,15 @@
 package io.jenkins.plugins.ci.model
 
-import io.jenkins.plugins.ci.model.Stage
+import io.jenkins.plugins.ci.model.Action
 
 class Workflow {
 
     String name
-    List<Stage> stages = []
+    List<Action> actions = []
 
     def execute() {
-        this.stages.each { stage ->
-            stage.execute()
+        this.actions.each { action ->
+            action.execute()
         }
     }
 
