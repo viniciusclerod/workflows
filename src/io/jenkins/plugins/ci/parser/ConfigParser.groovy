@@ -74,7 +74,7 @@ class ConfigParser {
                 actions: ConfigParser.parseActions(ctx, config, value.jobs) ?: []
             )
             config.workflows[key] = workflow
-            ctx.echo "${config.workflows}"
+            // ctx.echo "${config}"
         }
     }
 
