@@ -87,31 +87,27 @@ class Pipeline {
     }
 
     Boolean shouldRun(def ctx, Map filters) {
-        def script = {
-            Boolean proceed = true
-            if (filters) {
-                if (env.CHANGE_ID != null) {
-                    if (filters.pull && filters.pull.ignore) {
-                        Boolean abort = (env.CHANGE_BRANCH =~ filters.pull.ignore).matches()
-                        if (abort) return false
-                    }
-                    if (filters.pull && filters.pull.only) {
-                        proceed &= (env.CHANGE_BRANCH =~ filters.pull.only).matches()
-                    }
-                } else {
-                    if (filters.branches && filters.branches.ignore) {
-                        Boolean abort = (env.BRANCH_NAME =~ filters.branches.ignore).matches()
-                        if (abort) return false
-                    }
-                    if (filters.branches && filters.branches.only) {
-                        proceed &= (env.BRANCH_NAME =~ filters.branches.only).matches()
-                    }
+        Boolean proceed = true
+        if (filters) {
+            if (ctx.env.CHANGE_ID != null) {
+                if (filters.pull && filters.pull.ignore) {
+                    Boolean abort = (ctx.env.CHANGE_BRANCH =~ filters.pull.ignore).matches()
+                    if (abort) return false
+                }
+                if (filters.pull && filters.pull.only) {
+                    proceed &= (ctx.env.CHANGE_BRANCH =~ filters.pull.only).matches()
+                }
+            } else {
+                if (filters.branches && filters.branches.ignore) {
+                    Boolean abort = (ctx.env.BRANCH_NAME =~ filters.branches.ignore).matches()
+                    if (abort) return false
+                }
+                if (filters.branches && filters.branches.only) {
+                    proceed &= (ctx.env.BRANCH_NAME =~ filters.branches.only).matches()
                 }
             }
-            return proceed
         }
-        script.delegate = ctx
-        return script.call()
+        return proceed
     }
 
 }
