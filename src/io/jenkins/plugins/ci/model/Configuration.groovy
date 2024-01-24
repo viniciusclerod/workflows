@@ -8,5 +8,6 @@ class Configuration {
     Map environment = [:]
     Map<String,Command> commands = [:]
     Map<String,Job> jobs = [:]
+    Map<String,Workflows> workflows = [:]
 
 }

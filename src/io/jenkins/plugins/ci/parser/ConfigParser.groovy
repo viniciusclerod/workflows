@@ -52,6 +52,7 @@ class ConfigParser {
                     name = item.keySet().first()
                     arguments = item[name]
                     break
+                case String:
                 default:
                     name = item
             }
@@ -74,27 +75,34 @@ class ConfigParser {
                 actions: ConfigParser.parseActions(ctx, config, value.jobs) ?: []
             )
             config.workflows[key] = workflow
-            // ctx.echo "${config}"
+            ctx.echo "${config.workflows}"
         }
     }
 
     static List<Action> parseActions(def ctx, Configuration config, List list) {
         List actions = list.collect { it ->
             Action action = null
-            if (it instanceof String) {
-                ctx.echo "it=${it}"
-                action = new Action(name: it, type: 'job')
-            } else {
-                String key = it.keySet().first()
-                ctx.echo "${key}=${it[key]}"
-                action = new Action(name: key, type: 'job')
-
-                // action = new Action(
-                //     name: it[key].name ?: key,
-                //     type: it[key].type ?: 'job',
-                //     job: config.jobs[key],
-                //     filters: [:]
-                // )
+            switch (it) {
+                case Map:
+                    String key = it.keySet().first()
+                    action = new Action(
+                        name: it[key].name ?: key,
+                        type: it[key].type ?: 'job',
+                        job: config.jobs[key],
+                        filters: value?.filters.collect { rule, filter -> new Filter(
+                            only: filter.only ?: null,
+                            ignore: filter.ignore ?: null
+                        ) } ?: [:]
+                    )
+                    break
+                case String:
+                default:
+                    action = new Action(
+                        name: it,
+                        type: 'job',
+                        job: config.jobs[key]
+                    )
+            }
 
 
                 // it[key].filters.each { rule, filter ->
@@ -113,7 +121,6 @@ class ConfigParser {
                 //         ignore: filter.ignore ?: null
                 //     ) } ?: [:]
                 // )
-            }
             return action
         }
         return actions as List<Action>
