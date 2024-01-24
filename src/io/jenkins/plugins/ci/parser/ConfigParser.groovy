@@ -89,7 +89,7 @@ class ConfigParser {
                         name: it[key].name ?: key,
                         type: it[key].type ?: 'job',
                         job: config.jobs[key],
-                        filters: it[key].filters.collectEntries { rule, filter ->
+                        filters: it[key].filters?.collectEntries { rule, filter ->
                             [(rule): new Filter(
                                 only: filter.only ?: null,
                                 ignore: filter.ignore ?: null
