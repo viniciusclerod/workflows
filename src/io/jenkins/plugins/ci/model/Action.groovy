@@ -14,7 +14,7 @@ class Action {
         this.job.execute()
     }
 
-    Boolean shouldRun(Map env) {
+    Boolean shouldRun(def env) {
         Boolean proceed = true
         if (this.filters) {
             if (env.CHANGE_ID != null) {
