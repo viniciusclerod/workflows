@@ -21,7 +21,6 @@ class Pipeline {
             node {
                 this.buildSetupStage(ctx)
                 this.buildWorkflows(ctx)
-                // this.buildStages(ctx)
             }
         }
         script.delegate = ctx
@@ -32,12 +31,7 @@ class Pipeline {
         def script = {
             Map workflows = this.config.workflows.collectEntries { key, workflow ->
                 return [(workflow.name): {
-                    stage('Setup') {
-                        echo "Setup"
-                    }
-                    stage('Another Stage') {
-                        echo "Stage from"
-                    }
+                    this.buildStages(ctx)
                 }]
             }
             parallel(workflows)
