@@ -41,14 +41,14 @@ class Command {
         }.findAll { it.value != null } ?: [:]
         if (!arguments as Boolean) return parameters
         switch (arguments) {
-        case Map:
-            // Map externalArgs = arguments.collectEntries { key, value ->
-            //     String type = value.getClass().getSimpleName().toLowerCase()
-            //     return ["${key}": (type == this.parameters[key]?.type) ? value : null]
-            // }.findAll { it.value != null } ?: [:]
-            return MapHelper.merge(parameters, arguments, { a, b -> b ?: a })
-        default:
-            return arguments
+            case Map:
+                // Map externalArgs = arguments.collectEntries { key, value ->
+                //     String type = value.getClass().getSimpleName().toLowerCase()
+                //     return ["${key}": (type == this.parameters[key]?.type) ? value : null]
+                // }.findAll { it.value != null } ?: [:]
+                return MapHelper.merge(parameters, arguments, { a, b -> b ?: a })
+            default:
+                return arguments
         }
     }
 
