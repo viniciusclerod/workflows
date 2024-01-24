@@ -89,10 +89,12 @@ class ConfigParser {
                         name: it[key].name ?: key,
                         type: it[key].type ?: 'job',
                         job: config.jobs[key],
-                        filters: it[key].filters.collect { rule, filter -> new Filter(
-                            only: filter.only ?: null,
-                            ignore: filter.ignore ?: null
-                        ) } ?: [:]
+                        filters: it[key].filters.collectEntries { rule, filter ->
+                            [(rule): new Filter(
+                                only: filter.only ?: null,
+                                ignore: filter.ignore ?: null
+                            )]
+                        } ?: [:]
                     )
                     break
                 case String:
