@@ -7,10 +7,4 @@ class Workflow {
     String name
     List<Action> actions = []
 
-    def execute() {
-        this.actions.each { action ->
-            action.execute()
-        }
-    }
-
 }
