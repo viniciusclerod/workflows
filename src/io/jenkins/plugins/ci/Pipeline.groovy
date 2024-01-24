@@ -60,7 +60,7 @@ class Pipeline {
     def buildActions(def ctx, List actions) {
         def script = {
             actions.each { action ->
-                if (action.shouldRun(env)) {
+                if (action.shouldRun(ctx.env)) {
                     stage(action.name) {
                         if (action.type == 'approval') {
                             input(message: "Approval is required to proceed.")
