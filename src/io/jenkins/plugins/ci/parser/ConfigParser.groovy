@@ -89,7 +89,7 @@ class ConfigParser {
                         name: it[key].name ?: key,
                         type: it[key].type ?: 'job',
                         job: config.jobs[key],
-                        filters: value?.filters.collect { rule, filter -> new Filter(
+                        filters: it[key].filters.collect { rule, filter -> new Filter(
                             only: filter.only ?: null,
                             ignore: filter.ignore ?: null
                         ) } ?: [:]
@@ -97,8 +97,9 @@ class ConfigParser {
                     break
                 case String:
                 default:
+                    String key = it
                     action = new Action(
-                        name: it,
+                        name: key,
                         type: 'job',
                         job: config.jobs[key]
                     )
