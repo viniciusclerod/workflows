@@ -30,7 +30,7 @@ class Pipeline {
 
     def buildWorkflows(def ctx) {
         def script = {
-            Map workflows = this.config.workflows.collectEntries { workflow ->
+            Map workflows = this.config.workflows.collectEntries { key, workflow ->
                 return [(workflow.name): {
                     stage('Setup') {
                         echo "Setup"
