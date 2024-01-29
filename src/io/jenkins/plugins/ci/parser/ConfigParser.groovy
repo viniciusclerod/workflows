@@ -53,8 +53,8 @@ class ConfigParser {
                     name = item.keySet().first()
                     arguments = item[name]
                     break
-                case String:
-                    ctx.echo "[parseSteps] item=${item} (string)"
+                // case String:
+                //     ctx.echo "[parseSteps] item=${item} (string)"
                 default:
                     ctx.echo "[parseSteps] item=${item} (default)"
                     name = item
