@@ -31,6 +31,7 @@ class Command {
             break
         default:
             context = this.context
+            context.echo "[command] arguments=${arguments}"
         }
         context.invokeMethod(this.name, arguments)
     }

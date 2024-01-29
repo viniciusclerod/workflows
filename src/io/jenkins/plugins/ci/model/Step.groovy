@@ -12,10 +12,10 @@ class Step {
 
     def execute(def parameters = null) {
         def arguments = this.arguments
-        ctx.echo "arguments=${arguments}"
+        ctx.echo "[step] arguments=${arguments}"
         if (parameters) {
             arguments = this.parseArguments([ parameters: parameters ], arguments)
-            ctx.echo "arguments=${arguments} (parsed)"
+            ctx.echo "[step] arguments=${arguments} (parsed)"
         }
         this.command.execute(arguments)
     }
