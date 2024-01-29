@@ -54,8 +54,10 @@ class ConfigParser {
                     arguments = item[name]
                     break
                 case String:
+                    ctx.echo "[parseSteps] item=${item} (string)"
                 default:
                     name = item
+                    ctx.echo "[parseSteps] item=${item} (default)"
             }
             Command command = config.commands.find { it.key == name }?.value
             if (command == null) {
