@@ -6,6 +6,8 @@ import io.jenkins.plugins.ci.model.Step
 
 class Command {
 
+    def ctx
+
     def context
 
     String name
@@ -31,8 +33,8 @@ class Command {
             break
         default:
             context = this.context
-            context.echo "[command] arguments=${arguments}"
         }
+        ctx.echo "[command] arguments=${arguments}"
         context.invokeMethod(this.name, arguments)
     }
 
