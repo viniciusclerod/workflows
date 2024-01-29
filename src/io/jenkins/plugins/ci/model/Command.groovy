@@ -6,8 +6,6 @@ import io.jenkins.plugins.ci.model.Step
 
 class Command {
 
-    def ctx
-
     def context
 
     String name
@@ -20,7 +18,6 @@ class Command {
         } else {
             this.steps.each { step ->
                 def parameters = this.getParameters(arguments)
-                ctx.echo "[command] arguments=${arguments} parameters=${parameters}"
                 step.execute(parameters)
             }
         }
@@ -35,7 +32,6 @@ class Command {
         default:
             context = this.context
         }
-        ctx.echo "[command] name=${this.name} arguments=${arguments}"
         context.invokeMethod(this.name, arguments)
     }
 

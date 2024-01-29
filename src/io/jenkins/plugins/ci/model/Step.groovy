@@ -5,17 +5,13 @@ import io.jenkins.plugins.ci.model.Command
 
 class Step {
 
-    def ctx
-
     Command command
     def arguments
 
     def execute(def parameters = null) {
         def arguments = this.arguments
-        ctx.echo "[step] arguments=${arguments}"
         if (parameters) {
             arguments = this.parseArguments([ parameters: parameters ], arguments)
-            ctx.echo "[step] arguments=${arguments} (parsed)"
         }
         this.command.execute(arguments)
     }
