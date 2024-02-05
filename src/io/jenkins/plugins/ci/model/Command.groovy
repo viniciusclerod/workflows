@@ -15,10 +15,8 @@ class Command {
 
     def execute(def arguments) {
         if (this.steps.isEmpty()) {
-            this.ctx.echo "arguments=${arguments} (without steps)"
             this.invoke(arguments)
         } else {
-            this.ctx.echo "arguments=${arguments} (with steps)"
             this.steps.each { step ->
                 def parameters = this.getParameters(arguments)
                 step.execute(parameters)
