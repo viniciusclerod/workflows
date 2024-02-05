@@ -6,7 +6,9 @@ import com.jenkins.ci.reference.Step
 
 class Command {
 
+    def ctx
     def context
+
     String name
     List<Step> steps = []
     Map parameters = [:]
@@ -14,17 +16,19 @@ class Command {
 
     def call(Map arguments = [:]) {
         if (this.steps.isEmpty()) {
-            this.context.echo "arguments=${arguments}"
+            this.ctx.echo "arguments=${arguments} (without steps)"
             def params = this.getParams(arguments)
-            this.context.echo "params=${params}"
+            this.ctx.echo "params=${params} (without steps)"
             this.context.invokeMethod(this.name, params)
         } else {
+            this.ctx.echo "arguments=${arguments} (with steps)"
             this.steps.each { step ->
                 Map args = step.arguments?.collectEntries {
                     [(it.key): this.parseAttribute([
                         parameters: this.getParams(arguments)
                     ], it.value)]
                 } ?: [:]
+                this.ctx.echo "args=${args} (with steps)"
                 step.call(args)
             }
         }
