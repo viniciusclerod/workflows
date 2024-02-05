@@ -7,8 +7,8 @@ class Step {
     Command command
     Map arguments
 
-    def call() {
-        command.call(this.arguments)
+    def call(Map arguments) {
+        command.call(arguments ?: this.arguments)
     }
 
 }
