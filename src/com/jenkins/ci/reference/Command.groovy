@@ -19,29 +19,24 @@ class Command {
             this.context.invokeMethod(this.name, params)
         } else {
             this.steps.each { step ->
-                Map args = step.arguments.collectEntries {
+                Map args = step.arguments?.collectEntries {
                     [(it.key): this.parseAttribute([
                         parameters: this.getParams(arguments)
                     ], it.value)]
-                }
+                } ?: [:]
                 step.call(args)
             }
         }
     }
 
     def getParams(Map arguments = [:]) {
-        Map defaultParams = (this.parameters instanceof Map)
-            ? this.parameters
-                .collectEntries { key, val -> [(key): val.default]}
-                .findAll { it.value != null } ?: [:]
-            : [:]
-        Map stepParams = (this.parameters instanceof Map)
-            ? arguments
-                .collectEntries { key, val ->
-                    String type = value.getClass().getSimpleName().toLowerCase()
-                    return [(key): (type == this.parameters[key].type) ? val : null]
-                }.findAll { it.value != null } ?: [:]
-            : [:]
+        Map defaultParams = this.parameters?.collectEntries { key, val ->
+            [(key): val.default]
+        }.findAll { it.value != null } ?: [:]
+        Map stepParams = arguments?.collectEntries { key, val ->
+            String type = value.getClass().getSimpleName().toLowerCase()
+            return [(key): (type == this.parameters[key].type) ? val : null]
+        }.findAll { it.value != null } ?: [:]
         return MapHelper.merge(defaultParams, stepParams)
     }
 
