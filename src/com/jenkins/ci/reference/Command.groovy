@@ -30,10 +30,10 @@ class Command {
     }
 
     def getParams(Map arguments = [:]) {
-        Map defaultParams = this.parameters.collectEntries { key, val ->
+        Map defaultParams = this.parameters?.collectEntries { key, val ->
             [(key): val.default]
         }.findAll { it.value != null } ?: [:]
-        Map stepParams = arguments.collectEntries { key, val ->
+        Map stepParams = arguments?.collectEntries { key, val ->
             String type = value.getClass().getSimpleName().toLowerCase()
             return [(key): (type == this.parameters[key].type) ? val : null]
         }.findAll { it.value != null } ?: [:]
