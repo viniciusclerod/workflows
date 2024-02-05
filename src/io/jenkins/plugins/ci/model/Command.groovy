@@ -6,6 +6,7 @@ import io.jenkins.plugins.ci.model.Step
 
 class Command {
 
+    def ctx
     def context
 
     String name
@@ -14,8 +15,10 @@ class Command {
 
     def execute(def arguments) {
         if (this.steps.isEmpty()) {
+            this.ctx.echo "arguments=${arguments} (without steps)"
             this.invoke(arguments)
         } else {
+            this.ctx.echo "arguments=${arguments} (with steps)"
             this.steps.each { step ->
                 def parameters = this.getParameters(arguments)
                 step.execute(parameters)
@@ -36,7 +39,7 @@ class Command {
     }
 
     def getParameters(def arguments) {
-        def parameters = this.parameters.collectEntries { key, value ->
+        def parameters = this.parameters?.collectEntries { key, value ->
             [(key): value.default]
         }.findAll { it.value != null } ?: [:]
         if (!arguments as Boolean) return parameters
