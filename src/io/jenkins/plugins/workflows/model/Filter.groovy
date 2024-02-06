@@ -1,4 +1,4 @@
-package io.jenkins.plugins.ci.model
+package io.jenkins.plugins.workflows.model
 
 class Filter {
     String only

@@ -1,4 +1,4 @@
-package io.jenkins.plugins.ci.helper
+package io.jenkins.plugins.workflows.helper
 
 class MapHelper {
 

@@ -1,6 +1,6 @@
-package io.jenkins.plugins.ci.model
+package io.jenkins.plugins.workflows.model
 
-import io.jenkins.plugins.ci.model.Step
+import io.jenkins.plugins.workflows.model.Step
 
 class Job {
 

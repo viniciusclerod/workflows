@@ -1,4 +1,4 @@
-@Library('jenkins-orb')
+@Library('workflows')
 
 def call(String script) {
     evaluate(script)

@@ -1,7 +1,9 @@
-package io.jenkins.plugins.ci
+package io.jenkins.plugins.workflows
 
-import io.jenkins.plugins.ci.model.Configuration
-import io.jenkins.plugins.ci.parser.ConfigParser
+import io.jenkins.plugins.workflows.helper.BuiltInHelper
+import io.jenkins.plugins.workflows.helper.MapHelper
+import io.jenkins.plugins.workflows.model.Configuration
+import io.jenkins.plugins.workflows.parser.ConfigurationParser
 
 class Pipeline {
 
@@ -43,13 +45,15 @@ class Pipeline {
             stage('Setup') {
                 checkout ctx.scm
                 def yaml = readYaml file: this.yamlPath
-                this.config = ConfigParser.parse(ctx, yaml)
-                if (this.config.environment) {
-                    List<String> environment = this.getEnvironment(ctx)
-                    environment.each { item ->
-                        def (key, value) = item.split('=', 2)
-                        ctx.env.setProperty(key, value)
-                    }
+                this.config = ConfigurationParser.parse(ctx, yaml)
+                List<String> environment = this.getEnvironment(ctx, MapHelper.merge(
+                    BuiltInHelper.environment, 
+                    this.config?.environment ?: [:], 
+                    { a, b -> b ?: a }
+                ))
+                environment.each { item ->
+                    def (key, value) = item.split('=', 2)
+                    ctx.env.setProperty(key, value)
                 }
             }
         }

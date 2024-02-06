@@ -1,7 +1,7 @@
-package io.jenkins.plugins.ci.model
+package io.jenkins.plugins.workflows.model
 
-import io.jenkins.plugins.ci.helper.MapHelper
-import io.jenkins.plugins.ci.model.Command
+import io.jenkins.plugins.workflows.helper.MapHelper
+import io.jenkins.plugins.workflows.model.Command
 
 class Step {
 

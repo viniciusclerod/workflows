@@ -1,7 +1,7 @@
-package io.jenkins.plugins.ci.model
+package io.jenkins.plugins.workflows.model
 
-import io.jenkins.plugins.ci.model.Job
-import io.jenkins.plugins.ci.model.Filter
+import io.jenkins.plugins.workflows.model.Job
+import io.jenkins.plugins.workflows.model.Filter
 
 class Action {
 

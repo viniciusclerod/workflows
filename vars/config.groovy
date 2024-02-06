@@ -1,5 +1,5 @@
-@Library('jenkins-orb')
-import io.jenkins.plugins.ci.Pipeline
+@Library('workflows')
+import io.jenkins.plugins.workflows.Pipeline
 
 def call(String yamlPath) {
 
