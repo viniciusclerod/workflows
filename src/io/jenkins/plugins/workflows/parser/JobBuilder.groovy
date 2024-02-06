@@ -6,7 +6,7 @@ import io.jenkins.plugins.workflows.model.Configuration
 
 class JobBuilder {
 
-    static void buildJobs(def ctx, Configuration config, Map map) {
+    static void build(def ctx, Configuration config, Map map) {
         map.each { key, value ->
             Job job = new Job(
                 name: key,
