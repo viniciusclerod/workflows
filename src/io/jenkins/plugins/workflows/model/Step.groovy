@@ -8,11 +8,14 @@ class Step {
     Command command
     def arguments
 
-    def execute(def parameters = null) {
+    def execute(def parameters = null, def ctx) {
+        ctx.echo "step=(${this}) ${this.properties}"
         def arguments = this.arguments
+        ctx.echo "arguments=${arguments} parameters=${parameters}"
         if (parameters) {
             arguments = this.parseArguments([ parameters: parameters ], arguments)
         }
+        ctx.echo "arguments=${arguments}"
         this.command.execute(arguments)
     }
 

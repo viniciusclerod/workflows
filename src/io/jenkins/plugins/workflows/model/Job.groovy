@@ -11,8 +11,7 @@ class Job {
     def execute(def ctx) {
         ctx.echo "job=(${this}) ${this.properties}"
         this.steps.each { step ->
-            ctx.echo "step=(${step}) ${step.properties}"
-            step.execute()
+            step.execute(null, ctx)
         }
     }
 
