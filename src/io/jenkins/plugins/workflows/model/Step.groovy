@@ -12,15 +12,16 @@ class Step {
 
     def execute(def parameters = null) {
         def arguments = this.arguments
-        this.ctx.echo "arguments=${arguments} parameters=${parameters}"
+        this.ctx.echo "[execute] arguments=${arguments} parameters=${parameters}"
         if (parameters) {
             arguments = this.parseArguments([ parameters: parameters ], arguments)
         }
-        this.ctx.echo "arguments=${arguments}"
+        this.ctx.echo "[execute] arguments=${arguments}"
         this.command.execute(arguments)
     }
 
     def parseArguments(Map map, def arguments) {
+        this.ctx.echo "[parseArguments] map=${map} arguments=${arguments}"
         switch (arguments) {
             case Map:
                 return arguments.collectEntries { it ->
@@ -35,6 +36,7 @@ class Step {
     }
 
     def parseArgument(Map map, String text) {
+        this.ctx.echo "[parseArgument] map=${map} text=${text}"
         def pattern = /<<\s*(\S+\.\S+|\S+\(\s*\S+\s*\))\s*>>/
         return text.replaceAll(pattern) { key, match ->
             switch (match) {
@@ -44,8 +46,9 @@ class Step {
                     return value
                 case ~/include\(\s*\S+\s*\)/:
                     def filePath = match.replaceAll(/include\(\s*|\s*\)/, "")
-                    File file = new File(filePath)
-                    return file.text
+                    return filePath
+                    // File file = new File(filePath)
+                    // return file.text
             }
         }
     }
