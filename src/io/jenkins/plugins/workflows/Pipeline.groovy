@@ -84,9 +84,7 @@ class Pipeline {
     List<String> getEnvironment(def ctx, Map environment = this.config.environment) {
         if (!environment as Boolean) return []
         String script = '#!/usr/bin/env bash\n' << 
-            environment.collect { k, v -> 
-                "$k=$v\necho $k=\$$k"
-            }.join('\n') as String
+            environment.collect { k, v -> "$k=$v\necho $k=\$$k" }.join('\n') as String
         String output = ctx.sh(
             label: "Preparing environment variables",
             script: script,
