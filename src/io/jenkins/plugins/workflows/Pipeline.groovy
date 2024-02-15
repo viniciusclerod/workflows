@@ -70,8 +70,7 @@ class Pipeline {
                             input(message: "Approval is required to proceed.")
                         } else {
                             withEnv(this.getEnvironment(ctx, action.job.environment)) {
-                                echo "ctx=${ctx} action=${action}"
-                                action.execute()
+                                action.execute(ctx)
                             }
                         }
                     }

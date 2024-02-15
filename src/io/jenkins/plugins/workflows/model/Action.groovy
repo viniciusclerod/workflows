@@ -10,8 +10,9 @@ class Action {
     Job job
     Map<String,Filter> filters
 
-    def execute() {
-        this.job.execute()
+    def execute(def ctx) {
+        ctx.echo "action=(${this}) ${this.properties}"
+        this.job.execute(ctx)
     }
 
     Boolean shouldRun(def env) {

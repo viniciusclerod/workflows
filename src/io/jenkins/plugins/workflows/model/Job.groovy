@@ -8,8 +8,10 @@ class Job {
     Map environment = [:]
     List<Step> steps = []
 
-    def execute() {
+    def execute(def ctx) {
+        ctx.echo "job=(${this}) ${this.properties}"
         this.steps.each { step ->
+            ctx.echo "step=(${step}) ${step.properties}"
             step.execute()
         }
     }
