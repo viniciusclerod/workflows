@@ -39,6 +39,7 @@ class Step {
         this.ctx.echo "[parseArgument] map=${map} text=${text}"
         def pattern = /<<\s*(\S+\.\S+|\S+\(\s*\S+\s*\))\s*>>/
         return text.replaceAll(pattern) { it ->
+            this.ctx.echo "[parseArgument][text.replaceAll] it=${it}"
             def [key, match] = it
             this.ctx.echo "[parseArgument][text.replaceAll] key=${key} match=${match}"
             switch (match) {
