@@ -14,7 +14,6 @@ class Command {
     List<Step> steps = []
 
     def execute(def arguments) {
-        this.ctx.echo "command=(${this}) ${this.properties}"
         if (this.steps.isEmpty()) {
             this.invoke(arguments)
         } else {
