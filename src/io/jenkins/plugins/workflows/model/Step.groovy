@@ -47,7 +47,7 @@ class Step {
                 case ~/include\(\s*\S+\s*\)/:
                     def filePath = match.replaceAll(/include\(\s*|\s*\)/, "")
                     this.context.echo "filePath=${filePath}"
-                    def value = this.context.readFile(filePath)
+                    def value = this.context.readFile(file: filePath)
                     this.context.echo "value=${value}"
                     return value
             }
