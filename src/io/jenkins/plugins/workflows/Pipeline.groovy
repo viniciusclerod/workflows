@@ -85,9 +85,9 @@ class Pipeline {
         if (!environment as Boolean) return []
         String output = ctx.sh(
             label: "Preparing environment variables",
-            script: ('#!/usr/bin/env bash\n' << environment.collect { k, v -> 
+            script: '#!/usr/bin/env bash\n' + environment.collect { k, v -> 
                 "$k=$v && echo $k=\$$k"
-            }.join('\n')) as String,
+            }.join('\n'),
             returnStdout: true
         ).trim()
         return output.split('\n') as List<String>
