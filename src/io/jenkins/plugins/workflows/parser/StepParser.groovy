@@ -23,7 +23,7 @@ class StepParser {
                 config.commands[name] = new Command(ctx: ctx, context: ctx, name: name)
                 command = config.commands[name]
             }
-            Step step = new Step(command: command, arguments: arguments)
+            Step step = new Step(ctx: ctx, command: command, arguments: arguments)
             return step
         }
         return steps as List<Step>
