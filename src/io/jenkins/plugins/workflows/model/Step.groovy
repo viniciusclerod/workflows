@@ -12,11 +12,7 @@ class Step {
 
     def execute(def parameters = null) {
         def arguments = this.arguments
-        this.context.echo "arguments=${arguments} parameters=${parameters}"
-        // if (parameters) {
-            arguments = this.parseArguments([ parameters: parameters ], arguments)
-        // }
-        this.context.echo "arguments=${arguments}"
+        arguments = this.parseArguments([ parameters: parameters ?: [:] ], arguments)
         this.command.execute(arguments)
     }
 
@@ -38,7 +34,6 @@ class Step {
         def pattern = /<<\s*(\S+\.\S+|\S+\(\s*\S+\s*\))\s*>>/
         return text.replaceAll(pattern) { it ->
             def (key, match) = it
-            this.context.echo "key=${key} match=${match}"
             switch (match) {
                 case ~/parameters\.\S+/:
                     def keyList = match.split("\\.")
@@ -46,9 +41,7 @@ class Step {
                     return value
                 case ~/include\(\s*\S+\s*\)/:
                     def filePath = match.replaceAll(/include\(\s*|\s*\)/, "")
-                    this.context.echo "filePath=${filePath}"
                     def value = this.context.readFile(file: filePath)
-                    this.context.echo "value=${value}"
                     return value
             }
         }
