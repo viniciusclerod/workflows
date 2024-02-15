@@ -14,11 +14,11 @@ class Command {
     List<Step> steps = []
 
     def execute(def arguments) {
-        def parameters = this.getParameters(arguments)
         if (this.steps.isEmpty()) {
-            this.invoke(parameters)
+            this.invoke(arguments)
         } else {
             this.steps.each { step ->
+                def parameters = this.getParameters(arguments)
                 step.execute(parameters)
             }
         }
