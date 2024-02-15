@@ -69,9 +69,7 @@ class Pipeline {
                         if (action.type == 'approval') {
                             input(message: "Approval is required to proceed.")
                         } else {
-                            def vars = this.getEnvironment(ctx, action.job.environment)
-                            echo "vars=${vars}"
-                            withEnv(vars) {
+                            withEnv(this.getEnvironment(ctx, action.job.environment)) {
                                 action.execute()
                             }
                         }

@@ -43,9 +43,8 @@ class Step {
                     return value
                 case ~/include\(\s*\S+\s*\)/:
                     def filePath = match.replaceAll(/include\(\s*|\s*\)/, "")
-                    return filePath
-                    // File file = new File(filePath)
-                    // return file.text
+                    def value = this.context.readFile(filePath)
+                    return value
             }
         }
     }
