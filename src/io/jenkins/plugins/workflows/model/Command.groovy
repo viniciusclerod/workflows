@@ -6,14 +6,15 @@ import io.jenkins.plugins.workflows.model.Step
 
 class Command {
 
+    def ctx
     def context
 
     String name
     Map parameters = [:]
     List<Step> steps = []
 
-    def execute(def arguments, ctx) {
-        ctx.echo "command=(${this}) ${this.properties}"
+    def execute(def arguments) {
+        this.ctx.echo "command=(${this}) ${this.properties}"
         if (this.steps.isEmpty()) {
             this.invoke(arguments)
         } else {

@@ -8,10 +8,9 @@ class Job {
     Map environment = [:]
     List<Step> steps = []
 
-    def execute(def ctx) {
-        ctx.echo "job=(${this}) ${this.properties}"
+    def execute() {
         this.steps.each { step ->
-            step.execute(null, ctx)
+            step.execute()
         }
     }
 

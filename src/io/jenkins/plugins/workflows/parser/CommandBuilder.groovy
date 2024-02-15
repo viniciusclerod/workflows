@@ -12,6 +12,7 @@ class CommandBuilder {
             Boolean isLeaf = !(value.steps) as Boolean
             List<Step> steps = isLeaf ? [] : StepParser.parse(ctx, config, value.steps)
             Command command = new Command(
+                ctx: ctx,
                 context: isLeaf ? ctx : config,
                 name: key,
                 parameters: value.parameters,

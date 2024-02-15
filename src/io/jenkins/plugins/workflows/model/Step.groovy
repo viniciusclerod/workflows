@@ -5,18 +5,20 @@ import io.jenkins.plugins.workflows.model.Command
 
 class Step {
 
+    def ctx
+
     Command command
     def arguments
 
-    def execute(def parameters = null, def ctx) {
+    def execute(def parameters = null) {
         // ctx.echo "step=(${this}) ${this.properties}"
         def arguments = this.arguments
-        ctx.echo "arguments=${arguments} parameters=${parameters}"
+        this.ctx.echo "arguments=${arguments} parameters=${parameters}"
         if (parameters) {
             arguments = this.parseArguments([ parameters: parameters ], arguments)
         }
-        ctx.echo "arguments=${arguments}"
-        this.command.execute(arguments, ctx)
+        this.ctx.echo "arguments=${arguments}"
+        this.command.execute(arguments)
     }
 
     def parseArguments(Map map, def arguments) {
