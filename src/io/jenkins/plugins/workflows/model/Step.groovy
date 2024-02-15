@@ -13,9 +13,9 @@ class Step {
     def execute(def parameters = null) {
         def arguments = this.arguments
         this.context.echo "arguments=${arguments} parameters=${parameters}"
-        if (parameters) {
+        // if (parameters) {
             arguments = this.parseArguments([ parameters: parameters ], arguments)
-        }
+        // }
         this.context.echo "arguments=${arguments}"
         this.command.execute(arguments)
     }
