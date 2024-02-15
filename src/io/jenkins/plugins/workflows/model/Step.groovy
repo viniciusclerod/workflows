@@ -10,7 +10,6 @@ class Step {
 
     def execute(def parameters = null, def ctx) {
         // ctx.echo "step=(${this}) ${this.properties}"
-        ctx.echo "step=(${this})"
         def arguments = this.arguments
         ctx.echo "arguments=${arguments} parameters=${parameters}"
         if (parameters) {
