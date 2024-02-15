@@ -12,7 +12,8 @@ class Command {
     Map parameters = [:]
     List<Step> steps = []
 
-    def execute(def arguments) {
+    def execute(def arguments, ctx) {
+        ctx.echo "command=(${this}) ${this.properties}"
         if (this.steps.isEmpty()) {
             this.invoke(arguments)
         } else {
