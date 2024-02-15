@@ -16,25 +16,33 @@ class Step {
         this.command.execute(arguments)
     }
 
-    def parseArguments(def context, def arguments) {
+    def parseArguments(Map map, def arguments) {
         switch (arguments) {
             case Map:
                 return arguments.collectEntries { it ->
-                    def value = it.value instanceof String ? this.parseArgument(context, it.value) : it.value
+                    def value = it.value instanceof String ? this.parseArgument(map, it.value) : it.value
                     return [(it.key): value]
                 }
             case String:
-                return this.parseArgument(context, arguments)
+                return this.parseArgument(map, arguments)
             default:
                 return arguments
         }
     }
 
-    def parseArgument(def context, String text) {
-        return text.replaceAll(/<<\s*([\S]+)\s*>>/) { match ->
-            def keyList = match[1].split("\\.")
-            def value = MapHelper.getValueByKeys(context, keyList)
-            return value
+    def parseArgument(Map map, String text) {
+        def pattern = /<<\s*(\S+\.\S+|\S+\(\s*\S+\s*\))\s*>>/
+        return text.replaceAll(pattern) { key, match ->
+            switch (match) {
+                case ~/parameters\.\S+/:
+                    def keyList = match.split("\\.")
+                    def value = MapHelper.getValueByKeys(map, keyList)
+                    return value
+                case ~/include\(\s*\S+\s*\)/:
+                    def filePath = match.replaceAll(/include\(\s*|\s*\)/, "")
+                    File file = new File(filePath)
+                    return file.text
+            }
         }
     }
 
