@@ -38,7 +38,8 @@ class Step {
     def parseArgument(Map map, String text) {
         this.ctx.echo "[parseArgument] map=${map} text=${text}"
         def pattern = /<<\s*(\S+\.\S+|\S+\(\s*\S+\s*\))\s*>>/
-        return text.replaceAll(pattern) { key, match ->
+        return text.replaceAll(pattern) { it ->
+            def [key, match] = it
             this.ctx.echo "[parseArgument][text.replaceAll] key=${key} match=${match}"
             switch (match) {
                 case ~/parameters\.\S+/:
