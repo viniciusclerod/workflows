@@ -11,7 +11,7 @@ class Action {
     Map<String,Filter> filters
 
     def execute() {
-        this.job.execute(ctx)
+        this.job.execute()
     }
 
     Boolean shouldRun(def env) {
