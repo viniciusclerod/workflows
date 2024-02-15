@@ -39,10 +39,12 @@ class Step {
         this.ctx.echo "[parseArgument] map=${map} text=${text}"
         def pattern = /<<\s*(\S+\.\S+|\S+\(\s*\S+\s*\))\s*>>/
         return text.replaceAll(pattern) { key, match ->
+            this.ctx.echo "[parseArgument][text.replaceAll] key=${key} match=${match}"
             switch (match) {
                 case ~/parameters\.\S+/:
                     def keyList = match.split("\\.")
                     def value = MapHelper.getValueByKeys(map, keyList)
+                    this.ctx.echo "[parseArgument][text.replaceAll][parameters] keyList=${keyList} value=${value}"
                     return value
                 case ~/include\(\s*\S+\s*\)/:
                     def filePath = match.replaceAll(/include\(\s*|\s*\)/, "")
