@@ -22,7 +22,13 @@ class Pipeline {
         def script = {
             node {
                 this.buildSetupStage(ctx)
-                this.buildWorkflows(ctx)
+                timeout(
+                    time: this.config?.options?.timeout?.time ?: 1800,
+                    unit: this.config?.options?.timeout?.unit ?: 'SECONDS'
+                ) {
+                    this.buildWorkflows(ctx)
+                }
+
             }
         }
         script.delegate = ctx
@@ -42,20 +48,20 @@ class Pipeline {
 
     def buildSetupStage(def ctx) {
         def script = {
-            stage('Setup') {
+            // stage('Setup') {
                 checkout ctx.scm
                 def yaml = readYaml file: this.yamlPath
                 this.config = ConfigurationParser.parse(ctx, yaml)
                 List<String> environment = this.getEnvironment(ctx, MapHelper.merge(
-                    BuiltInHelper.environment, 
-                    this.config?.environment ?: [:], 
+                    BuiltInHelper.environment,
+                    this.config?.environment ?: [:],
                     { a, b -> b ?: a }
                 ))
                 environment.each { item ->
                     def (key, value) = item.split('=', 2)
                     ctx.env.setProperty(key, value)
                 }
-            }
+            // }
         }
         script.delegate = ctx
         script.call()
