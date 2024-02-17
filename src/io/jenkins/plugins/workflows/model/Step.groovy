@@ -31,7 +31,7 @@ class Step {
     }
 
     def parseArgument(Map map, String text) {
-        def pattern = /<<\s*(\S+\.\S+|\S+\(\s*\S+\s*\))\s*>>/
+        def pattern = /<<\s*(\S+?\.\S+?|\S+?\(\s*\S+?\s*\))\s*>>/
         return text.replaceAll(pattern) { it ->
             def (key, match) = it
             switch (match) {
