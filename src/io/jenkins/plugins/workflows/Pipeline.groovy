@@ -89,6 +89,8 @@ class Pipeline {
                     }
                 } catch (Exception e) {
                     echo "Failed to parse action: ${e}"
+                    echo "${e.properties}"
+                    echo "${e.stackTrace}"
                     echo "Action: ${action.properties}"
                 }
             }
