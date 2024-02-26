@@ -11,7 +11,7 @@ class ConfigurationParser {
 
     static Configuration parse(def ctx, def yaml) {
         Configuration config = new Configuration()
-        ContextBuilder.build(ctx, config, yaml.environment)
+        ContextBuilder.build(ctx, config, yaml.contexts)
         EnvironmentBuilder.build(ctx, config, yaml.environment)
         CommandBuilder.build(ctx, config, yaml.commands)
         JobBuilder.build(ctx, config, yaml.jobs)
