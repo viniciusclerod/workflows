@@ -2,10 +2,7 @@
 
 def call(String script) {
     try {
-        sh(
-            label: 'Debug Evaluate',
-            script: "echo ${script}"
-        )
+        echo "${script}"
         evaluate(script)
     } catch (Exception e) {
         sh(
