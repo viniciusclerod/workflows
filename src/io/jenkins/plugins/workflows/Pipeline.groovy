@@ -88,7 +88,8 @@ class Pipeline {
                         }
                     }
                 } catch (Exception e) {
-                    echo "Failed to parse action: ${e.message}"
+                    echo "Failed to parse action: ${e}"
+                    echo "Action: ${action.properties}"
                 }
             }
         }
