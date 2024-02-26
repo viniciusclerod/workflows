@@ -28,7 +28,6 @@ class Pipeline {
                 ) {
                     this.buildWorkflows(ctx)
                 }
-
             }
         }
         script.delegate = ctx
@@ -48,20 +47,19 @@ class Pipeline {
 
     def buildSetupStage(def ctx) {
         def script = {
-            // stage('Setup') {
+            stage('Setup') {
                 checkout ctx.scm
                 def yaml = readYaml file: this.yamlPath
                 this.config = ConfigurationParser.parse(ctx, yaml)
                 List<String> environment = this.getEnvironment(ctx, MapHelper.merge(
                     BuiltInHelper.environment,
-                    this.config?.environment ?: [:],
-                    { a, b -> b ?: a }
+                    this.config?.environment ?: [:]
                 ))
                 environment.each { item ->
                     def (key, value) = item.split('=', 2)
                     ctx.env.setProperty(key, value)
                 }
-            // }
+            }
         }
         script.delegate = ctx
         script.call()
@@ -75,8 +73,15 @@ class Pipeline {
                         if (action.type == 'approval') {
                             input(message: "Approval is required to proceed.")
                         } else {
-                            withEnv(this.getEnvironment(ctx, action.job.environment)) {
-                                action.execute()
+                            withCredentials(
+                                this.processCredentials(action.getContextCredentials())
+                            ) {
+                                withEnv(this.processEnvironment(ctx, MapHelper.merge(
+                                    action.getContextEnvironment(),
+                                    action.job.environment
+                                ))) {
+                                    action.execute()
+                                }
                             }
                         }
                     }
@@ -87,7 +92,14 @@ class Pipeline {
         script.call()
     }
 
-    List<String> getEnvironment(def ctx, Map environment = this.config.environment) {
+    List processCredentials(def ctx, List credentials) {
+        if (!credentials as Boolean) return []
+        return credentials.collect { it ->
+            ctx.invokeMethod(it.type, it.parameters)
+        }
+    }
+
+    List<String> processEnvironment(def ctx, Map environment = this.config.environment) {
         if (!environment as Boolean) return []
         String script = '#!/usr/bin/env bash\n' << 
             environment.collect { k, v -> "$k=$v\necho $k=\$$k" }.join('\n') as String

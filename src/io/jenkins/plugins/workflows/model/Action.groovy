@@ -1,7 +1,9 @@
 package io.jenkins.plugins.workflows.model
 
+import io.jenkins.plugins.workflows.helper.MapHelper
 import io.jenkins.plugins.workflows.model.Job
 import io.jenkins.plugins.workflows.model.Filter
+import io.jenkins.plugins.workflows.model.Context
 
 class Action {
 
@@ -9,6 +11,7 @@ class Action {
     String type
     Job job
     Map<String,Filter> filters
+    List context
 
     def execute() {
         this.job.execute()
@@ -36,6 +39,22 @@ class Action {
             }
         }
         return proceed
+    }
+
+    Map getContextEnvironment() {
+        Map environment = [:]
+        this.context.each { it ->
+            environment = MapHelper.merge(environment, it.environment)
+        }
+        return environment
+    }
+
+    List getContextCredentials() {
+        List credentials = []
+        this.context.each { it ->
+            credentials.addAll(it.credentials)
+        }
+        return credentials
     }
 
 }

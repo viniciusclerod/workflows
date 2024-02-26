@@ -21,7 +21,8 @@ class ActionParser {
                                 only: filter.only ?: null,
                                 ignore: filter.ignore ?: null
                             )]
-                        } ?: [:]
+                        } ?: [:],
+                        context: ActionParser.getContexts(it[key].context, config)
                     )
                     break
                 default:
@@ -35,6 +36,19 @@ class ActionParser {
             return action
         }
         return actions as List<Action>
+    }
+
+    static List getContexts(def value, Configuration config) {
+        switch (value) {
+            case null:
+                return []
+            case List:
+                return value.collect { it ->
+                    config.contexts[it]
+                }
+            default:
+                return [config.contexts[value]]
+        }
     }
 
 }
