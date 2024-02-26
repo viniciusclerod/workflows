@@ -68,23 +68,27 @@ class Pipeline {
     def buildActions(def ctx, List actions) {
         def script = {
             actions.each { action ->
-                if (action.shouldRun(ctx.env)) {
-                    stage(action.name) {
-                        if (action.type == 'approval') {
-                            input(message: "Approval is required to proceed.")
-                        } else {
-                            withCredentials(
-                                this.processCredentials(ctx, action.getContextCredentials())
-                            ) {
-                                withEnv(this.processEnvironment(ctx, MapHelper.merge(
-                                    action.getContextEnvironment(),
-                                    action.job.environment
-                                ))) {
-                                    action.execute()
+                try {
+                    if (action.shouldRun(ctx.env)) {
+                        stage(action.name) {
+                            if (action.type == 'approval') {
+                                input(message: "Approval is required to proceed.")
+                            } else {
+                                withCredentials(
+                                    this.processCredentials(ctx, action.getContextCredentials())
+                                ) {
+                                    withEnv(this.processEnvironment(ctx, MapHelper.merge(
+                                        action.getContextEnvironment(),
+                                        action.job.environment
+                                    ))) {
+                                        action.execute()
+                                    }
                                 }
                             }
                         }
                     }
+                } catch (Exception e) {
+                    echo "Failed to parse action: ${e.message}"
                 }
             }
         }
