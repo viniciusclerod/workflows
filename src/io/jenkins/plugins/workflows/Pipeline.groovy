@@ -74,7 +74,7 @@ class Pipeline {
                             input(message: "Approval is required to proceed.")
                         } else {
                             withCredentials(
-                                this.processCredentials(action.getContextCredentials())
+                                this.processCredentials(ctx, action.getContextCredentials())
                             ) {
                                 withEnv(this.processEnvironment(ctx, MapHelper.merge(
                                     action.getContextEnvironment(),
@@ -94,8 +94,8 @@ class Pipeline {
 
     List processCredentials(def ctx, List credentials) {
         if (!credentials as Boolean) return []
-        return credentials.collect { it ->
-            ctx.invokeMethod(it.type, it.parameters)
+        return credentials.collect { credential ->
+            ctx.invokeMethod(credential.type, credential.parameters)
         }
     }
 
