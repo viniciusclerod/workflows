@@ -51,7 +51,7 @@ class Pipeline {
                 checkout ctx.scm
                 def yaml = readYaml file: this.yamlPath
                 this.config = ConfigurationParser.parse(ctx, yaml)
-                List<String> environment = this.getEnvironment(ctx, MapHelper.merge(
+                List<String> environment = this.processEnvironment(ctx, MapHelper.merge(
                     BuiltInHelper.environment,
                     this.config?.environment ?: [:]
                 ))
