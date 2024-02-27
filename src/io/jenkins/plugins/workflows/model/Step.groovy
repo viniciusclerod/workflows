@@ -14,14 +14,17 @@ class Step {
         try {
             def arguments = this.arguments
             arguments = this.parseArguments([ parameters: parameters ?: [:] ], arguments)
-            this.command.execute(arguments)
         } catch (Exception e) {
-            this.context.echo "step.execute() ERROR: ${e.properties}"
+            this.context.echo "step.parseArguments() ERROR: ${e.properties}"
+        }
+        try {
+            this.command.execute(arguments)
+        catch (Exception e) {
+            this.context.echo "step.command.execute() ERROR: ${e.properties}"
         }
     }
 
     def parseArguments(Map map, def arguments) {
-        this.context.echo "step.parseArguments(${map}, ${arguments})"
         switch (arguments) {
             case Map:
                 return arguments.collectEntries { it ->
@@ -36,7 +39,6 @@ class Step {
     }
 
     def parseArgument(Map map, String text) {
-        this.context.echo "step.parseArgument(${map}, ${text})"
         def pattern = /<<\s*(\S+?\.\S+?|\S+?\(\s*\S+?\s*\))\s*>>/
         return text.replaceAll(pattern) { it ->
             def (key, match) = it
