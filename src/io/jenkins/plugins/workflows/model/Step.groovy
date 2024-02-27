@@ -5,7 +5,7 @@ import io.jenkins.plugins.workflows.model.Command
 
 class Step {
 
-    def context
+    def ctx
 
     Command command
     def arguments
@@ -41,7 +41,7 @@ class Step {
                     return value
                 case ~/include\(\s*\S+\s*\)/:
                     def filePath = match.replaceAll(/include\(\s*|\s*\)/, "")
-                    def value = this.context.readFile(file: filePath)
+                    def value = this.ctx.readFile(file: filePath)
                     return value
             }
         }
