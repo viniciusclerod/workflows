@@ -17,11 +17,7 @@ class Step {
         } catch (Exception e) {
             this.context.echo "step.parseArguments() ERROR: ${e.properties}"
         }
-        try {
-            this.command.execute(arguments)
-        catch (Exception e) {
-            this.context.echo "step.command.execute() ERROR: ${e.properties}"
-        }
+        this.command.execute(arguments)
     }
 
     def parseArguments(Map map, def arguments) {
