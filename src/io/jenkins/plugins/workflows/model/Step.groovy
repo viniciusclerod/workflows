@@ -11,14 +11,10 @@ class Step {
     def arguments
 
     def execute(def parameters = null) {
-        try {
-            def arguments = this.arguments
-            arguments = this.parseArguments([ parameters: parameters ?: [:] ], arguments)
-            this.context.echo "[${this.command}] command.execute(${arguments})"
-            this.command.execute(arguments)
-        } catch (Exception e) {
-            this.context.echo "step.execute() ERROR: ${e.properties}"
-        }
+        def arguments = this.arguments
+        arguments = this.parseArguments([ parameters: parameters ?: [:] ], arguments)
+        this.context.echo "[${this.command.name}] command.execute(${arguments})"
+        this.command.execute(arguments)
     }
 
     def parseArguments(Map map, def arguments) {

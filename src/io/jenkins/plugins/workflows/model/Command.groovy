@@ -18,13 +18,18 @@ class Command {
             this.invoke(arguments)
         } else {
             this.steps.each { step ->
-                def parameters = this.getParameters(arguments)
-                step.execute(parameters)
+                try {
+                    def parameters = this.getParameters(arguments)
+                    step.execute(parameters)
+                } catch (Exception e) {
+                    this.ctx.echo "command.execute() ERROR: ${e.properties}"
+                }
             }
         }
     }
 
     def invoke(def arguments) {
+        this.ctx.echo "command.invoke(${arguments})"
         def context
         switch (this.context) {
         case Configuration:
@@ -37,6 +42,7 @@ class Command {
     }
 
     def getParameters(def arguments) {
+        this.ctx.echo "command.getParameters(${arguments})"
         def parameters = this.parameters?.collectEntries { key, value ->
             [(key): value.default]
         }.findAll { it.value != null } ?: [:]
