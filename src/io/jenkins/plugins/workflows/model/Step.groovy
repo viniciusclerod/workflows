@@ -14,10 +14,11 @@ class Step {
         try {
             def arguments = this.arguments
             arguments = this.parseArguments([ parameters: parameters ?: [:] ], arguments)
+            this.context.echo "[${this.command}] command.execute(${arguments})"
+            this.command.execute(arguments)
         } catch (Exception e) {
-            this.context.echo "step.parseArguments() ERROR: ${e.properties}"
+            this.context.echo "step.execute() ERROR: ${e.properties}"
         }
-        this.command.execute(arguments)
     }
 
     def parseArguments(Map map, def arguments) {
