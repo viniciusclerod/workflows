@@ -14,6 +14,7 @@ class Command {
     List<Step> steps = []
 
     def execute(def arguments) {
+        this.ctx.echo "[${this.name}] command.execute(${arguments})"
         if (this.steps.isEmpty()) {
             this.invoke(arguments)
         } else {
@@ -22,14 +23,14 @@ class Command {
                     def parameters = this.getParameters(arguments)
                     step.execute(parameters)
                 } catch (Exception e) {
-                    this.ctx.echo "command.execute() ERROR: ${e.properties}"
+                    this.ctx.echo "[${this.name}] command.execute() ERROR: ${e.properties}"
                 }
             }
         }
     }
 
     def invoke(def arguments) {
-        this.ctx.echo "command.invoke(${arguments})"
+        this.ctx.echo "[${this.name}] command.invoke(${arguments})"
         def context
         switch (this.context) {
         case Configuration:
@@ -42,7 +43,7 @@ class Command {
     }
 
     def getParameters(def arguments) {
-        this.ctx.echo "command.getParameters(${arguments})"
+        this.ctx.echo "[${this.name}] command.getParameters(${arguments})"
         def parameters = this.parameters?.collectEntries { key, value ->
             [(key): value.default]
         }.findAll { it.value != null } ?: [:]

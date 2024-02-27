@@ -13,7 +13,6 @@ class Step {
     def execute(def parameters = null) {
         def arguments = this.arguments
         arguments = this.parseArguments([ parameters: parameters ?: [:] ], arguments)
-        this.context.echo "[${this.command.name}] command.execute(${arguments})"
         this.command.execute(arguments)
     }
 
