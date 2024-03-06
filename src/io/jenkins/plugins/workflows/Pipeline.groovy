@@ -103,7 +103,11 @@ class Pipeline {
         if (!environment as Boolean) return []
         String script = '#!/usr/bin/env bash\n' << 
             environment.collect { k, v -> "$k=$v\necho $k=\$$k" }.join('\n') as String
-        String output = ctx.sh(
+        String output = ctx.labelledShell(
+            label: "Preparing environment variables",
+            script: script,
+            returnStdout: true
+        ).trim() ?: ctx.sh(
             label: "Preparing environment variables",
             script: script,
             returnStdout: true
