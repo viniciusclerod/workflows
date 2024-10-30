@@ -3,7 +3,7 @@ package io.jenkins.plugins.workflows.helper
 class BuiltInHelper {
 
     static Map options = [
-        timeout: [ time: 1800, unit: 'SECONDS']
+        timeout: [ time: 1, unit: 'HOURS']
     ]
 
     static Map environment = [
