@@ -9,9 +9,11 @@ class Pipeline {
 
     String yamlPath
     Configuration config
+    Map opts
 
-    Pipeline(String yamlPath) {
+    Pipeline(String yamlPath, Map opts = [:]) {
         this.yamlPath = yamlPath ?: '.jenkins/config.yaml'
+        this.opts = opts
     }
 
     def execute(def ctx) {
@@ -20,7 +22,7 @@ class Pipeline {
 
     def buildPipeline(def ctx) {
         def script = {
-            node {
+            node(this.opts?.node) {
                 this.buildSetupStage(ctx)
                 timeout(
                     time: this.config?.options?.timeout?.time ?: 1800,
