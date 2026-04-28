@@ -8,6 +8,18 @@ class MapHelper {
         }
     }
 
+    static Map deepMerge(Map map1, Map map2) {
+        Map result = [:] + (map1 ?: [:])
+        (map2 ?: [:]).each { k, v ->
+            if (result[k] instanceof Map && v instanceof Map) {
+                result[k] = deepMerge(result[k], v)
+            } else {
+                result[k] = v
+            }
+        }
+        return result
+    }
+
     static def getValueByKeys(def map, def keys) {
         if (keys.size() == 1) return map[keys[0]]
         else return MapHelper.getValueByKeys(map[keys[0]], keys[1..-1])

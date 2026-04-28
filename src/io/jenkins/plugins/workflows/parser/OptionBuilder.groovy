@@ -6,7 +6,7 @@ import io.jenkins.plugins.workflows.model.Configuration
 class OptionBuilder {
 
     static void build(def ctx, Configuration config, Map map) {
-        config.options = MapHelper.merge(config.options, map ?: [:])
+        config.options = MapHelper.deepMerge(config.options, map ?: [:])
     }
 
 }
