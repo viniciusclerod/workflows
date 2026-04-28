@@ -5,12 +5,14 @@ import io.jenkins.plugins.workflows.parser.ContextBuilder
 import io.jenkins.plugins.workflows.parser.CommandBuilder
 import io.jenkins.plugins.workflows.parser.EnvironmentBuilder
 import io.jenkins.plugins.workflows.parser.JobBuilder
+import io.jenkins.plugins.workflows.parser.OptionBuilder
 import io.jenkins.plugins.workflows.parser.WorkflowBuilder
 
 class ConfigurationParser {
 
     static Configuration parse(def ctx, def yaml) {
         Configuration config = new Configuration()
+        OptionBuilder.build(ctx, config, yaml.options)
         ContextBuilder.build(ctx, config, yaml.contexts)
         EnvironmentBuilder.build(ctx, config, yaml.environment)
         CommandBuilder.build(ctx, config, yaml.commands)

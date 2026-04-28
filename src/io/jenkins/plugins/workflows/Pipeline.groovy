@@ -25,10 +25,17 @@ class Pipeline {
             node(this.opts?.node) {
                 this.buildSetupStage(ctx)
                 timeout(
-                    time: this.config?.options?.timeout?.time ?: 1800,
-                    unit: this.config?.options?.timeout?.unit ?: 'SECONDS'
+                    time: this.config.options.timeout.time,
+                    unit: this.config.options.timeout.unit
                 ) {
-                    this.buildWorkflows(ctx)
+                    if (this.config.options.docker?.image) {
+                        docker.image(this.config.options.docker.image)
+                        .inside(this.config.options.docker.args ?: '') {
+                            this.buildWorkflows(ctx)
+                        }
+                    } else {
+                        this.buildWorkflows(ctx)
+                    }
                 }
             }
         }
