@@ -4,6 +4,7 @@ class BuiltInHelper {
 
     static Map options = [
         timeout: [ time: 60, unit: 'MINUTES']
+    ]
 
     static Map environment = [
         'PROJECT_REPONAME': '$(git config --local remote.origin.url | sed -n \'s#.*/\\([^.]*\\)\\.git#\\1#p\')',
